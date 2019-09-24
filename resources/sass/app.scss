@@ -1,14 +1,17 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// // Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Icons
+// // Variables
+// @import 'variables';
+
+// Material Designs Icons
 @import '~@mdi/font/scss/materialdesignicons.scss';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import './components/sb-admin';
 // FontAwesome
 @import '~@fortawesome/fontawesome-free/scss/brands';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+// // Bootstrap
+// @import '~bootstrap/scss/bootstrap';

@@ -12,14 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
+
+Route::get('/home', function () {
+    return view('index');
+})->name('home');
+
+Route::get('/icons', function () {
+    return view('icons');
+})->name('icons');
 
 Auth::routes();
-
-Route::get('/admin', function ()
-{
-    return view('index');
-});
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('causes', 'CauseController');
