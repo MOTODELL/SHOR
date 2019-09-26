@@ -1,23 +1,19 @@
+{{-- Aquí se extiende al layout de app --}}
+{{-- Si quieres probar los diferentes menús, se encuentran en 'layouts/examples' --}}
+{{-- Ejemplo: @extends('layouts.examples.mega-menu') --}}
 @extends('layouts.app')
 
+@section('header')
+    <h2 class="page-head-title">Blank Page</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active">Blank Page Header</li>
+        </ol>
+    </nav>
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <h3 class="text-center">Content goes here!</h3>
 @endsection

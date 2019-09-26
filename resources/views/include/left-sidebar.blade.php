@@ -4,8 +4,9 @@
             <div class="left-sidebar-scroll">
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
-                        <li class="divider">Menu</li>
+                        <li class="divider pt-2">Menu</li>
                         <li class="{{ (request()->is('/')) ? 'active' : '' }}"><a href="#"><i class="icon zmdi zmdi-home"></i><span>Inicio</span></a>
+                        
                         </li>
                         <li class="parent"><a href="#"><i class="icon zmdi zmdi-face"></i><span>Dropdown</span></a>
                             <ul class="sub-menu">
@@ -22,6 +23,7 @@
                             <li class="{{ (request()->is('/icons')) ? 'active' : '' }}"><a href="{{ route('icons') }}"><i class="icon zmdi zmdi-collection-image-o"></i><span>Ver íconos de la plantilla</span></a>
                         @endcan
                         </li>
+                    <li class="{{ (request()->is('/')) ? 'active' : '' }}"><a href="{{ route('users.index') }}"><i class="icon zmdi zmdi-account-box"></i><span>Usuarios</span></a>
                     </ul>
                 </div>
             </div>

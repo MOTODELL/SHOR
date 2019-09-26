@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-$(document).ready(function(){
+$(document).ready(function() {
     //initialize the javascript
     App.init();
     App.megaMenu();
@@ -21,8 +21,17 @@ $(document).ready(function(){
     if ($('script[src="' + host + '/lib/prettify/prettify.js"]').length > 0) {
         prettyPrint();
     }
+    if (
+        $(
+            'script[src="' +
+                host +
+                '/lib/datatables/datatables.net/js/jquery.dataTables.js"]'
+        ).length > 0
+    ) {
+        App.tableFilters();
+    }
 
-    if (window.location.pathname == '/icons') {
+    if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
 

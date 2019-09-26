@@ -1,11 +1,19 @@
 <nav class="navbar navbar-expand fixed-top be-top-header">
     <div class="container-fluid">
-        <div class="be-navbar-header"><a class="navbar-brand" href="{{ route('home') }}"></a><a class="be-toggle-left-sidebar" href="#"><span class="icon zmdi zmdi-menu"></span></a>
+        <div class="be-navbar-header">
+            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="be-toggle-left-sidebar" href="#">
+                <span class="icon zmdi zmdi-menu"></span>
+            </a>
         </div>
         <div class="page-title"><span>Collapsible Sidebar</span></div>
         <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ asset('img/avatar.png') }}" alt="Avatar"><span class="user-name">Túpac Amaru</span></a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <img src="{{ asset('img/avatar.png') }}" alt="Avatar">
+                        <span class="user-name">Túpac Amaru</span>
+                    </a>
                     <div class="dropdown-menu" role="menu">
                         <div class="user-info">
                             <div class="user-name">Túpac Amaru</div>
@@ -18,7 +26,6 @@
                             document.getElementById('logout-form').submit();">
                             <span class="icon zmdi zmdi-power"></span>Logout
                         </a>
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -47,16 +54,30 @@
                                                         <div class="text"><span class="user-name">Joel King</span> is now following you</div><span class="date">2 days ago</span>
                                                     </div>
                                                 </a></li>
-                                            <li class="notification"><a href="#">
+                                            <li class="notification">
+                                                <a href="#">
                                                     <div class="image"><img src="{{ asset('img/avatar4.png') }}" alt="Avatar"></div>
                                                     <div class="notification-info">
-                                                        <div class="text"><span class="user-name">John Doe</span> is watching your main repository</div><span class="date">2 days ago</span>
+                                                        <div class="text">
+                                                            <span class="user-name">John Doe</span> 
+                                                            is watching your main repository
+                                                        </div>
+                                                        <span class="date">2 days ago</span>
                                                     </div>
-                                                </a></li>
-                                            <li class="notification"><a href="#">
+                                                </a>
+                                            </li>
+                                            <li class="notification">
+                                                <a href="#">
                                                     <div class="image"><img src="{{ asset('img/avatar5.png') }}" alt="Avatar"></div>
-                                                    <div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> is now following you</span><span class="date">5 days ago</span></div>
-                                                </a></li>
+                                                    <div class="notification-info">
+                                                        <span class="text">
+                                                            <span class="user-name">Emily Carter</span> 
+                                                            is now following you
+                                                        </span>
+                                                        <span class="date">5 days ago</span>
+                                                    </div>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
