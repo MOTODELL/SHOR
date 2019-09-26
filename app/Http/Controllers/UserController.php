@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Dependency;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,7 +37,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        $user = new User();
+        $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->dependency()->associate($dependency);
+        $user->save();
+
+        return redirect('users.index')->with('message', 'Usuario creado correctamente');
     }
 
     /**
@@ -46,7 +58,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show');
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -57,7 +69,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit');
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -69,7 +81,16 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        $user->name = $request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->dependency()->associate($dependency);
+        if ($user->save()) {
+            return redirect('users.index')->with('message', 'Usuario actualizado correctamente');
+        }
+        return Redirect::back()->withErrors(['error', 'No fue posible actualizar, intente nuevamente.']);
     }
 
     /**
@@ -80,6 +101,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect('users.index')->with('message', 'Usuario eliminado correctamente');
     }
 }

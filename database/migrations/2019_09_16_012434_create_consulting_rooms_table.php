@@ -24,6 +24,7 @@ class CreateConsultingRoomsTable extends Migration
             $table->boolean('thursday');
             $table->boolean('friday');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

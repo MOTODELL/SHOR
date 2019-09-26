@@ -33,6 +33,7 @@ class CreateDatesTable extends Migration
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('patient_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

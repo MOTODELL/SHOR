@@ -31,6 +31,7 @@ class CreatePatientsTable extends Migration
             $table->unsignedBigInteger('ssn_id');
             $table->unsignedBigInteger('titular');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

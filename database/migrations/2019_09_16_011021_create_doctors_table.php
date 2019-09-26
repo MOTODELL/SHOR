@@ -28,6 +28,7 @@ class CreateDoctorsTable extends Migration
             $table->unsignedBigInteger('consulting_room_id');
             $table->unsignedBigInteger('state_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

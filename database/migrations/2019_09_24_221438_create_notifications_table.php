@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSsnsTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateSsnsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ssns', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('ssn');
-            $table->date('date_start');
-            $table->date('date_end');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateSsnsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ssns');
+        Schema::dropIfExists('notifications');
     }
 }
