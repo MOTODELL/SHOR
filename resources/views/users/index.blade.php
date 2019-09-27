@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Blank Page</h2>
+    <h2 class="page-head-title">Usuarios</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -16,135 +16,140 @@
 @endsection
 
 @section('content')
-    <div class="main-content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-            <div class="card card-table">
-                <div class="row table-filters-container">
-                <div class="col-12 col-lg-12 col-xl-6">
-                    <div class="row">
-                    <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Milestone progress</span>
+    <div class="card card-table">
+        <div class="row table-filters-container">
+            <div class="col-12 col-lg-12 col-xl-6">
+                <div class="row">
+                    <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4">
+                        <span class="table-filter-title">Milestone progress</span>
                         <div class="filter-container">
-                        <form>
-                            <label class="control-label d-block"><span id="slider-value">0% - 100%</span></label>
-                            <input class="bslider form-control" id="milestone_slider" type="text" data-slider-value="[0,100]" data-slider-step="1" data-slider-max="100" data-slider-min="0" value="50">
-                        </form>
+                            <form>
+                                <label class="control-label d-block">
+                                    <span id="slider-value">0% - 100%</span>
+                                </label>
+                                <input class="bslider form-control" id="milestone_slider" type="text" data-slider-value="[0,100]" data-slider-step="1" data-slider-max="100" data-slider-min="0" value="50">
+                            </form>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Proyect</span>
+                    <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4">
+                        <span class="table-filter-title">Proyect</span>
                         <div class="filter-container">
-                        <label class="control-label">Select a proyect:</label>
-                        <form>
-                            <select class="select2">
-                            <option value="All">All</option>
-                            <option value="Bootstrap">Bootstrap Admin</option>
-                            <option value="CLI">CLI Connector</option>
-                            <option value="Back-end">Back-end Manager</option>
-                            </select>
-                        </form>
+                            <label class="control-label">Select a proyect:</label>
+                            <form>
+                                <select class="select2">
+                                <option value="All">All</option>
+                                <option value="Bootstrap">Bootstrap Admin</option>
+                                <option value="CLI">CLI Connector</option>
+                                <option value="Back-end">Back-end Manager</option>
+                                </select>
+                            </form>
                         </div>
-                    </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-12 col-xl-6">
-                    <div class="row">
+            </div>
+            <div class="col-12 col-lg-12 col-xl-6">
+                <div class="row">
                     <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Date</span>
                         <div class="filter-container">
-                        <form>
-                            <div class="row">
-                            <div class="col-6">
-                                <label class="control-label">Since:</label>
-                                <input class="form-control form-control-sm datetimepicker" id="dateSince" data-min-view="2" data-date-format="yyyy-mm-dd">
-                            </div>
-                            <div class="col-6">
-                                <label class="control-label">To:</label>
-                                <input class="form-control form-control-sm datetimepicker" id="dateTo" data-min-view="2" data-date-format="yyyy-mm-dd">
-                            </div>
-                            </div>
-                        </form>
+                            <form>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="control-label">Since:</label>
+                                        <input class="form-control form-control-sm datetimepicker" id="dateSince" data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="control-label">To:</label>
+                                        <input class="form-control form-control-sm datetimepicker" id="dateTo" data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 table-filters pb-xl-4"><span class="table-filter-title">Status</span>
                         <div class="filter-container">
-                        <form>
-                            <div class="row">
-                            <div class="col-6">
-                                <div class="custom-controls-stacked">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="toDo" type="checkbox">
-                                    <label class="custom-control-label" for="toDo">To Do</label>
+                            <form>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="custom-controls-stacked">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" id="toDo" type="checkbox">
+                                                <label class="custom-control-label" for="toDo">To Do</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" id="inReview" type="checkbox">
+                                                <label class="custom-control-label" for="inReview">In review</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="custom-controls-stacked">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" id="inProgress" type="checkbox">
+                                                <label class="custom-control-label" for="inProgress">In progress</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" id="done" type="checkbox">
+                                                <label class="custom-control-label" for="done">Done</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="inReview" type="checkbox">
-                                    <label class="custom-control-label" for="inReview">In review</label>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="custom-controls-stacked">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="inProgress" type="checkbox">
-                                    <label class="custom-control-label" for="inProgress">In progress</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" id="done" type="checkbox">
-                                    <label class="custom-control-label" for="done">Done</label>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
-                    </div>
                 </div>
-                </div>
-                <div class="card-body">
-                <div class="noSwipe">
-                    <table class="table table-striped table-hover be-table-responsive" id="table1">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="noSwipe">
+                <table class="table table-striped table-hover be-table-responsive" id="table1">
                     <thead>
                         <tr>
-                        <th style="width:5%;">
-                            <div class="custom-control custom-control-sm custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="check5">
-                            <label class="custom-control-label" for="check5"></label>
-                            </div>
-                        </th>
-                        <th style="width:20%;">User</th>
-                        <th style="width:17%;">Last Commit</th>
-                        <th style="width:15%;">Milestone</th>
-                        <th style="width:10%;">Branch</th>
-                        <th style="width:10%;">Date</th>
-                        <th style="width:10%;"></th>
+                            <th style="width:5%;">
+                                <div class="custom-control custom-control-sm custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="check5">
+                                <label class="custom-control-label" for="check5"></label>
+                                </div>
+                            </th>
+                            <th style="width:20%;">Usuario</th>
+                            <th style="width:15%;">Nombre(s)</th>
+                            <th style="width:15%;">Apellidos</th>
+                            <th style="width:15%;">Email</th>
+                            <th style="width:20%;"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($users as $user)
+                            
                         <tr class="success done">
-                        <td>
-                            <div class="custom-control custom-control-sm custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="check6">
-                            <label class="custom-control-label" for="check6"></label>
-                            </div>
-                        </td>
-                        <td class="user-avatar cell-detail user-info"><img class="mt-0 mt-md-2 mt-lg-0" src="assets/img/avatar6.png" alt="Avatar"><span>Penelope Thornton</span><span class="cell-detail-description">Developer</span></td>
-                        <td class="cell-detail" data-project="Bootstrap"><span>Initial commit</span><span class="cell-detail-description">Bootstrap Admin</span></td>
-                        <td class="milestone" data-progress="0,45"><span class="completed">8 / 15</span><span class="version">v1.2.0</span>
-                            <div class="progress">
-                            <div class="progress-bar progress-bar-primary" style="width: 45%;"></div>
-                            </div>
-                        </td>
-                        <td class="cell-detail"><span>master</span><span class="cell-detail-description">63e8ec3</span></td>
-                        <td class="cell-detail"><span class="date">May 6, 2018</span><span class="cell-detail-description">8:30</span></td>
-                        <td class="text-right">
-                            <div class="btn-group btn-hspace">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Done <span class="icon-dropdown mdi mdi-chevron-down"></span></button>
-                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                            </div>
-                        </td>
+                            <td>
+                                <div class="custom-control custom-control-sm custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="check6">
+                                <label class="custom-control-label" for="check6"></label>
+                                </div>
+                            </td>
+                            <td class="user-avatar cell-detail user-info">
+                                <img class="mt-0 mt-md-2 mt-lg-0" src="assets/img/avatar6.png" alt="Avatar">
+                                <span>{{ $user->username }}</span>
+                            </td>
+                            <td class="cell-detail" data-project="Bootstrap">
+                                <span>{{ $user->name }}</span>
+                            </td>
+                            <td class="cell-detail" data-progress="0,45">
+                                <span>{{ $user->lastname }}</span>
+                            </td>
+                            <td class="cell-detail">
+                                <span>{{ $user->email }}</span>
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group btn-hspace">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Edit</button>
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Delete</button>
+                                </div>
+                            </td>
                         </tr>
-                        <tr class="primary to-do">
+                        @endforeach
+                        {{-- <tr class="primary to-do">
                         <td data-status="in-progress">
                             <div class="custom-control custom-control-sm custom-checkbox">
                             <input class="custom-control-input" type="checkbox" id="check7">
@@ -226,7 +231,7 @@
                             <label class="custom-control-label" for="check10"></label>
                             </div>
                         </td>
-                        <td class="user-avatar cell-detail user-info"><img class="mt-0 mt-md-2 mt-lg-0" src="assets/img/avatar.png" alt="Avatar"><span>Kristopher Donny</span><span class="cell-detail-description">Designer</span></td>
+                        <td class="user-avatar cell-detail user-info"><img class="mt-0 mt-md-2 mt-lg-0" src="resources/img/avatar.png" alt="Avatar"><span>Kristopher Donny</span><span class="cell-detail-description">Designer</span></td>
                         <td class="cell-detail" data-project="CLI"><span>Right sidebar adjusments</span><span class="cell-detail-description">CLI Connector</span></td>
                         <td class="milestone" data-progress="0,98"><span class="completed">38 / 40</span><span class="version">v1.0.1</span>
                             <div class="progress">
@@ -368,12 +373,9 @@
                             </div>
                             </div>
                         </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
-                    </table>
-                </div>
-                </div>
-            </div>
+                </table>
             </div>
         </div>
     </div>

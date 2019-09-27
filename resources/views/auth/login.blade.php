@@ -17,18 +17,18 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="form-group input-group input-group-lg mb-3">
+                        <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="icon zmdi zmdi-account-circle zmdi-hc-lg text-primary"></i></span>
                             </div>
-                            <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" type="text" placeholder="Usuario" autocomplete="off">
+                            <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" type="text" placeholder="Usuario" autocomplete="off" autofocus>
                             @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group input-group input-group-lg mb-3">
+                        <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
                             <div class="input-group-prepend">
                                 <span class="input-group-text pr-4" id="basic-addon1"><i class="icon zmdi zmdi-lock zmdi-hc-lg text-primary"></i></span>
                             </div>
