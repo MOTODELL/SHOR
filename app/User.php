@@ -39,10 +39,83 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // RELACIONES
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
 
+    /**
+     * Roles relationship (Many to Many).
+     * 
+     * @return relationship
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    /**
+     * Dependencies relationship (One to Many - Inverse).
+     * 
+     * @return relationship
+     */
     public function dependency()
     {
         return $this->belongsTo(Dependency::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | OWN METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Abort unless the user has the authorize role for the controller action.
+     * 
+     * @return bool
+     */
+
+    public function authorizeRoles($roles)
+    {
+        abort_unless($this->hasAnyRole($roles), 401);
+        return true;
+    }
+
+    /**
+     * Search and find if the user has, at least, one of the the especified roles.
+     * 
+     * @return bool
+     */
+    
+    public function hasAnyRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasRole($roles)) {
+                 return true; 
+            }   
+        }
+        return false;
+    }
+
+    /**
+     * Search and find if the user has the specified role.
+     * 
+     * @return bool
+     */
+    
+    public function hasRole($role)
+    {
+        if ($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
     }
 }

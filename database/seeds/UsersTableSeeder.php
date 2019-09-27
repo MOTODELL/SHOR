@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,8 @@ class UsersTableSeeder extends Seeder
         $user->dependency_id = 1;
         $user->save();
 
+        $user->roles()->attach(Role::where('name', 'admin')->first());
+
         $user = new User();
         $user->name = 'Angeles';
         $user->lastname = 'Martinez';
@@ -30,5 +33,7 @@ class UsersTableSeeder extends Seeder
         $user->password = Hash::make('123');
         $user->dependency_id = 1;
         $user->save();
+
+        $user->roles()->attach(Role::where('name', 'admin')->first());
     }
 }
