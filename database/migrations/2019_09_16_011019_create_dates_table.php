@@ -26,12 +26,12 @@ class CreateDatesTable extends Migration
             $table->string('unit_price');
             $table->string('extra_cost');
             $table->string('amount');
-            $table->string('status');
             $table->unsignedBigInteger('cause_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('consulting_room_id');
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('status_id');
             $table->timestamps();
             $table->softDeletes();
         });
