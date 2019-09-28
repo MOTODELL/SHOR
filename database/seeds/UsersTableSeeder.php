@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         $user->lastname = 'Ponce';
         $user->username = 'charly12';
         $user->email = 'ch.1209@hotmail.com';
+        $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
         $user->password = Hash::make('charly12');
         $user->dependency_id = 1;
         $user->save();
@@ -30,6 +31,7 @@ class UsersTableSeeder extends Seeder
         $user->lastname = 'Martinez';
         $user->username = 'ang';
         $user->email = 'angelesmava0@gamil.com';
+        $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
         $user->password = Hash::make('123');
         $user->dependency_id = 1;
         $user->save();

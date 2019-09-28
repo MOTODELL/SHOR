@@ -28,8 +28,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-
-        return view('users.index');
+        $users = User::all();
+        return view('users.index', compact(['users']));
     }
 
     /**
@@ -54,19 +54,19 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        // $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        $dependency = '1';
         $user = new User();
         $user->username = $request->input('username');
         $user->name = $request->input('name');
+        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->dependency()->associate($dependency);
         if ($user->save()) {
-
-            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
-
-            return redirect('users.index')->with('message', 'Usuario creado correctamente');
+            // $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+            return redirect()->route('users.index')->with('message', 'Usuario creado correctamente');
         }
         return Redirect::back()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -80,7 +80,6 @@ class UserController extends Controller
     public function show(Request $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
-
         return view('users.show', compact('user'));
     }
 
@@ -108,17 +107,16 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        // $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
+        $dependency = '1';
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->dependency()->associate($dependency);
         if ($user->save()) {
-            
-            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
-
-            return redirect('users.index')->with('message', 'Usuario actualizado correctamente');
+            // $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+            return redirect()->route('users.index')->with('message', 'Usuario actualizado correctamente');
         }
         return Redirect::back()->withErrors(['error', 'No fue posible actualizar, intente nuevamente.']);
     }
@@ -132,9 +130,7 @@ class UserController extends Controller
     public function destroy(Request $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
-        
         $user->delete();
-
-        return redirect('users.index')->with('message', 'Usuario eliminado correctamente');
+        return redirect()->route('users.index')->with('message', 'Usuario eliminado correctamente');
     }
 }

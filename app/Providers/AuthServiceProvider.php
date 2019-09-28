@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('view-icons', function ($user)
         {
-            return $user->id == 1;
+            return true;
         });
     }
 }

@@ -21,6 +21,7 @@ Route::get('/home', function () {
 })->name('home');
 
 Route::resource('users', 'UserController');
+Route::resource('dependencies', 'DependencyController');
 
 Route::get('/icons', function () {
     return view('icons');
