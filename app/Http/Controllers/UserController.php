@@ -55,8 +55,7 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        // $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
-        $dependency = '1';
+        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
         $user = new User();
         $user->username = $request->input('username');
         $user->name = $request->input('name');
@@ -70,7 +69,7 @@ class UserController extends Controller
         }
         $user->dependency()->associate($dependency);
         if ($user->save()) {
-            // $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
             return redirect()->route('users.index')->with('message-store', 'Creado');
         }
         return Redirect::back()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
@@ -110,15 +109,14 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
-        // $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
-        $dependency = '1';
+        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->dependency()->associate($dependency);
         if ($user->save()) {
-            // $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
             return redirect()->route('users.index')->with('message-update', 'Actualizado');
         }
         return Redirect::back()->withErrors(['error', 'No fue posible actualizar, intente nuevamente.']);

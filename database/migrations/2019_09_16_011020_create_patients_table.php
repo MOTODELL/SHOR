@@ -31,6 +31,7 @@ class CreatePatientsTable extends Migration
             $table->unsignedBigInteger('birthplace');
             $table->unsignedBigInteger('ssn_id');
             $table->unsignedBigInteger('titular');
+            $table->string('key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

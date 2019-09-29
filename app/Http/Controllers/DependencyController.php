@@ -12,8 +12,10 @@ class DependencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request->user()->authorizeRoles('admin');
+
         $dependencies = Dependency::all();
         return view('dependencies.index', compact(['dependencies']));
     }
@@ -23,8 +25,17 @@ class DependencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $request->user()->authorizeRoles('admin');
+
+        $dependency = new Dependency();
+        $name = strtolower($request->input('description'));
+        $name = preg_replace('/\s+/', '-', $name);
+        $dependency->name = $name;
+        $dependency->description = $request->input('description');
+        
+
         return view('dependencies.create');
     }
 
@@ -36,7 +47,7 @@ class DependencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->user()->authorizeRoles('admin');
     }
 
     /**
@@ -45,8 +56,10 @@ class DependencyController extends Controller
      * @param  \App\Dependency  $dependency
      * @return \Illuminate\Http\Response
      */
-    public function show(Dependency $dependency)
+    public function show(Request $request, Dependency $dependency)
     {
+        $request->user()->authorizeRoles('admin');
+
         return view('dependencies.show', compact('dependency'));
     }
 
@@ -56,8 +69,10 @@ class DependencyController extends Controller
      * @param  \App\Dependency  $dependency
      * @return \Illuminate\Http\Response
      */
-    public function edit(Dependency $dependency)
+    public function edit(Request $request, Dependency $dependency)
     {
+        $request->user()->authorizeRoles('admin');
+
         return view('dependencies.edit', compact('dependency'));
     }
 
@@ -70,7 +85,7 @@ class DependencyController extends Controller
      */
     public function update(Request $request, Dependency $dependency)
     {
-        //
+        $request->user()->authorizeRoles('admin');
     }
 
     /**
@@ -79,8 +94,10 @@ class DependencyController extends Controller
      * @param  \App\Dependency  $dependency
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Dependency $dependency)
+    public function destroy(Request $request, Dependency $dependency)
     {
+        $request->user()->authorizeRoles('admin');
+
         $dependency->delete();
         return redirect()->route('dependencies.index')->with('message', 'Usuario eliminado correctamente');
     }

@@ -18,6 +18,7 @@ class CreateSsnsTable extends Migration
             $table->integer('ssn');
             $table->date('date_start');
             $table->date('date_end');
+            $table->string('key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
