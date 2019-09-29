@@ -25,6 +25,7 @@ class CreateDoctorsTable extends Migration
             $table->string('zip_code');
             $table->date('vacation_start');
             $table->date('vacation_end');
+            $table->boolean('status');
             $table->unsignedBigInteger('consulting_room_id');
             $table->unsignedBigInteger('state_id');
             $table->timestamps();

@@ -82,6 +82,6 @@ class DependencyController extends Controller
     public function destroy(Dependency $dependency)
     {
         $dependency->delete();
-        return redirect('dependencies.index')->with('message', 'Usuario eliminado correctamente');
+        return redirect()->route('dependencies.index')->with('message', 'Usuario eliminado correctamente');
     }
 }

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Dependencias</h2>
+    <h2 class="page-head-title">Causas</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Dependencias</span></a>
+                <a href="{{ route('causes.index') }}"><span class="text-primary">Causas</span></a>
             </li>
-            <li class="breadcrumb-item active">Editar Dependencia</li>
+            <li class="breadcrumb-item active">Crear Causa</li>
         </ol>
     </nav>
 @endsection
@@ -14,18 +14,18 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Editar Dependencia</legend>
+                <legend>Crear Causa</legend>
             </div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('dependencies.update', $dependency) }}">
+            <form method="POST" action="{{ route('causes.store') }}">
                 @csrf
-                @method('PUT')
+                @method('POST')
                 <div class="form-row mt-4">
                     <div class="form-group col-sm-12 col-md-6">
-                        <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre') }}</label>
-                        <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Urgencias" name="name" value="{{ $dependency->name }}" required autocomplete="name" autofocus>
-                        @error('name')
+                        <label for="code"><span class="text-danger pr-1">*</span>{{ __('Código') }}</label>
+                        <input id="code" type="text" class="form-control form-control-lg @error('code') is-invalid @enderror" placeholder="13" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>
+                        @error('code')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="description"><span class="text-danger pr-1">*</span>{{ __('Descripción') }}</label>
-                        <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ $dependency->description }}" required autocomplete="description" autofocus>
+                        <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Diarrea" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
                         @enderror
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('dependencies.index') }}" class="btn btn-secondary mr-5"><i class="icon icon-left mdi mdi-keyboard-return mdi-18px"></i>{{ __('Regresar') }}</a>
+                        <a  href="{{ route('causes.index') }}" class="btn btn-secondary mr-5"><i class="icon icon-left mdi mdi-keyboard-return mdi-18px"></i>{{ __('Regresar') }}</a>
                         <button type="submit" class="btn btn-primary"><i class="icon icon-left mdi mdi-content-save mdi-18px"></i>{{ __('Guardar') }}</button>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
                         @csrf
                         <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1"><i class="icon zmdi zmdi-account-circle zmdi-hc-lg text-primary"></i></span>
+                                <span class="input-group-text pr-4" id="basic-addon1"><i class="icon zmdi zmdi-account zmdi-hc-lg text-primary"></i></span>
                             </div>
                             <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" type="text" placeholder="Usuario" autocomplete="off" autofocus>
                             @error('username')
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
                             <div class="input-group-prepend">
-                                <span class="input-group-text pr-4" id="basic-addon1"><i class="icon zmdi zmdi-lock zmdi-hc-lg text-primary"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="icon zmdi zmdi-key zmdi-hc-lg text-primary"></i></span>
                             </div>
                             <input class="form-control @error('password') is-invalid @enderror" name="password" id="password" value="{{ old('password') }}" type="password" placeholder="Contraseña">
                             @error('password')

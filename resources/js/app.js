@@ -5,6 +5,7 @@
  */
 
 require("./bootstrap");
+require("sweetalert2");
 
 $(document).ready(function() {
     //initialize the javascript
@@ -30,14 +31,9 @@ $(document).ready(function() {
     ) {
         App.dataTables();
     }
-
     if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
-
-    // if (window.location.pathname == '/icons') {
-    //     App.IconsFilter();
-    // }
 });
 $(document).ready(function() {
     $(".dataTable").DataTable({

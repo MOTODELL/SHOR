@@ -21,6 +21,7 @@ class CreatePatientsTable extends Migration
             $table->string('curp');
             $table->date('birthdate');
             $table->char('sex');
+            $table->string('marital_status');
             $table->string('phone');
             $table->string('street');
             $table->string('colony');

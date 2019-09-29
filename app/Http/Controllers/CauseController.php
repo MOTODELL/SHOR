@@ -41,7 +41,6 @@ class CauseController extends Controller
         $cause->code = $request->input('code');
         $cause->description = $request->input('description');
         $cause->save();
-
         return redirect()->route('causes.index');
     }
 
@@ -92,6 +91,7 @@ class CauseController extends Controller
      */
     public function destroy(Cause $cause)
     {
-        //
+        $cause->delete();
+        return redirect()->route('causes.index')->with('message-destroy', 'Eliminado');
     }
 }

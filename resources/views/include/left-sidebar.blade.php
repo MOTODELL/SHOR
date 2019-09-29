@@ -38,15 +38,21 @@
                             </li>
                         @endcan
                         <li class="{{ (request()->is('/')) ? 'active' : '' }}">
-                            <a href="{{ route('users.index') }}">
-                                <i class="icon zmdi zmdi-account-box"></i>
-                                <span>Usuarios</span>
+                            <a href="{{ route('dependencies.index') }}">
+                                <i class="icon zmdi zmdi-city-alt"></i>
+                                <span>Dependencias</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('/')) ? 'active' : '' }}">
-                            <a href="{{ route('dependencies.index') }}">
-                                <i class="icon zmdi zmdi-view-dashboard"></i>
-                                <span>Dependencias</span>
+                            <a href="{{ route('causes.index') }}">
+                                <i class="icon zmdi zmdi-spinner"></i>
+                                <span>Causas</span>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                            <a href="{{ route('users.index') }}">
+                                <i class="icon zmdi zmdi-account-box"></i>
+                                <span>Usuarios</span>
                             </a>
                         </li>
                     </ul>
