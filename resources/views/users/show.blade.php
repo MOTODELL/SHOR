@@ -1,16 +1,15 @@
 @extends('layouts.app')
 @section('content')
 <div class="user-display">
-  	{{-- <div class="user-display-bg">
-			<img src="{{ asset('img/user-profile-display.png') }}" alt="">
-		</div> --}}
+  	<div class="user-display-sm primary">
+		</div>
     <div class="user-display-bottom">
 			<div class="user-display-avatar">
 				<img src="{{ $user->avatar }}" alt="">
 			</div>
 			<div class="user-display-info">
 				<div class="name">{{ $user->name }}</div>
-				<div class="nick">{{ $user->lastname }}</div>
+				{{-- <div class="nick">{{ $user->lastname }}</div> --}}
 			</div>
 			<div class="user-display-details">
 				<div class="card-header">
@@ -34,7 +33,7 @@
 						<div class="tab-pane fade show active pr-3" id="user-profile-info" role="tabpanel" aria-labelledby="user-profile-info-tab">
 							<div class="row">
 								<div class="col">
-									<div class="alert alert-primary alert-simple border-0">
+									<div class="alert alert-primary alert-simple border-0 shadow-none">
 										<div class="icon"><i class="icon zmdi zmdi-pin-account"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Nombre completo</span>
@@ -43,7 +42,7 @@
 									</div>
 								</div>
 								<div class="col">
-									<div class="alert alert-success alert-simple border-0">
+									<div class="alert alert-success alert-simple border-0 shadow-none">
 										<div class="icon"><i class="icon zmdi zmdi-account"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Nombre de usuario</span>
@@ -52,7 +51,7 @@
 									</div>
 								</div>
 								<div class="col">
-									<div class="alert alert-danger alert-simple border-0">
+									<div class="alert alert-danger alert-simple border-0 shadow-none">
 										<div class="icon"><i class="icon zmdi zmdi-email"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Email</span>

@@ -34,9 +34,9 @@
 				<thead>
 					<tr>
 						<th style="width:5%;">
-                            <div class="custom-control custom-control-sm custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="check5">
-                            <label class="custom-control-label" for="check5"></label>
+                            <div class="custom-control custom-control-sm custom-checkbox be-select-all">
+								<input class="custom-control-input" type="checkbox" id="check1">
+								<label class="custom-control-label" for="check1"></label>
                             </div>
                         </th>
                         <th style="width:20%;">Usuario</th>
@@ -51,8 +51,8 @@
 					<tr class="success done">
 						<td>
 							<div class="custom-control custom-control-sm custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="check6">
-								<label class="custom-control-label" for="check6"></label>
+								<input class="custom-control-input" type="checkbox" id="check'.{{$user->id}}">
+								<label class="custom-control-label" for="check'.{{$user->id}}"></label>
 							</div>
 						</td>
 						<td class="user-avatar cell-detail user-info">
