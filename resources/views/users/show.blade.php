@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="user-display">
-  	{{-- <div class="user-display-bg">
-			<img src="{{ asset('img/user-profile-display.png') }}" alt="">
-		</div> --}}
+  	<div class="user-display-sm primary">
+	</div>
     <div class="user-display-bottom">
 			<div class="user-display-avatar">
 				<img src="{{ $user->avatar }}" alt="">
