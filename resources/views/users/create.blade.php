@@ -73,8 +73,8 @@
                         <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="********">
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('users.index') }}" class="btn btn-secondary mr-5"><i class="mdi mdi-keyboard-return mdi-18px"></i>{{ __('Regresar') }}</a>
-                        <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save mdi-18px"></i>{{ __('Guardar') }}</button>
+                        <a  href="{{ route('users.index') }}" class="btn btn-secondary mr-5"><i class="icon zmdi zmdi-long-arrow-return icon-left"></i>{{ __('Regresar') }}</a>
+                        <button type="submit" class="btn btn-primary"><i class="icon mdi mdi-content-save mdi-18px icon-left"></i>{{ __('Guardar') }}</button>
                     </div>
                 </div>
             </form>

@@ -99,7 +99,7 @@ class User extends Authenticatable
             }
         } else {
             if ($this->hasRole($roles)) {
-                 return true; 
+                return true; 
             }   
         }
         return false;

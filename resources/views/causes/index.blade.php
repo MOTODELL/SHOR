@@ -4,13 +4,13 @@
     <link rel="stylesheet" type="text/css" href="assets/lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Dependencias</h2>
+    <h2 class="page-head-title">Causas</h2>
 @endsection
 @section('content')
     <div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-rounded btn-space btn-primary" href="{{ route('dependencies.create') }}">
+				<a class="btn btn-rounded btn-space btn-primary" href="{{ route('causes.create') }}">
 					<i class="icon zmdi zmdi-account-add icon-left zmdi-hc-5x"></i>
 					Nueva
 				</a>
@@ -26,13 +26,13 @@
                             <label class="custom-control-label" for="check5"></label>
                             </div>
                         </th>
-                        <th style="width:35%;">Nombre</th>
+                        <th style="width:35%;">Código</th>
                         <th style="width:40%;">Descripción</th>
                         <th style="width:10%;">Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
-				@foreach ($dependencies as $dependency)
+				@foreach ($causes as $cause)
 					<tr class="success done">
 						<td>
 							<div class="custom-control custom-control-sm custom-checkbox">
@@ -41,14 +41,14 @@
 							</div>
 						</td>
 						<td class="cell-detail" data-project="Bootstrap">
-							<span>{{ $dependency->name }}</span>
+							<span>{{ $cause->code }}</span>
 						</td>
 						<td class="cell-detail" data-project="Bootstrap">
-							<span>{{ $dependency->description }}</span>
+							<span>{{ $cause->description }}</span>
 						</td>
 						<td class="text-right">
-							<a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="mdi mdi-lead-pencil mdi-18px"></i></a>
-							<form action="{{ route('dependencies.destroy', $dependency) }}" method="post" class="d-inline">
+							<a href="{{ route('causes.edit', $cause->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="mdi mdi-lead-pencil mdi-18px"></i></a>
+							<form action="{{ route('causes.destroy', $cause) }}" method="post" class="d-inline">
 								@csrf
 								@method('DELETE')
 								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="mdi mdi-trash-can mdi-18px"></i></button>
