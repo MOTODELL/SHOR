@@ -9,6 +9,7 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -30,8 +31,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $request->user()->authorizeRoles('admin');
+
         $users = User::all();
-        return view('users.index', compact(['users']));
+        $dependencies = Dependency::all();
+        $roles = Role::all();
+        return view('users.index', compact(['users', 'dependencies', 'roles']));
     }
 
     /**
@@ -42,7 +46,10 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-        return view('users.create');
+
+        $dependencies = Dependency::all();
+        $roles = Role::all();
+        return view('users.create', compact(['dependencies', 'roles']));
     }
 
     /**
@@ -55,24 +62,26 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
-        $user = new User();
-        $user->username = $request->input('username');
-        $user->name = $request->input('name');
-        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-        $user->lastname = $request->input('lastname');
-        $user->email = $request->input('email');
-        if ($request->input('password') == $request->input('password_confirmation')) {
-            $user->password = Hash::make($request->input('password'));
-        } else {
-            return Redirect::back()->withErrors(['error', 'Las contraseñas no coinciden.']);
+        $dependency = Dependency::where('name', $request->input('dependency'))->first();
+        if ($dependency) {
+            $user = new User();
+            if ($request->input('password') == $request->input('password_confirmation')) {
+                $user->password = Hash::make($request->input('password'));
+            } else {
+                return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
+            }
+            $user->username = $request->input('username');
+            $user->name = $request->input('name');
+            $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+            $user->lastname = $request->input('lastname');
+            $user->email = $request->input('email');
+            $user->dependency()->associate($dependency);
+            if ($user->save()) {
+                $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+                return redirect()->route('users.index')->with('message-store', 'Creado');
+            }
         }
-        $user->dependency()->associate($dependency);
-        if ($user->save()) {
-            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
-            return redirect()->route('users.index')->with('message-store', 'Creado');
-        }
-        return Redirect::back()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -84,6 +93,7 @@ class UserController extends Controller
     public function show(Request $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
+
         return view('users.show', compact('user'));
     }
 
@@ -96,6 +106,7 @@ class UserController extends Controller
     public function edit(Request $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
+
         return view('users.edit', compact('user'));
     }
 
@@ -109,17 +120,28 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
-        $dependency = Dependency::where('name', $request->input('dependency'))->firstOrFail();
-        $user->name = $request->input('name');
-        $user->lastname = $request->input('lastname');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->dependency()->associate($dependency);
-        if ($user->save()) {
-            $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
-            return redirect()->route('users.index')->with('message-update', 'Actualizado');
+
+        $dependency = Dependency::where('name', $request->input('dependency'))->first();
+        if ($user && $dependency) {
+            if ($request->has('password')) {
+                if ($request->input('password') == $request->input('password_confirmation')) {
+                    $user->password = Hash::make($request->input('password'));
+                } else {
+                    return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
+                }
+            }
+            $user->username = $request->input('username');
+            $user->name = $request->input('name');
+            $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+            $user->lastname = $request->input('lastname');
+            $user->email = $request->input('email');
+            $user->dependency()->associate($dependency);
+            if ($user->save()) {
+                $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+                return redirect()->route('users.index')->with('message-store', 'Creado');
+            }
         }
-        return Redirect::back()->withErrors(['error', 'No fue posible actualizar, intente nuevamente.']);
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -131,6 +153,7 @@ class UserController extends Controller
     public function destroy(Request $request, User $user)
     {
         $request->user()->authorizeRoles('admin');
+
         $user->delete();
         return redirect()->route('users.index')->with('message-destroy', 'Eliminado');
     }

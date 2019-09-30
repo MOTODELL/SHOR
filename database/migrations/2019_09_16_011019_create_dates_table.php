@@ -27,7 +27,7 @@ class CreateDatesTable extends Migration
             $table->string('extra_cost');
             $table->string('amount');
             $table->unsignedBigInteger('cause_id');
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id');
             $table->unsignedBigInteger('consulting_room_id');
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('patient_id');

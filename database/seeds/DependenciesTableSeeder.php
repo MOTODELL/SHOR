@@ -12,6 +12,7 @@ class DependenciesTableSeeder extends Seeder
      */
     public function run()
     {
+        Dependency::truncate();
         $dependency = new Dependency();
         $dependency->name = 'caja';
         $dependency->description = 'Caja';

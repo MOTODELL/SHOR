@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Dependency;
+use App\Http\Requests\StoreDependencyRequest;
+use App\Http\Requests\UpdateDependencyRequest;
 use Illuminate\Http\Request;
 
 class DependencyController extends Controller
@@ -17,6 +19,7 @@ class DependencyController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $dependencies = Dependency::all();
+
         return view('dependencies.index', compact(['dependencies']));
     }
 
@@ -29,13 +32,6 @@ class DependencyController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = new Dependency();
-        $name = strtolower($request->input('description'));
-        $name = preg_replace('/\s+/', '-', $name);
-        $dependency->name = $name;
-        $dependency->description = $request->input('description');
-        
-
         return view('dependencies.create');
     }
 
@@ -45,9 +41,19 @@ class DependencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDependencyRequest $request)
     {
         $request->user()->authorizeRoles('admin');
+
+        $dependency = new Dependency();
+        $name = strtolower($request->input('description'));
+        $name = preg_replace('/\s+/', '-', $name);
+        $dependency->name = $name;
+        $dependency->description = $request->input('description');
+        if ($dependency->save()) {
+            return redirect()->route('dependencies.index')->with('message-store', 'Creado');
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -83,9 +89,18 @@ class DependencyController extends Controller
      * @param  \App\Dependency  $dependency
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dependency $dependency)
+    public function update(UpdateDependencyRequest $request, Dependency $dependency)
     {
         $request->user()->authorizeRoles('admin');
+
+        $name = strtolower($request->input('description'));
+        $name = preg_replace('/\s+/', '-', $name);
+        $dependency->name = $name;
+        $dependency->description = $request->input('description');
+        if ($dependency->save()) {
+            return redirect()->route('dependencies.index')->with('message-store', 'Editado');
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -99,6 +114,7 @@ class DependencyController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $dependency->delete();
-        return redirect()->route('dependencies.index')->with('message', 'Usuario eliminado correctamente');
+
+        return redirect()->route('dependencies.index')->with('message', 'Dependencia eliminada correctamente');
     }
 }
