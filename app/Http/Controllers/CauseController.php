@@ -105,7 +105,7 @@ class CauseController extends Controller
         $cause->code = $request->input('code');
         $cause->description = $request->input('description');
         if ($cause->save()) {
-            return redirect()->route('causes.index')->with('message-store', 'Creado');
+            return redirect()->route('causes.index')->with('message-store', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

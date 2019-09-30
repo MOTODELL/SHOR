@@ -9,7 +9,17 @@ class Dependency extends Model
 {
     use SoftDeletes;
 
-    // RELACIONES
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Users relationship (One to Many).
+     * 
+     * @return \App\User
+     */
 
     public function users()
     {
