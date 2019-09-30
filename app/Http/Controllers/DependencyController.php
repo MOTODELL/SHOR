@@ -7,6 +7,8 @@ use App\Http\Requests\StoreDependencyRequest;
 use App\Http\Requests\UpdateDependencyRequest;
 use Illuminate\Http\Request;
 
+use function App\Http\getDescriptionName;
+
 class DependencyController extends Controller
 {
     /**
@@ -45,12 +47,12 @@ class DependencyController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
+        
         $dependency = new Dependency();
-        $name = strtolower($request->input('description'));
-        $name = preg_replace('/\s+/', '-', $name);
-        $dependency->name = $name;
+        $dependency->name = getDescriptionName($request->input('description'));
         $dependency->description = $request->input('description');
         if ($dependency->save()) {
+            // dd($request->input('description'));
             return redirect()->route('dependencies.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
@@ -93,9 +95,7 @@ class DependencyController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $name = strtolower($request->input('description'));
-        $name = preg_replace('/\s+/', '-', $name);
-        $dependency->name = $name;
+        $dependency->name = getDescriptionName($request->input('description'));
         $dependency->description = $request->input('description');
         if ($dependency->save()) {
             return redirect()->route('dependencies.index')->with('message-store', 'Editado');
