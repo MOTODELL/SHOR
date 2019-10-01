@@ -62,24 +62,24 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = Dependency::where('name', $request->input('dependency'))->first();
-        if ($dependency) {
-            $user = new User();
-            if ($request->input('password') == $request->input('password_confirmation')) {
-                $user->password = Hash::make($request->input('password'));
-            } else {
-                return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
-            }
-            $user->username = $request->input('username');
-            $user->name = $request->input('name');
-            $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-            $user->lastname = $request->input('lastname');
-            $user->email = $request->input('email');
+        $user = new User();
+        if ($request->input('password') == $request->input('password_confirmation')) {
+            $user->password = Hash::make($request->input('password'));
+        } else {
+            return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
+        }
+        $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        if ($request->input('role') != 'admin') {
+            $dependency = Dependency::where('name', $request->input('dependency'))->first();
             $user->dependency()->associate($dependency);
-            if ($user->save()) {
-                $user->roles()->attach(Role::where('name', $request->input('role')->first()));
-                return redirect()->route('users.index')->with('message-store', 'Creado');
-            }
+        }
+        if ($user->save()) {
+            $user->roles()->attach(Role::where('name', $request->input('role'))->first());
+            return redirect()->route('users.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -123,25 +123,27 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependency = Dependency::where('name', $request->input('dependency'))->first();
-        if ($user && $dependency) {
-            if ($request->has('password')) {
-                if ($request->input('password') == $request->input('password_confirmation')) {
-                    $user->password = Hash::make($request->input('password'));
-                } else {
-                    return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
-                }
+        if ($request->has('password')) {
+            if ($request->input('password') == $request->input('password_confirmation')) {
+                $user->password = Hash::make($request->input('password'));
+            } else {
+                return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
             }
-            $user->username = $request->input('username');
-            $user->name = $request->input('name');
-            $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-            $user->lastname = $request->input('lastname');
-            $user->email = $request->input('email');
+        }
+        $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+        if ($request->input('role') != 'admin') {
+            $dependency = Dependency::where('name', $request->input('dependency'))->first();
             $user->dependency()->associate($dependency);
-            if ($user->save()) {
-                $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
-                return redirect()->route('users.index')->with('message-store', 'Creado');
-            }
+        } else {
+            $user->dependency()->delete();
+        }
+        if ($user->save()) {
+            $user->roles()->attach(Role::where('name', $request->input('role'))->first());
+            return redirect()->route('users.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

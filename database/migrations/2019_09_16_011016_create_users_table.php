@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 100); //MySQL
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('dependency_id');
+            $table->unsignedBigInteger('dependency_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
