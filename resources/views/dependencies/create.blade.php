@@ -21,19 +21,25 @@
             <form method="POST" action="{{ route('dependencies.store') }}">
                 @csrf
                 @method('POST')
-                <div class="form-row mt-4">
-                    <div class="form-group col">
-                        <label for="description"><span class="text-danger pr-1">*</span>{{ __('Descripción') }}</label>
+                <div class="form-row mt-4 row justify-content-md-center">
+                    <div class="form-group col-sm-8">
+                        <label for="description"><span class="text-danger pr-1">*</span>Nombre</label>
                         <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
                         @error('description')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('dependencies.index') }}" class="btn btn-secondary mr-5"><i class="icon icon-left mdi mdi-keyboard-return mdi-18px"></i>{{ __('Regresar') }}</a>
-                        <button type="submit" class="btn btn-primary"><i class="icon icon-left mdi mdi-content-save mdi-18px"></i>{{ __('Guardar') }}</button>
+                        <a  href="{{ route('dependencies.index') }}" class="btn btn-secondary pt-1 mr-5">
+                            <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Regresar</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary pt-1 mr-5">
+                            <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Guardar</span>
+                        </button>
                     </div>
                 </div>
             </form>
