@@ -14,7 +14,7 @@ class CreateDoctorsTable extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('lastname');
             $table->string('professional_id');
@@ -28,7 +28,6 @@ class CreateDoctorsTable extends Migration
             $table->boolean('status');
             $table->unsignedBigInteger('consulting_room_id');
             $table->unsignedBigInteger('state_id');
-            $table->string('key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

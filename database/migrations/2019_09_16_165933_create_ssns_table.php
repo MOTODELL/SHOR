@@ -14,11 +14,10 @@ class CreateSsnsTable extends Migration
     public function up()
     {
         Schema::create('ssns', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
             $table->integer('ssn');
             $table->date('date_start');
             $table->date('date_end');
-            $table->string('key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

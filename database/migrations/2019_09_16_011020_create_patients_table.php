@@ -14,7 +14,7 @@ class CreatePatientsTable extends Migration
     public function up()
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
             $table->integer('relationship');
             $table->string('name');
             $table->string('lastname');
@@ -29,9 +29,8 @@ class CreatePatientsTable extends Migration
             $table->string('zip_code');
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('birthplace');
-            $table->unsignedBigInteger('ssn_id');
-            $table->unsignedBigInteger('titular');
-            $table->string('key')->nullable();
+            $table->uuid('ssn_id');
+            $table->uuid('titular');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -29,8 +29,8 @@ class CreateDatesTable extends Migration
             $table->unsignedBigInteger('cause_id');
             $table->uuid('user_id');
             $table->unsignedBigInteger('consulting_room_id');
-            $table->unsignedBigInteger('doctor_id');
-            $table->unsignedBigInteger('patient_id');
+            $table->uuid('doctor_id');
+            $table->uuid('patient_id');
             $table->unsignedBigInteger('status_id');
             $table->timestamps();
             $table->softDeletes();

@@ -16,8 +16,8 @@ class CreateObservationsTable extends Migration
         Schema::create('observations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('description');
-            $table->unsignedBigInteger('date_id');
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('date_id')->nullable();
+            $table->uuid('patient_id')->nullable();
             $table->timestamps();
         });
     }
