@@ -77,7 +77,7 @@ class UserController extends Controller
             $user->email = $request->input('email');
             $user->dependency()->associate($dependency);
             if ($user->save()) {
-                $user->roles()->attach(Role::where('name', $request->input('roles')->first()));
+                $user->roles()->attach(Role::where('name', $request->input('role')->first()));
                 return redirect()->route('users.index')->with('message-store', 'Creado');
             }
         }
@@ -107,7 +107,9 @@ class UserController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        return view('users.edit', compact('user'));
+        $dependencies = Dependency::all();
+        $roles = Role::all();
+        return view('users.edit', compact(['user', 'dependencies', 'roles']));
     }
 
     /**

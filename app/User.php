@@ -138,4 +138,8 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function getDependency()
+    {
+        return $this->dependencies()->where()->users()->first();
+    }
 }

@@ -34,25 +34,25 @@
 							<div class="row">
 								<div class="col">
 									<div class="alert alert-primary alert-simple border-0 shadow-none">
-										<div class="icon"><i class="icon zmdi zmdi-pin-account"></i></div>
+										<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Nombre completo</span>
 											<div class="user-timeline-title">{{ $user->name.' '.$user->lastname }}</div>
 										</div>
 									</div>
 								</div>
-								<div class="col">
+								{{-- <div class="col">
 									<div class="alert alert-success alert-simple border-0 shadow-none">
-										<div class="icon"><i class="icon zmdi zmdi-account"></i></div>
+										<div class="icon"><i class="zmdi zmdi-account zmdi-hc-lg"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Nombre de usuario</span>
 											<div class="user-timeline-title">{{ $user->username }}</div>
 										</div>
 									</div>
-								</div>
+								</div> --}}
 								<div class="col">
 									<div class="alert alert-danger alert-simple border-0 shadow-none">
-										<div class="icon"><i class="icon zmdi zmdi-email"></i></div>
+										<div class="icon"><i class="zmdi zmdi-email zmdi-hc-lg"></i></div>
 										<div class="message">
 											<span class="user-timeline-date">Email</span>
 											<div class="user-timeline-title">{{ $user->email }}</div>
@@ -116,7 +116,7 @@
 										<input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="********">
 									</div>
 									<div class="col-md-12 d-flex justify-content-center mt-2">
-										<button type="submit" class="btn btn-primary"><i class="icon icon-left zmdi zmdi-refresh-alt"></i>Actualizar</button>
+										<button type="submit" class="btn btn-primary pt-1"><i class="zmdi zmdi-refresh-alt zmdi-hc-2x pr-1"></i><span class="h4 my-0">Actualizar</span></button>
 									</div>
 								</div>
 							</form>

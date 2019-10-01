@@ -19,7 +19,7 @@
                 <legend>Crear Usuario</legend>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body pt-0">
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
                 <div class="form-row mt-4">
@@ -51,6 +51,22 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="role"><span class="text-danger pr-1">*</span>{{ __('Tipo de usuario') }}</label>
+                        <select name="role" id="role" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->description }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div id="selectDependency" class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Area correspondiente') }}</label>
+                        <select name="dependency" id="dependency" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        @foreach ($dependencies as $dependency)
+                            <option value="{{ $dependency->id }}">{{ $dependency->description }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="username"><span class="text-danger pr-1">*</span>{{ __('Nombre de usuario') }}</label>
                         <input id="username" type="text" class="form-control form-control-lg @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
                         @error('username')
@@ -73,11 +89,32 @@
                         <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="********">
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('users.index') }}" class="btn btn-secondary mr-5"><i class="icon zmdi zmdi-long-arrow-return icon-left"></i>{{ __('Regresar') }}</a>
-                        <button type="submit" class="btn btn-primary"><i class="icon mdi mdi-content-save mdi-18px icon-left"></i>{{ __('Guardar') }}</button>
+                        <a  href="{{ route('users.index') }}" class="btn btn-secondary pt-1 mr-5">
+                            <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Regresar</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary pt-1 mr-5">
+                            <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Guardar</span>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function showDependency() {
+            if($('#role').val() == 'admin'){
+                $('#selectDependency').hide();
+            } else {
+                $('#selectDependency').show();
+            }
+        }
+        $('#role').change(function(){
+            showDependency();
+        });
+        showDependency();
+    </script>
+@endpush

@@ -13,15 +13,13 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         Role::truncate();
-        
-        $role = new Role();
-        $role->name = 'admin';
-        $role->description = 'Administrator';
-        $role->save();
-        
         $role = new Role();
         $role->name = 'user';
-        $role->description = 'User';
+        $role->description = 'Usuario';
+        $role->save();
+        $role = new Role();
+        $role->name = 'admin';
+        $role->description = 'Administrador';
         $role->save();
     }
 }

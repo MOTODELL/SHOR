@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
+                        <div class="form-group input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text pr-4" id="basic-addon1"><i class="icon zmdi zmdi-account zmdi-hc-lg text-primary"></i></span>
                             </div>
@@ -28,7 +28,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group input-group input-group-lg mb-3 border border-secondary rounded">
+                        <div class="form-group input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="icon zmdi zmdi-key zmdi-hc-lg text-primary"></i></span>
                             </div>

@@ -30,26 +30,26 @@
                         </li>
                         <li class="divider">Divididor</li>
                         @can('view-icons')
-                            <li class="{{ (request()->is('/icons')) ? 'active' : '' }}">
+                            <li class="{{ (request()->is('icons')) ? 'active' : '' }}">
                                 <a href="{{ route('icons') }}">
                                     <i class="icon zmdi zmdi-collection-image-o"></i>
                                     <span>Ver íconos de la plantilla</span>
                                 </a>
                             </li>
                         @endcan
-                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                        <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
                             <a href="{{ route('dependencies.index') }}">
                                 <i class="icon zmdi zmdi-city-alt"></i>
                                 <span>Dependencias</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                        <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon zmdi zmdi-spinner"></i>
                                 <span>Causas</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                        <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
                                 <i class="icon zmdi zmdi-account-box"></i>
                                 <span>Usuarios</span>

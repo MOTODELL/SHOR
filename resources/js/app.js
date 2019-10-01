@@ -1,9 +1,3 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require("./bootstrap");
 require("sweetalert2");
 
@@ -37,6 +31,8 @@ $(document).ready(function() {
 });
 $(document).ready(function() {
     $(".dataTable").DataTable({
+        dom: "Bfrtip",
+        buttons: ["copy", "csv", "excel", "pdf", "print"],
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -68,7 +64,7 @@ $(document).ready(function() {
     });
 });
 
-// window.Vue = require('vue');
+// window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -90,5 +86,5 @@ $(document).ready(function() {
  */
 
 // const app = new Vue({
-//     el: '#app',
+//     el: "#app"
 // });
