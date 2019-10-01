@@ -17,47 +17,49 @@
 			</div>
 		</div>
         <div class="card-body">
-			<table class="table table-striped table-hover table-fw-widget dataTable">
-				<thead>
-					<tr>
-						<th style="width:5%;">
-                            <div class="custom-control custom-control-sm custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="check5">
-                            <label class="custom-control-label" for="check5"></label>
-                            </div>
-                        </th>
-                        <th style="width:35%;">Código</th>
-                        <th style="width:40%;">Descripción</th>
-                        <th style="width:10%;">Acciones</th>
-					</tr>
-				</thead>
-				<tbody>
-				@foreach ($causes as $cause)
-					<tr class="success done">
-						<td>
-							<div class="custom-control custom-control-sm custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="check6">
-								<label class="custom-control-label" for="check6"></label>
-							</div>
-						</td>
-						<td class="cell-detail" data-project="Bootstrap">
-							<span>{{ $cause->code }}</span>
-						</td>
-						<td class="cell-detail" data-project="Bootstrap">
-							<span>{{ $cause->description }}</span>
-						</td>
-						<td class="text-right">
-							<a href="{{ route('causes.edit', $cause->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="mdi mdi-lead-pencil mdi-18px"></i></a>
-							<form action="{{ route('causes.destroy', $cause) }}" method="post" class="d-inline">
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="mdi mdi-trash-can mdi-18px"></i></button>
-							</form>
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
+			<div class="container-fluid pb-3">
+			    <table class="table table-striped table-hover table-fw-widget dataTable">
+    				<thead>
+    					<tr>
+    						<th style="width:5%;">
+                                <div class="custom-control custom-control-sm custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="check5">
+                                <label class="custom-control-label" for="check5"></label>
+                                </div>
+                            </th>
+                            <th style="width:35%;">Código</th>
+                            <th style="width:40%;">Descripción</th>
+                            <th style="width:10%;">Acciones</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    				@foreach ($causes as $cause)
+    					<tr class="success done">
+    						<td>
+    							<div class="custom-control custom-control-sm custom-checkbox">
+    								<input class="custom-control-input" type="checkbox" id="check6">
+    								<label class="custom-control-label" for="check6"></label>
+    							</div>
+    						</td>
+    						<td class="cell-detail" data-project="Bootstrap">
+    							<span>{{ $cause->code }}</span>
+    						</td>
+    						<td class="cell-detail" data-project="Bootstrap">
+    							<span>{{ $cause->description }}</span>
+    						</td>
+    						<td class="text-right">
+    							<a href="{{ route('causes.edit', $cause->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="mdi mdi-lead-pencil mdi-18px"></i></a>
+    							<form action="{{ route('causes.destroy', $cause) }}" method="post" class="d-inline">
+    								@csrf
+    								@method('DELETE')
+    								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="mdi mdi-trash-can mdi-18px"></i></button>
+    							</form>
+    						</td>
+    					</tr>
+    					@endforeach
+    				</tbody>
+    			</table>
+			</div>
         </div>
     </div>
 @endsection

@@ -17,49 +17,51 @@
 			</div>
 		</div>
         <div class="card-body">
-			<table class="table table-striped table-hover table-fw-widget dataTable">
-				<thead>
-					<tr>
-						<th style="width:5%;">
-                            <div class="custom-control custom-control-sm custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="check5">
-                            <label class="custom-control-label" for="check5"></label>
-                            </div>
-                        </th>
-                        <th style="width:40%;">Nombre</th>
-                        <th style="width:35%;">Alias</th>
-                        <th style="width:10%;"></th>
-					</tr>
-				</thead>
-				<tbody>
-				@foreach ($dependencies as $dependency)
-					<tr>
-						<td>
-							<div class="custom-control custom-control-sm custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="check6">
-								<label class="custom-control-label" for="check6"></label>
-							</div>
-						</td>
-                        <td class="cell-detail" data-project="Bootstrap">
-                            <span>{{ $dependency->description }}</span>
-                        </td>
-						<td class="cell-detail" data-project="Bootstrap">
-							<span>{{ $dependency->name }}</span>
-						</td>
-						<td class="text-right">
-							<a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="zmdi zmdi-edit zmdi-hc-lg"></i></a>
-							<form action="{{ route('dependencies.destroy', $dependency) }}" method="post" class="d-inline">
-								@csrf
-								@method('DELETE')
-								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                                    <i class="zmdi zmdi-delete zmdi-hc-lg"></i>
-                                </button>
-							</form>
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
+			<div class="container-fluid pb-3">
+			    <table class="table table-striped table-hover table-fw-widget dataTable">
+    				<thead>
+    					<tr>
+    						<th style="width:5%;">
+                                <div class="custom-control custom-control-sm custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="check5">
+                                <label class="custom-control-label" for="check5"></label>
+                                </div>
+                            </th>
+                            <th style="width:40%;">Nombre</th>
+                            <th style="width:35%;">Alias</th>
+                            <th style="width:10%;"></th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    				@foreach ($dependencies as $dependency)
+    					<tr>
+    						<td>
+    							<div class="custom-control custom-control-sm custom-checkbox">
+    								<input class="custom-control-input" type="checkbox" id="check6">
+    								<label class="custom-control-label" for="check6"></label>
+    							</div>
+    						</td>
+                            <td class="cell-detail" data-project="Bootstrap">
+                                <span>{{ $dependency->description }}</span>
+                            </td>
+    						<td class="cell-detail" data-project="Bootstrap">
+    							<span>{{ $dependency->name }}</span>
+    						</td>
+    						<td class="text-right">
+    							<a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="zmdi zmdi-edit zmdi-hc-lg"></i></a>
+    							<form action="{{ route('dependencies.destroy', $dependency) }}" method="post" class="d-inline">
+    								@csrf
+    								@method('DELETE')
+    								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                        <i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+                                    </button>
+    							</form>
+    						</td>
+    					</tr>
+    					@endforeach
+    				</tbody>
+    			</table>
+			</div>
         </div>
     </div>
 @endsection
