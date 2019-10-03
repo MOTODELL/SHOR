@@ -10,9 +10,9 @@
     <div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-rounded btn-space btn-primary" href="{{ route('causes.create') }}">
-					<i class="icon zmdi zmdi-account-add icon-left zmdi-hc-5x"></i>
-					Nueva
+				<a class="btn btn-primary pt-1" href="{{ route('causes.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva causa">
+					<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
+					<span class="h4 my-0">Nueva</span>
 				</a>
 			</div>
 		</div>
@@ -28,8 +28,8 @@
                                 </div>
                             </th>
                             <th style="width:35%;">Código</th>
-                            <th style="width:40%;">Descripción</th>
-                            <th style="width:10%;">Acciones</th>
+                            <th style="width:50%;">Descripción</th>
+                            <th style="width:10%;"></th>
     					</tr>
     				</thead>
     				<tbody>
@@ -48,11 +48,15 @@
     							<span>{{ $cause->description }}</span>
     						</td>
     						<td class="text-right">
-    							<a href="{{ route('causes.edit', $cause->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="mdi mdi-lead-pencil mdi-18px"></i></a>
+                                <a href="{{ route('causes.edit', $cause->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+                                    <i class="zmdi zmdi-edit zmdi-hc-lg"></i>
+                                </a>
     							<form action="{{ route('causes.destroy', $cause) }}" method="post" class="d-inline">
     								@csrf
     								@method('DELETE')
-    								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="mdi mdi-trash-can mdi-18px"></i></button>
+    								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                        <i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+                                    </button>
     							</form>
     						</td>
     					</tr>
@@ -64,6 +68,74 @@
     </div>
 @endsection
 @push('scripts')
+	@if (session('message-store'))
+		<script>
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 2000
+			});
+			Toast.fire({
+				type: 'success',
+				title: '¡Causa creada correctamente!'
+			});
+		</script>
+	@endif
+	<script>
+		$(document).on("click", ".remove-link", function(e) {
+		var btn = $(this);
+			Swal.mixin({
+				customClass: {
+					cancelButton: 'btn btn-danger',
+					confirmButton: 'btn btn-success'
+				},
+				buttonsStyling: false
+			});
+			Swal.fire({
+				title: '¿Deseas eliminar esta causa?',
+				text: "¡Esta acción no podrá ser revertida!",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Cancelar',
+				confirmButtonText: 'Si, eliminar',
+				reverseButtons: true
+			}).then((result) => {
+				if (result.value) {
+					Swal.fire(
+						'Eliminando...',
+						'Este causa se eliminará.',
+						'error'
+					);
+					$(btn).closest("form").submit();
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					Swal.fire(
+					'¡Cancelado!',
+					'Acción revertida',
+					'error'
+					);
+				}
+			});
+			e.preventDefault();
+			return false;
+		});
+	</script>
+	@if (session('message-update'))
+		<script>
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			Toast.fire({
+				type: 'info',
+				title: '¡Causa editada!'
+			});
+		</script>
+	@endif
     <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

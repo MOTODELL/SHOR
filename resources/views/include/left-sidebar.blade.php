@@ -43,6 +43,12 @@
                                 <span>Dependencias</span>
                             </a>
                         </li>
+                        {{-- <li class="{{ (request()->is('consulting-rooms*')) ? 'active' : '' }}">
+                            <a href="{{ route('consulting-rooms.index') }}">
+                                <i class="icon zmdi zmdi-city-alt"></i>
+                                <span>Consultorios</span>
+                            </a>
+                        </li> --}}
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon zmdi zmdi-spinner"></i>

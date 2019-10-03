@@ -1,5 +1,6 @@
 require("./bootstrap");
-require("sweetalert2");
+const Swal = require("sweetalert2");
+window.Swal = Swal;
 
 $(document).ready(function() {
     //initialize the javascript

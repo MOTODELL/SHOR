@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand fixed-top be-top-header">
     <div class="container-fluid">
         <div class="be-navbar-header">
-            <a class="navbar-brand" href="{{ route('home') }}">
+            <a class="navbar-brand" href="{{ route('home') }}"></a>
             <a class="be-toggle-left-sidebar" href="#">
                 <span class="icon zmdi zmdi-menu"></span>
             </a>

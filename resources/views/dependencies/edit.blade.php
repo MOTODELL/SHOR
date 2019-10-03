@@ -40,9 +40,15 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="col-sm-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('dependencies.index') }}" class="btn btn-secondary mr-5"><i class="icon icon-left mdi mdi-keyboard-return mdi-18px"></i>{{ __('Regresar') }}</a>
-                        <button type="submit" class="btn btn-primary"><i class="icon icon-left mdi mdi-content-save mdi-18px"></i>{{ __('Guardar') }}</button>
+                    <div class="col-md-12 d-flex justify-content-center mt-2">
+                        <a  href="{{ route('dependencies.index') }}" class="btn btn-secondary pt-1 mr-5">
+                            <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Regresar</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary pt-1 mr-5">
+                            <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Guardar</span>
+                        </button>
                     </div>
                 </div>
             </form>

@@ -19,6 +19,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+Route::get('/consulting-rooms', function () {
+    return view('consulting-rooms.create');
+})->name('consulting-rooms');
 
 Route::resource('users', 'UserController');
 Route::resource('causes', 'CauseController');

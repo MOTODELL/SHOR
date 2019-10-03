@@ -38,8 +38,7 @@
     <script src="{{ asset('lib/perfect-scrollbar/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/beagle.js') }}" type="text/javascript"></script>
-    @stack('scripts')
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    @stack('scripts')
 </body>
-
 </html>

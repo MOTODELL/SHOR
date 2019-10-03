@@ -140,6 +140,10 @@ class User extends Authenticatable
     }
     public function getDependency()
     {
-        return $this->dependencies()->where()->users()->first();
+        return $this->dependency()->first()->description;
+    }
+    public function getRole()
+    {
+        return $this->roles()->first()->description;
     }
 }

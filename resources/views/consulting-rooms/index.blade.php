@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
@@ -51,10 +51,10 @@
 								<span>{{ $user->email }}</span>
 							</td>
 							<td class="cell-detail" data-progress="0,45">
-								<span>{{ $user->getDependency() }}</span>
+								<span>{{ $user->lastname }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $user->getRole() }}</span>
+								<span>{{ $user->email }}</span>
 							</td>
 							<td class="text-right">
 								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
@@ -77,7 +77,7 @@
 	</div>
 @endsection
 @push('scripts')
-	@if (session('message-store'))
+	@if ('message-store')
 		<script>
 			const Toast = Swal.mixin({
 				toast: true,
@@ -88,60 +88,6 @@
 			Toast.fire({
 				type: 'success',
 				title: 'Usuario creado correctamente'
-			});
-		</script>
-	@endif
-	<script>
-		$(document).on("click", ".remove-link", function(e) {
-		var btn = $(this);
-			Swal.mixin({
-				customClass: {
-					cancelButton: 'btn btn-danger',
-					confirmButton: 'btn btn-success'
-				},
-				buttonsStyling: false
-			});
-			Swal.fire({
-				title: '¿Deseas eliminar este usuario?',
-				text: "¡Esta acción no podrá ser revertida!",
-				type: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				cancelButtonText: 'Cancelar',
-				confirmButtonText: 'Si, eliminar',
-				reverseButtons: true
-			}).then((result) => {
-				if (result.value) {
-					Swal.fire(
-						'Eliminando...',
-						'Este usuario se eliminará para siempre.',
-						'error'
-					);
-					$(btn).closest("form").submit();
-				} else if (result.dismiss === Swal.DismissReason.cancel) {
-					Swal.fire(
-					'¡Cancelado!',
-					'Acción revertida',
-					'error'
-					);
-				}
-			});
-			e.preventDefault();
-			return false;
-		});
-	</script>
-	@if (session('message-update'))
-		<script>
-			const Toast = Swal.mixin({
-				toast: true,
-				position: 'top-end',
-				showConfirmButton: false,
-				timer: 3000
-			});
-			Toast.fire({
-				type: 'info',
-				title: 'Usuario Editado'
 			});
 		</script>
 	@endif
@@ -159,4 +105,4 @@
     <script src="{{ asset('lib/datatables/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
-@endpush
+@endpush --}}

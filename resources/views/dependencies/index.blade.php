@@ -48,7 +48,9 @@
     							<span>{{ $dependency->name }}</span>
     						</td>
     						<td class="text-right">
-    							<a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar"><i class="zmdi zmdi-edit zmdi-hc-lg"></i></a>
+                                <a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+                                    <i class="zmdi zmdi-edit zmdi-hc-lg"></i>
+                                </a>
     							<form action="{{ route('dependencies.destroy', $dependency) }}" method="post" class="d-inline">
     								@csrf
     								@method('DELETE')
@@ -66,6 +68,74 @@
     </div>
 @endsection
 @push('scripts')
+	@if (session('message-store'))
+		<script>
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 2000
+			});
+			Toast.fire({
+				type: 'success',
+				title: '¡Dependencia creada correctamente!'
+			});
+		</script>
+	@endif
+	<script>
+		$(document).on("click", ".remove-link", function(e) {
+		var btn = $(this);
+			Swal.mixin({
+				customClass: {
+					cancelButton: 'btn btn-danger',
+					confirmButton: 'btn btn-success'
+				},
+				buttonsStyling: false
+			});
+			Swal.fire({
+				title: '¿Deseas eliminar esta dependencia?',
+				text: "¡Esta acción no podrá ser revertida!",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Cancelar',
+				confirmButtonText: 'Si, eliminar',
+				reverseButtons: true
+			}).then((result) => {
+				if (result.value) {
+					Swal.fire(
+						'Eliminando...',
+						'Este dependencia se eliminará.',
+						'error'
+					);
+					$(btn).closest("form").submit();
+				} else if (result.dismiss === Swal.DismissReason.cancel) {
+					Swal.fire(
+					'¡Cancelado!',
+					'Acción revertida',
+					'error'
+					);
+				}
+			});
+			e.preventDefault();
+			return false;
+		});
+	</script>
+	@if (session('message-update'))
+		<script>
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'top-end',
+				showConfirmButton: false,
+				timer: 3000
+			});
+			Toast.fire({
+				type: 'info',
+				title: '¡Dependencia editada!'
+			});
+		</script>
+	@endif
     <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>
