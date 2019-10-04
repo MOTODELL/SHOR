@@ -18,11 +18,11 @@ class CreateConsultingRoomsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->char('shift', 1); //Turno
-            $table->boolean('monday');
-            $table->boolean('tuesday');
-            $table->boolean('wednesday');
-            $table->boolean('thursday');
-            $table->boolean('friday');
+            $table->boolean('monday')->default(false);
+            $table->boolean('tuesday')->default(false);
+            $table->boolean('wednesday')->default(false);
+            $table->boolean('thursday')->default(false);
+            $table->boolean('friday')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

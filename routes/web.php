@@ -19,13 +19,11 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 })->name('home');
-Route::get('/consulting-rooms', function () {
-    return view('consulting-rooms.create');
-})->name('consulting-rooms');
 
 Route::resource('users', 'UserController');
 Route::resource('causes', 'CauseController');
 Route::resource('dependencies', 'DependencyController');
+Route::resource('consulting-rooms', 'ConsultingRoomController');
 
 Route::get('/icons', function () {
     return view('icons');
