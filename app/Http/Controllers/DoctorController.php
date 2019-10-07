@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\State;
+use App\Doctor;
+use App\ConsultingRoom;
+use App\Http\Requests\StoreDoctorRequest;
+use Illuminate\Http\Request;
+
+class DoctorController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        $doctors  = Doctor::all();
+
+        return view('doctors.index', compact('doctors'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        return view('doctors.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreDoctorRequest $request)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        $consulting_room = ConsultingRoom::where('name', $request->input('consulting-room-name'))->first();
+        $state = State::where('code', $request->input('state-code'))->first();
+        
+        if ($consulting_room && $state) {
+            $doctor = new Doctor();
+            $doctor->name = $request->input('name');
+            $doctor->lastname = $request->input('lastname');
+            $doctor->professional_id = $request->input('professional-id');
+            $doctor->phone = $request->input('phone');
+            $doctor->street = $request->input('street');
+            $doctor->colony = $request->input('colony');
+            $doctor->number = $request->input('number');
+            $doctor->zip_code = $request->input('zip-code');
+    
+            $doctor->consultingRoom()->associate($consulting_room);
+            $doctor->state()->associate($state);
+    
+            if ($doctor->save()) {
+                return redirect()->route('doctors.index')->with('message-store', 'Creado');
+            }
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, Doctor $doctor)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        return view('doctors.show', compact('doctor'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, Doctor $doctor)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        return view('doctors.edit', compact('doctor'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Doctor $doctor)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        $consulting_room = ConsultingRoom::where('name', $request->input('consulting-room-id'))->first();
+        $state = State::where('code', $request->input('state-code'))->first();
+
+        if ($consulting_room && $state) {
+            $doctor->name = $request->input('name');
+            $doctor->lastname = $request->input('lastname');
+            $doctor->professional_id = $request->input('professional-id');
+            $doctor->phone = $request->input('phone');
+            $doctor->street = $request->input('street');
+            $doctor->colony = $request->input('colony');
+            $doctor->number = $request->input('number');
+            $doctor->zip_code = $request->input('zip-code');
+    
+            $doctor->consultingRoom()->associate($consulting_room);
+            $doctor->state()->associate($state);
+    
+            if ($doctor->save()) {
+                return redirect()->route('doctors.index')->with('message-update', 'Editado');
+            }
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, Doctor $doctor)
+    {
+        $request->user()->authorizeRoles('admin');
+
+        $doctor->delete();
+
+        return redirect()->route('doctors.index')->with('message-destroy', 'Eliminado');
+    }
+}

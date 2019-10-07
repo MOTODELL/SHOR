@@ -22,6 +22,7 @@ Route::get('/home', function () {
 
 Route::resource('users', 'UserController');
 Route::resource('causes', 'CauseController');
+Route::resource('doctors', 'DoctorController');
 Route::resource('dependencies', 'DependencyController');
 Route::resource('consulting-rooms', 'ConsultingRoomController');
 

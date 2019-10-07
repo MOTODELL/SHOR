@@ -57,7 +57,7 @@ class ConsultingRoomController extends Controller
     {
         $consultingRoom = new ConsultingRoom();
         $consultingRoom->name = getDescriptionName($request->input('description'));
-        $consultingRoom->description = $request->input('description');
+        $consultingRoom->description = ucfirst($request->input('description'));
         $consultingRoom->shift = $request->input('shift');
 
         if ($consultingRoom->save()) {
@@ -104,7 +104,7 @@ class ConsultingRoomController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $consultingRoom->name = getDescriptionName($request->input('description'));
-        $consultingRoom->description = $request->input('description');
+        $consultingRoom->description = ucfirst($request->input('description'));
         $consultingRoom->shift = $request->input('shift');
 
         if ($consultingRoom->save()) {

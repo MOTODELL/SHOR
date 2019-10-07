@@ -60,9 +60,8 @@ class DependencyController extends Controller
         
         $dependency = new Dependency();
         $dependency->name = getDescriptionName($request->input('description'));
-        $dependency->description = $request->input('description');
+        $dependency->description = ucfirst($request->input('description'));
         if ($dependency->save()) {
-            // dd($request->input('description'));
             return redirect()->route('dependencies.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
@@ -106,7 +105,7 @@ class DependencyController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $dependency->name = getDescriptionName($request->input('description'));
-        $dependency->description = $request->input('description');
+        $dependency->description = ucfirst($request->input('description'));
         if ($dependency->save()) {
             return redirect()->route('dependencies.index')->with('message-store', 'Editado');
         }

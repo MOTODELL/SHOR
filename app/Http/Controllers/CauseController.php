@@ -58,7 +58,7 @@ class CauseController extends Controller
 
         $cause = new Cause();
         $cause->code = $request->input('code');
-        $cause->description = $request->input('description');
+        $cause->description = ucfirst($request->input('description'));
         if ($cause->save()) {
             return redirect()->route('causes.index')->with('message-store', 'Creado');
         }
@@ -103,7 +103,7 @@ class CauseController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $cause->code = $request->input('code');
-        $cause->description = $request->input('description');
+        $cause->description = ucfirst($request->input('description'));
         if ($cause->save()) {
             return redirect()->route('causes.index')->with('message-store', 'Editado');
         }
