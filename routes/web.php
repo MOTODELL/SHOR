@@ -16,15 +16,19 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 Route::resource('causes', 'CauseController');
 Route::resource('doctors', 'DoctorController');
 Route::resource('dependencies', 'DependencyController');
 Route::resource('consulting-rooms', 'ConsultingRoomController');
+
+/**
+ * Esas rutas las agregue de prueba, para comprobar lo de urgencias
+ */
+Route::post('dates/urgency', 'DateController@storeUrgency')->name('dates.urgency.store');
+Route::get('dates/urgency', 'DateController@createUrgency')->name('dates.urgency.create');
 
 Route::get('/icons', function () {
     return view('icons');

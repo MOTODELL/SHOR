@@ -30,7 +30,7 @@ class CreateRelationships extends Migration
             $table->foreign('ssn_id')->references('id')->on('ssns');
             $table->foreign('state_id')->references('id')->on('states');
             $table->foreign('titular')->references('id')->on('patients');
-            $table->foreign('birthplace')->references('id')->on('states');
+            $table->foreign('birthplace_id')->references('id')->on('states');
         });
 
         Schema::table('dates', function (Blueprint $table) {
@@ -66,7 +66,7 @@ class CreateRelationships extends Migration
             $table->dropForeign(['ssn_id']);
             $table->dropForeign(['state_id']);
             $table->dropForeign(['titular']);
-            $table->dropForeign(['birthplace']);
+            $table->dropForeign(['birthplace_id']);
         });
 
         Schema::table('dates', function (Blueprint $table) {

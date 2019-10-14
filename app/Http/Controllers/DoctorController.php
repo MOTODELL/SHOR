@@ -46,19 +46,19 @@ class DoctorController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $consulting_room = ConsultingRoom::where('name', $request->input('consulting-room-name'))->first();
-        $state = State::where('code', $request->input('state-code'))->first();
+        $consulting_room = ConsultingRoom::where('name', $request->input('consulting_room'))->first();
+        $state = State::where('code', $request->input('state'))->first();
         
         if ($consulting_room && $state) {
             $doctor = new Doctor();
             $doctor->name = $request->input('name');
             $doctor->lastname = $request->input('lastname');
-            $doctor->professional_id = $request->input('professional-id');
+            $doctor->professional_id = $request->input('professional_id');
             $doctor->phone = $request->input('phone');
             $doctor->street = $request->input('street');
             $doctor->colony = $request->input('colony');
             $doctor->number = $request->input('number');
-            $doctor->zip_code = $request->input('zip-code');
+            $doctor->zip_code = $request->input('zip_code');
     
             $doctor->consultingRoom()->associate($consulting_room);
             $doctor->state()->associate($state);
@@ -107,18 +107,18 @@ class DoctorController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $consulting_room = ConsultingRoom::where('name', $request->input('consulting-room-id'))->first();
-        $state = State::where('code', $request->input('state-code'))->first();
+        $consulting_room = ConsultingRoom::where('name', $request->input('consulting_room'))->first();
+        $state = State::where('code', $request->input('state'))->first();
 
         if ($consulting_room && $state) {
             $doctor->name = $request->input('name');
             $doctor->lastname = $request->input('lastname');
-            $doctor->professional_id = $request->input('professional-id');
+            $doctor->professional_id = $request->input('professional_id');
             $doctor->phone = $request->input('phone');
             $doctor->street = $request->input('street');
             $doctor->colony = $request->input('colony');
             $doctor->number = $request->input('number');
-            $doctor->zip_code = $request->input('zip-code');
+            $doctor->zip_code = $request->input('zip_code');
     
             $doctor->consultingRoom()->associate($consulting_room);
             $doctor->state()->associate($state);

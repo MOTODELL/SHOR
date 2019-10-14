@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Doctor extends Model
+class Ssn extends Model
 {
     use SoftDeletes;
     
@@ -28,7 +28,7 @@ class Doctor extends Model
     {
         return 'string';
     }
-    
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -36,24 +36,12 @@ class Doctor extends Model
     */
 
     /**
-     * Consulting room relationship (One to Many - Inverse).
+     * Users relationship (One to Many).
      * 
-     * @return App\ConsultingRoom
+     * @return relationship
      */
-
-     public function consultingRoom()
-     {
-         return $this->belongsTo(ConsultingRoom::class);
-     }
-
-    /**
-     * States relationship (One to Many - Inverse).
-     * 
-     * @return App\State
-     */
-
-     public function state()
-     {
-         return $this->belongsTo(State::class);
-     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
