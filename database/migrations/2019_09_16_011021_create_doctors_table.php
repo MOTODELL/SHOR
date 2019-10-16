@@ -16,18 +16,14 @@ class CreateDoctorsTable extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('lastname');
+            $table->string('paternal_lastname');
+            $table->string('maternal_lastname');
+            $table->char('sex', 1);
+            $table->date('bithdate');
             $table->string('professional_id');
+            $table->unsignedBigInteger('addresses_id')->nullable();
             $table->string('phone');
-            $table->string('street');
-            $table->string('colony');
-            $table->string('number');
-            $table->string('zip_code');
-            $table->date('vacation_start')->nullable();
-            $table->date('vacation_end')->nullable();
-            $table->boolean('status')->default(true);
-            $table->unsignedBigInteger('consulting_room_id');
-            $table->unsignedBigInteger('state_id');
+            $table->string('email');
             $table->timestamps();
             $table->softDeletes();
         });

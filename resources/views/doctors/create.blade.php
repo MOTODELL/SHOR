@@ -39,7 +39,7 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
                         <div>
                             <label for="lastname">
                                 <span class="text-danger pr-1">*</span>
@@ -106,11 +106,24 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <fieldset>
-                            <legend>Domicilio</legend>
-                            <label for="street"><span class="text-danger pr-1">*</span>{{ __('Calle') }}</label>
-                            <input id="street" type="text" class="form-control form-control-lg" name="street" required placeholder="********">
-                        </fieldset>
+                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Calle') }}</label>
+                        <input id="street" type="text" class="form-control form-control-lg" name="street" required placeholder="el venado">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
+                        <input id="street" type="text" class="form-control form-control-lg" name="number_ext" required placeholder="644">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número interior   ') }}</label>
+                        <input id="street" type="text" class="form-control form-control-lg" name="number_int" required placeholder="44">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Colonia') }}</label>
+                        <input id="street" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
+                        <input id="street" type="text" class="form-control form-control-lg" name="zip_code" required placeholder="48290">
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
                         <a  href="{{ route('doctors.index') }}" class="btn btn-secondary pt-1 mr-5">
