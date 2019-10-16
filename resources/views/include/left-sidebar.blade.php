@@ -37,27 +37,39 @@
                                 </a>
                             </li>
                         @endcan
-                        <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
-                            <a href="{{ route('dependencies.index') }}">
-                                <i class="icon zmdi zmdi-city-alt"></i>
-                                <span>Dependencias</span>
+                        <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
+                            <a href="{{ route('patients.index') }}">
+                                <i class="icon zmdi zmdi-male-female"></i>
+                                <span>Pacientes</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('consulting-rooms*')) ? 'active' : '' }}">
-                            <a href="{{ route('consulting-rooms.index') }}">
-                                <i class="icon zmdi zmdi-view-module"></i>
-                                <span>Consultorios</span>
+                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
+                            <a href="{{ route('doctors.index') }}">
+                                <i class="icon fas fa-user-md"></i>
+                                <span>Doctores</span>
                             </a>
                         </li>
+                        {{-- <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
+                            <a href="{{ route('doctors.index') }}">
+                                <i class="icon fas fa-briefcase-medical"></i>
+                                <span>Urgencias</span>
+                            </a>
+                        </li> --}}
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
-                                <i class="icon zmdi zmdi-spinner"></i>
+                                <i class="icon fas fa-book-medical"></i>
                                 <span>Causas</span>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
+                            <a href="{{ route('dependencies.index') }}">
+                                <i class="icon fas fa-clinic-medical"></i>
+                                <span>Áreas médicas</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
-                                <i class="icon zmdi zmdi-account-box"></i>
+                                <i class="icon zmdi zmdi-account-circle"></i>
                                 <span>Usuarios</span>
                             </a>
                         </li>

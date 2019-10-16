@@ -47,9 +47,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group login-submit mb-5"><button type="submit" class="btn btn-rounded btn-lg btn-primary">
-                            {{ __('Ingresar') }}
-                        </button></div>
+                        <div class="form-group login-submit mb-5">
+                            <button type="submit" class="btn btn-rounded btn-lg btn-primary">
+                                {{ __('Ingresar') }}
+                            </button>
+                        </div>
                     </form>
                     <div class="splash-footer pb-2">
                         <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
