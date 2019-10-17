@@ -20,11 +20,12 @@ class CreateAddressesTable extends Migration
             $table->string('numbre_int')->nullable();
             $table->string('colony')->nullable();
             $table->string('zip_code')->nullable();
-            $table->unsignedBigInteger('viality_id')->nullable();
-            $table->unsignedBigInteger('locality_id')->nullable();
-            $table->unsignedBigInteger('municipality_id')->nullable();
-            $table->unsignedBigInteger('states_id')->nullable();
+            $table->unsignedInteger('viality_id')->nullable();
+            $table->unsignedInteger('locality_id')->nullable();
+            $table->unsignedInteger('municipality_id')->nullable();
+            $table->unsignedInteger('state_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

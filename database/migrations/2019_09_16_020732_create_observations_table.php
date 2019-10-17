@@ -17,7 +17,6 @@ class CreateObservationsTable extends Migration
             $table->bigIncrements('id');
             $table->text('description');
             $table->unsignedBigInteger('date_id')->nullable();
-            $table->uuid('patient_id')->nullable();
             $table->timestamps();
         });
     }

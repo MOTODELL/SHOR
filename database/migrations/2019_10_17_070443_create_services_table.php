@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocalitiesTable extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateLocalitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('localities', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code');
-            $table->string('description');
+            $table->text('description');
+            $table->float('unit_price');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +30,6 @@ class CreateLocalitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('localities');
+        Schema::dropIfExists('services');
     }
 }

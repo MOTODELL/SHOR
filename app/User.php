@@ -65,20 +65,34 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
+    // NORMAL
+
     /**
      * Roles relationship (Many to Many).
      * 
-     * @return relationship
+     * @return \App\Role
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Dates relationship (Many to Many).
+     * 
+     * @return \App\Date
+     */
+    public function dates()
+    {
+        return $this->belongsToMany(Date::class);
+    }
+
+    // INVERSE
 
     /**
      * Dependencies relationship (One to Many - Inverse).
      * 
-     * @return relationship
+     * @return \App\Dependency
      */
     public function dependency()
     {

@@ -3,12 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Locality extends Model
 {
-    Use SoftDeletes;
-    
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -16,13 +13,12 @@ class Role extends Model
     */
 
     /**
-     * Users relationship (Many to Many).
+     * Addresses relationship (One to many).
      * 
-     * @return \App\User
+     * @return \App\Address
      */
-
-    public function users()
+    public function addresses()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Address::class);
     }
 }

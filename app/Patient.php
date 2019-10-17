@@ -32,32 +32,25 @@ class Patient extends Model
     |--------------------------------------------------------------------------
     */
 
+    // NORMAL
+
     /**
-     * State relationship (One to Many - Inverse).
+     * Dates relationship (One to Many).
      * 
-     * @return relationship
+     * @return \App\Date
      */
 
-    public function titular()
+    public function dates()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->hasMany(Date::class);
     }
+
+    // INVERSE
 
     /**
      * State relationship (One to Many - Inverse).
      * 
-     * @return relationship
-     */
-
-    public function state()
-    {
-        return $this->belongsTo(State::class);
-    }
-
-    /**
-     * State relationship (One to Many - Inverse).
-     * 
-     * @return relationship
+     * @return \App\State
      */
 
     public function birthplace()
@@ -68,7 +61,7 @@ class Patient extends Model
     /**
      * SSN relationship (One to Many - Inverse).
      * 
-     * @return relationship
+     * @return \App\Ssn
      */
 
     public function ssn()
@@ -77,13 +70,13 @@ class Patient extends Model
     }
 
     /**
-     * Dates relationship (One to Many - Inverse).
+     * Addresses relationship (One to Many - Inverse).
      * 
-     * @return relationship
+     * @return \App\Address
      */
 
-    public function dates()
+    public function address()
     {
-        return $this->hasMany(Date::class);
+        return $this->belongsTo(Address::class);
     }
 }

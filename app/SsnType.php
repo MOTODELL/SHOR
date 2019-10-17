@@ -3,12 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class SsnType extends Model
 {
-    Use SoftDeletes;
-    
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -16,13 +13,12 @@ class Role extends Model
     */
 
     /**
-     * Users relationship (Many to Many).
+     * SSN relationship (One to many).
      * 
-     * @return \App\User
+     * @return \App\Ssn
      */
-
-    public function users()
+    public function ssns()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Ssn::class);
     }
 }

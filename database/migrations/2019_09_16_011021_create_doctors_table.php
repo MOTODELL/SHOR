@@ -21,7 +21,7 @@ class CreateDoctorsTable extends Migration
             $table->char('sex', 1);
             $table->date('bithdate');
             $table->string('professional_id');
-            $table->unsignedBigInteger('addresses_id')->nullable();
+            $table->unsignedInteger('address_id')->nullable();
             $table->string('phone');
             $table->string('email');
             $table->timestamps();

@@ -15,13 +15,13 @@ class Cause extends Model
     */
 
     /**
-     * Dates relationship (One to Many).
+     * Dates relationship (Many to Many).
      * 
      * @return \App\Dates
      */
 
     public function dates()
     {
-        return $this->hasMany(Date::class);
+        return $this->belongsToMany(Date::class);
     }
 }

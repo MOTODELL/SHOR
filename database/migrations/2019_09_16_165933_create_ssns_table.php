@@ -15,9 +15,12 @@ class CreateSsnsTable extends Migration
     {
         Schema::create('ssns', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('ssn');
-            $table->date('date_start');
-            $table->date('date_end');
+            $table->unsignedInteger('ssn_type_id');
+            $table->string('ssn');
+            $table->integer('number');
+            $table->string('kinship');
+            $table->date('date_start')->nullable();
+            $table->date('date_end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

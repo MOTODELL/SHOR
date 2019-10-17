@@ -18,6 +18,7 @@ class CreateMunicipalitiesTable extends Migration
             $table->string('code');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

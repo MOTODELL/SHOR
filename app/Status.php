@@ -8,13 +8,18 @@ class Status extends Model
 {
     protected $table = 'status';
 
-    /**
-     * Dates relationship (Many to Many).
-     * 
-     * @return relationship
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
 
-    public function status()
+    /**
+     * Dates relationship (One to many).
+     * 
+     * @return \App\Date
+     */
+    public function dates()
     {
         return $this->hasMany(Date::class);
     }

@@ -35,13 +35,27 @@ class Ssn extends Model
     |--------------------------------------------------------------------------
     */
 
+    // NORMAL
+
     /**
-     * Users relationship (One to Many).
+     * Patients relationship (One to One).
      * 
-     * @return relationship
+     * @return \App\Patient
      */
-    public function users()
+    public function patient()
     {
-        return $this->hasMany(User::class);
+        return $this->hasOne(User::class);
+    }
+
+    // INVERSE
+
+    /**
+     * SSN types relationship (One to Many - Inverse).
+     * 
+     * @return \App\SsnType
+     */
+    public function ssn_type()
+    {
+        return $this->belongsTo(SsnType::class);
     }
 }

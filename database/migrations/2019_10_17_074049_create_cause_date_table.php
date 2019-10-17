@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocalitiesTable extends Migration
+class CreateCauseDateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateLocalitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('localities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('code');
-            $table->string('description');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::create('cause_date', function (Blueprint $table) {
+            $table->unsignedInteger('cause_id');
+            $table->unsignedInteger('date_id');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateLocalitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('localities');
+        Schema::dropIfExists('cause_date');
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Doctor extends Model
 {
     use SoftDeletes;
-    
+
     protected static function boot()
     {
         parent::boot();
@@ -28,32 +28,36 @@ class Doctor extends Model
     {
         return 'string';
     }
-    
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Consulting room relationship (One to Many - Inverse).
-     * 
-     * @return App\ConsultingRoom
-     */
-
-     public function consultingRoom()
-     {
-         return $this->belongsTo(ConsultingRoom::class);
-     }
+    // NORMAL
 
     /**
-     * States relationship (One to Many - Inverse).
+     * Dates relationship (One to Many).
      * 
-     * @return App\State
+     * @return \App\Date
      */
 
-     public function state()
-     {
-         return $this->belongsTo(State::class);
-     }
+    public function dates()
+    {
+        return $this->hasMany(Date::class);
+    }
+
+    // INVERSE
+
+    /**
+     * Address relationship (One to Many - Inverse).
+     * 
+     * @return \App\Address
+     */
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }
