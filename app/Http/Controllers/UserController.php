@@ -71,7 +71,8 @@ class UserController extends Controller
         $user->username = $request->input('username');
         $user->name = ucfirst($request->input('name'));
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-        $user->lastname = ucfirst($request->input('lastname'));
+        $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $user->email = $request->input('email');
         if ($request->input('role') != 'admin') {
             $dependency = Dependency::where('name', $request->input('dependency'))->first();
@@ -133,7 +134,8 @@ class UserController extends Controller
         $user->username = $request->input('username');
         $user->name = ucfirst($request->input('name'));
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-        $user->lastname = ucfirst($request->input('lastname'));
+        $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $user->email = $request->input('email');
         if ($request->input('role') != 'admin') {
             $dependency = Dependency::where('name', $request->input('dependency'))->first();

@@ -4,13 +4,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Usuarios</h2>
+    <h2 class="page-head-title">Pacientes</h2>
 @endsection
 @section('content')
 	<div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('users.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo usuario">
+				<a class="btn btn-primary pt-1" href="{{ route('patients.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo paciente">
 					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
 					<span class="h4 my-0">Nuevo</span>
 				</a>
@@ -22,45 +22,46 @@
 					<thead>
 						<tr>
 							<th style="width:5%;">
-	              <div class="custom-control custom-control-sm custom-checkbox be-select-all">
-									<input class="custom-control-input" type="checkbox" id="check1">
-									<label class="custom-control-label" for="check1"></label>
-	              </div>
+                                <div class="custom-control custom-control-sm custom-checkbox be-select-all">
+                                    <input class="custom-control-input" type="checkbox" id="check1">
+                                    <label class="custom-control-label" for="check1"></label>
+                                </div>
 							</th>
 							<th style="width:20%;">Nombre completo</th>
+							<th style="width:25%;">Teléfono</th>
 							<th style="width:25%;">Correo</th>
-							<th style="width:20%;">Dependencia</th>
+							<th style="width:20%;">Domicilio</th>
 							<th style="width:20%;">Privilegios</th>
 							<th style="width:15%;"></th>
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($users as $user)
+					@foreach ($patients as $patient)
 						<tr class="success done">
 							<td>
 								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check'.{{$user->id}}">
-									<label class="custom-control-label" for="check'.{{$user->id}}"></label>
+									<input class="custom-control-input" type="checkbox" id="check'.{{$patient->id}}">
+									<label class="custom-control-label" for="check'.{{$patient->id}}"></label>
 								</div>
 							</td>
-							<td class="user-avatar cell-detail user-info">
-								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
-								<span>{{ $user->name.' '.$user->lastname }}</span>
+							<td class="patient-avatar cell-detail patient-info">
+								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($patient->avatar) }}" alt="{{ asset($patient->name) }}">
+								<span>{{ $patient->name.' '.$patient->lastname }}</span>
 							</td>
 							<td class="cell-detail" data-project="Bootstrap">
-								<span>{{ $user->email }}</span>
+								<span>{{ $patient->phone }}</span>
 							</td>
 							<td class="cell-detail" data-progress="0,45">
-								<span>{{ $user->getDependency() }}</span>
+								<span>{{ $patient->email }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $user->getRole() }}</span>
+								<span>{{ $patient->colony }}</span>
 							</td>
 							<td class="text-right">
-								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
-								<form action="{{ route('users.destroy', $user) }}" method="post" class="d-inline">
+								<form action="{{ route('patients.destroy', $patient) }}" method="post" class="d-inline">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
@@ -87,7 +88,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: 'Usuario creado correctamente'
+				title: 'Paciente creado correctamente'
 			});
 		</script>
 	@endif
@@ -102,7 +103,7 @@
 				buttonsStyling: false
 			});
 			Swal.fire({
-				title: '¿Deseas eliminar este usuario?',
+				title: '¿Deseas eliminar este paciente?',
 				text: "¡Esta acción no podrá ser revertida!",
 				type: 'warning',
 				showCancelButton: true,
@@ -115,7 +116,7 @@
 				if (result.value) {
 					Swal.fire(
 						'Eliminando...',
-						'Este usuario se eliminará para siempre.',
+						'Este paciente se eliminará para siempre.',
 						'error'
 					);
 					$(btn).closest("form").submit();
@@ -141,11 +142,10 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: 'Usuario Editado'
+				title: 'paciente Editado'
 			});
 		</script>
 	@endif
-
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

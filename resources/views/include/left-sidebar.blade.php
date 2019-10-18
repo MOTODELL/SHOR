@@ -77,11 +77,5 @@
                 </div>
             </div>
         </div>
-        <div class="progress-widget">
-            <div class="progress-data"><span class="progress-value">60%</span><span class="name">Current Project</span></div>
-            <div class="progress">
-                <div class="progress-bar progress-bar-primary" style="width: 60%;"></div>
-            </div>
-        </div>
     </div>
 </div>

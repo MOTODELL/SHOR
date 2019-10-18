@@ -21,6 +21,14 @@ class CreateRelationships extends Migration
             $table->foreign('dependency_id')->references('id')->on('dependencies');
         });
 
+        Schema::table('municipalities', function (Blueprint $table) {
+            $table->foreign('state_id')->references('id')->on('states');
+        });
+
+        Schema::table('localities', function (Blueprint $table) {
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
+        });
+
         Schema::table('doctors', function (Blueprint $table) {
             $table->foreign('address_id')->references('id')->on('addresses');
         });
@@ -80,6 +88,14 @@ class CreateRelationships extends Migration
         
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['dependency_id']);
+        });
+
+        Schema::table('municipalities', function (Blueprint $table) {
+            $table->dropForeign(['state_id']);
+        });
+
+        Schema::table('localities', function (Blueprint $table) {
+            $table->dropForeign(['municipality_id']);
         });
 
         Schema::table('doctors', function (Blueprint $table) {

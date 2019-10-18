@@ -4,13 +4,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Dependencias</h2>
+    <h2 class="page-head-title">Áreas médicas</h2>
 @endsection
 @section('content')
     <div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva dependencia">
+				<a class="btn btn-primary pt-1" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva área médica">
 					<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
 					<span class="h4 my-0">Nueva</span>
 				</a>
@@ -27,8 +27,7 @@
                                 <label class="custom-control-label" for="check5"></label>
                                 </div>
                             </th>
-                            <th style="width:40%;">Nombre</th>
-                            <th style="width:35%;">Alias</th>
+                            <th style="width:85%;">Nombre</th>
                             <th style="width:10%;"></th>
     					</tr>
     				</thead>
@@ -44,9 +43,6 @@
                             <td class="cell-detail" data-project="Bootstrap">
                                 <span>{{ $dependency->description }}</span>
                             </td>
-    						<td class="cell-detail" data-project="Bootstrap">
-    							<span>{{ $dependency->name }}</span>
-    						</td>
     						<td class="text-right">
                                 <a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
                                     <i class="zmdi zmdi-edit zmdi-hc-lg"></i>
@@ -78,7 +74,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: '¡Dependencia creada correctamente!'
+				title: '¡área médica creada correctamente!'
 			});
 		</script>
 	@endif
@@ -93,7 +89,7 @@
 				buttonsStyling: false
 			});
 			Swal.fire({
-				title: '¿Deseas eliminar esta dependencia?',
+				title: '¿Deseas eliminar esta área médica?',
 				text: "¡Esta acción no podrá ser revertida!",
 				type: 'warning',
 				showCancelButton: true,
@@ -106,7 +102,7 @@
 				if (result.value) {
 					Swal.fire(
 						'Eliminando...',
-						'Este dependencia se eliminará.',
+						'Este área médica se eliminará.',
 						'error'
 					);
 					$(btn).closest("form").submit();
@@ -132,7 +128,7 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: '¡Dependencia editada!'
+				title: '¡área médica editada!'
 			});
 		</script>
 	@endif
@@ -161,7 +157,7 @@
             });
             Toast.fire({
                 type: 'success',
-                title: 'Dependencia creada'
+                title: 'Área médica creada'
             });
         </script>
     @endif
@@ -176,7 +172,7 @@
                 buttonsStyling: false
             });
             Swal.fire({
-                title: '¿Deseas eliminar esta dependencia?',
+                title: '¿Deseas eliminar esta área médica?',
                 text: "¡Esta acción no podrá ser revertida!",
                 type: 'warning',
                 showCancelButton: true,
@@ -189,7 +185,7 @@
                 if (result.value) {
                     Swal.fire(
                         'Eliminando...',
-                        'Esta dependencia se eliminará para siempre.',
+                        'Esta área médica se eliminará para siempre.',
                         'error'
                     );
                     $(btn).closest("form").submit();
@@ -215,7 +211,7 @@
             });
             Toast.fire({
                 type: 'info',
-                title: 'Dependencia Editada'
+                title: 'Área médica editada'
             });
         </script>
     @endif

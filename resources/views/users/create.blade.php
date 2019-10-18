@@ -7,7 +7,7 @@
             <li class="breadcrumb-item">
                 <a href="{{ route('users.index') }}"><span class="text-primary">Usuarios</span></a>
             </li>
-            <li class="breadcrumb-item active">Crear Usuario</li>
+            <li class="breadcrumb-item active">Crear usuario</li>
         </ol>
     </nav>
 @endsection
@@ -16,7 +16,7 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Crear Usuario</legend>
+                <legend>Crear usuario</legend>
             </div>
         </div>
         <div class="card-body pt-0">
@@ -33,16 +33,25 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido(s)') }}</label>
-                        <input id="lastname" type="text" class="form-control form-control-lg @error('lastname') is-invalid @enderror" placeholder="Apellido" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname">
-                        @error('lastname')
+                        <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
+                        <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
+                        @error('paternal_lastname')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electronico') }}</label>
+                        <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
+                        <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
+                        @error('maternal_lastname')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electrónico') }}</label>
                         <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -59,7 +68,7 @@
                         </select>
                     </div>
                     <div id="selectDependency" class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Area correspondiente') }}</label>
+                        <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Área médica') }}</label>
                         <select name="dependency" id="dependency" class="form-control form-control-lg custom-select select2" style="width: 100%">
                         @foreach ($dependencies as $dependency)
                             <option value="{{ $dependency->name }}">{{ $dependency->description }}</option>
@@ -68,8 +77,8 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="username"><span class="text-danger pr-1">*</span>{{ __('Nombre de usuario') }}</label>
-                        <input id="username" type="text" class="form-control form-control-lg @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
-                        <small class="card-subtitle pt-1">Debe contener un minimo de 8 carácteres.</small>
+                        <input id="username" type="text" class="form-control form-control-lg text-lowercase @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
+                        <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                         @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -79,7 +88,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="password"><span class="text-danger pr-1">*</span>{{ __('Contraseña') }}</label>
                         <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required placeholder="********">
-                        <small class="card-subtitle pt-1">Debe contener un minimo de 8 carácteres.</small>
+                        <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -89,7 +98,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="password-confirm"><span class="text-danger pr-1">*</span>{{ __('Confirmación de contraseña') }}</label>
                         <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="********">
-                        <small class="card-subtitle pt-1">Debe contener un minimo de 8 carácteres.</small>
+                        <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
                         <a  href="{{ route('users.index') }}" class="btn btn-secondary pt-1 mr-5">

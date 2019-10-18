@@ -6,7 +6,6 @@ $(document).ready(function() {
     //initialize the javascript
     App.init();
     App.megaMenu();
-
     // Obtiene la url actual
     // Esto para que solo inicialice las librerías que se importaron en la vista actual
     var protocol = location.protocol;
@@ -17,52 +16,50 @@ $(document).ready(function() {
     if ($('script[src="' + host + '/lib/prettify/prettify.js"]').length > 0) {
         prettyPrint();
     }
-    if (
-        $(
-            'script[src="' +
-                host +
-                '/lib/datatables/datatables.net/js/jquery.dataTables.js"]'
-        ).length > 0
-    ) {
+    if ($('script[src="' + host + '/lib/datatables/datatables.net/js/jquery.dataTables.js"]').length > 0) {
         App.dataTables();
+        $(".dataTable").DataTable({
+            dom: "Bfrtip",
+            buttons: ["copy", "csv", "excel", "pdf", "print"],
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla",
+                sInfo:
+                    "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty:
+                    "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "",
+                sSearch: "Buscar:",
+                sUrl: "",
+                sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                },
+                oAria: {
+                    sSortAscending:
+                        ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending:
+                        ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    }
+    if ($('script[src="' + host + '/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"]').length > 0) {
+        App.formElements();
+    }
+    if ($('script[src="' + host + '/lib/jquery.maskedinput/jquery.maskedinput.js"]').length > 0) {
+        App.masks();
     }
     if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
-});
-$(document).ready(function() {
-    $(".dataTable").DataTable({
-        dom: "Bfrtip",
-        buttons: ["copy", "csv", "excel", "pdf", "print"],
-        language: {
-            sProcessing: "Procesando...",
-            sLengthMenu: "Mostrar _MENU_ registros",
-            sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningún dato disponible en esta tabla",
-            sInfo:
-                "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            sInfoEmpty:
-                "Mostrando registros del 0 al 0 de un total de 0 registros",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sSearch: "Buscar:",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Último",
-                sNext: "Siguiente",
-                sPrevious: "Anterior"
-            },
-            oAria: {
-                sSortAscending:
-                    ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending:
-                    ": Activar para ordenar la columna de manera descendente"
-            }
-        }
-    });
 });
 
 // window.Vue = require("vue");

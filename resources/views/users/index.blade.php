@@ -28,8 +28,8 @@
 	              </div>
 							</th>
 							<th style="width:20%;">Nombre completo</th>
-							<th style="width:25%;">Correo</th>
-							<th style="width:20%;">Dependencia</th>
+							<th style="width:25%;">Correo electrónico</th>
+							<th style="width:20%;">Área médica</th>
 							<th style="width:20%;">Privilegios</th>
 							<th style="width:15%;"></th>
 						</tr>
@@ -45,7 +45,7 @@
 							</td>
 							<td class="user-avatar cell-detail user-info">
 								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
-								<span>{{ $user->name.' '.$user->lastname }}</span>
+								<span>{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
 							</td>
 							<td class="cell-detail" data-project="Bootstrap">
 								<span>{{ $user->email }}</span>

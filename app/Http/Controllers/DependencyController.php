@@ -107,7 +107,7 @@ class DependencyController extends Controller
         $dependency->name = getDescriptionName($request->input('description'));
         $dependency->description = ucfirst($request->input('description'));
         if ($dependency->save()) {
-            return redirect()->route('dependencies.index')->with('message-store', 'Editado');
+            return redirect()->route('dependencies.index')->with('message-update', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

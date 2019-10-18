@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\State;
 use App\Doctor;
+use App\Viality;
 use App\ConsultingRoom;
 use App\Http\Requests\StoreDoctorRequest;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,8 +37,9 @@ class DoctorController extends Controller
     public function create(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-
-        return view('doctors.create');
+        $vialities = Viality::all();
+        $states = State::all();
+        return view('doctors.create', compact(['vialities', 'states']));
     }
 
     /**

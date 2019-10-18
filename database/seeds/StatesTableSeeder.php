@@ -15,162 +15,162 @@ class StatesTableSeeder extends Seeder
         State::truncate();
         
         $state = new State();
-        $state->code = 'AGU';
+        $state->code = 'AS';
         $state->description = 'Aguascalientes';
         $state->save();
 
         $state = new State();
-        $state->code = 'BCN';
+        $state->code = 'BC';
         $state->description = 'Baja California';
         $state->save();
 
         $state = new State();
-        $state->code = 'BCS';
+        $state->code = 'BS';
         $state->description = 'Baja California Sur';
         $state->save();
 
         $state = new State();
-        $state->code = 'CAM';
+        $state->code = 'CC';
         $state->description = 'Campeche';
         $state->save();
 
         $state = new State();
-        $state->code = 'CHP';
+        $state->code = 'CS';
         $state->description = 'Chiapas';
         $state->save();
 
         $state = new State();
-        $state->code = 'CHH';
+        $state->code = 'CH';
         $state->description = 'Chihuahua';
         $state->save();
 
         $state = new State();
-        $state->code = 'CMX';
+        $state->code = 'DF';
         $state->description = 'Ciudad de México';
         $state->save();
 
         $state = new State();
-        $state->code = 'COA';
+        $state->code = 'CL';
         $state->description = 'Coahuila';
         $state->save();
 
         $state = new State();
-        $state->code = 'COL';
+        $state->code = 'CM';
         $state->description = 'Colima';
         $state->save();
 
         $state = new State();
-        $state->code = 'DUR';
+        $state->code = 'DG';
         $state->description = 'Durango';
         $state->save();
 
         $state = new State();
-        $state->code = 'GUA';
+        $state->code = 'GT';
         $state->description = 'Guanajuato';
         $state->save();
 
         $state = new State();
-        $state->code = 'GRO';
+        $state->code = 'GR';
         $state->description = 'Guerrero';
         $state->save();
 
         $state = new State();
-        $state->code = 'HID';
+        $state->code = 'HG';
         $state->description = 'Hidalgo';
         $state->save();
 
         $state = new State();
-        $state->code = 'JAL';
+        $state->code = 'JC';
         $state->description = 'Jalisco';
         $state->save();
 
         $state = new State();
-        $state->code = 'MEX';
+        $state->code = 'MC';
         $state->description = 'Estado de México';
         $state->save();
 
         $state = new State();
-        $state->code = 'MIC';
+        $state->code = 'MN';
         $state->description = 'Michoacán';
         $state->save();
 
         $state = new State();
-        $state->code = 'MOR';
+        $state->code = 'MS';
         $state->description = 'Morelos';
         $state->save();
 
         $state = new State();
-        $state->code = 'NAY';
+        $state->code = 'NT';
         $state->description = 'Nayarit';
         $state->save();
 
         $state = new State();
-        $state->code = 'NLE';
+        $state->code = 'NL';
         $state->description = 'Nuevo León';
         $state->save();
 
         $state = new State();
-        $state->code = 'OAX';
+        $state->code = 'OC';
         $state->description = 'Oaxaca';
         $state->save();
 
         $state = new State();
-        $state->code = 'PUE';
+        $state->code = 'PL';
         $state->description = 'Puebla';
         $state->save();
 
         $state = new State();
-        $state->code = 'QUE';
+        $state->code = 'QO';
         $state->description = 'Querétaro';
         $state->save();
 
         $state = new State();
-        $state->code = 'ROO';
+        $state->code = 'QR';
         $state->description = 'Quintana Roo';
         $state->save();
 
         $state = new State();
-        $state->code = 'SLP';
+        $state->code = 'SP';
         $state->description = 'San Luis Potosí';
         $state->save();
 
         $state = new State();
-        $state->code = 'SIN';
+        $state->code = 'SL';
         $state->description = 'Sinaloa';
         $state->save();
 
         $state = new State();
-        $state->code = 'SON';
+        $state->code = 'SR';
         $state->description = 'Sonora';
         $state->save();
 
         $state = new State();
-        $state->code = 'TAB';
+        $state->code = 'TC';
         $state->description = 'Tabasco';
         $state->save();
 
         $state = new State();
-        $state->code = 'TAM';
+        $state->code = 'TS';
         $state->description = 'Tamaulipas';
         $state->save();
 
         $state = new State();
-        $state->code = 'TLA';
+        $state->code = 'TL';
         $state->description = 'Tlaxcala';
         $state->save();
 
         $state = new State();
-        $state->code = 'VER';
+        $state->code = 'VZ';
         $state->description = 'Veracruz';
         $state->save();
 
         $state = new State();
-        $state->code = 'YUC';
+        $state->code = 'YN';
         $state->description = 'Yucatán';
         $state->save();
 
         $state = new State();
-        $state->code = 'ZAC';
+        $state->code = 'ZS';
         $state->description = 'Zacatecas';
         $state->save();
     }

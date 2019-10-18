@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
         
         $user = new User();
         $user->name = 'Charly';
-        $user->lastname = 'Ponce';
+        $user->paternal_lastname = 'Ponce';
+        $user->maternal_lastname = 'Ibarra';
         $user->username = 'charly12';
         $user->email = 'ch.1209@hotmail.com';
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
@@ -31,7 +32,8 @@ class UsersTableSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Angeles';
-        $user->lastname = 'Martinez';
+        $user->paternal_lastname = 'Martinez';
+        $user->maternal_lastname = 'Vargas';
         $user->username = 'ang';
         $user->email = 'angelesmava0@gamil.com';
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;

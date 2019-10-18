@@ -30,7 +30,10 @@ class UpdateUserRequest extends FormRequest
             'name'  => [
                 'required'
             ],
-            'lastname'  => [
+            'paternal_lastname'  => [
+                'required'
+            ],
+            'maternal_lastname'  => [
                 'required'
             ],
             'email' => [

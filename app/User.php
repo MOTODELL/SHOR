@@ -168,4 +168,9 @@ class User extends Authenticatable
         }
         return "";
     }
+
+    public function getUsernameAttribute($value)
+    {
+        return strtolower($value);
+    }
 }

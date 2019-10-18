@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Dependencias</h2>
+    <h2 class="page-head-title">Áreas médicas</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Dependencias</span></a>
+                <a href="{{ route('users.index') }}"><span class="text-primary">Áreas médicas</span></a>
             </li>
-            <li class="breadcrumb-item active">Crear Dependencia</li>
+            <li class="breadcrumb-item active">Crear área médica</li>
         </ol>
     </nav>
 @endsection
@@ -14,14 +14,14 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Crear Dependencia</legend>
+                <legend>Crear área médica</legend>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('dependencies.store') }}">
                 @csrf
                 @method('POST')
-                <div class="form-row mt-4 row justify-content-md-center">
+                <div class="form-row mt-4 justify-content-md-center">
                     <div class="form-group col-sm-8">
                         <label for="description"><span class="text-danger pr-1">*</span>Nombre</label>
                         <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>

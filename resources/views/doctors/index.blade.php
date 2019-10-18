@@ -4,13 +4,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Usuarios</h2>
+    <h2 class="page-head-title">Doctores</h2>
 @endsection
 @section('content')
 	<div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('doctors.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo usuario">
+				<a class="btn btn-primary pt-1" href="{{ route('doctors.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo doctor">
 					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
 					<span class="h4 my-0">Nuevo</span>
 				</a>
@@ -88,7 +88,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: 'Usuario creado correctamente'
+				title: '¡Doctor creado correctamente!'
 			});
 		</script>
 	@endif
@@ -103,7 +103,7 @@
 				buttonsStyling: false
 			});
 			Swal.fire({
-				title: '¿Deseas eliminar este usuario?',
+				title: '¿Deseas eliminar este doctor?',
 				text: "¡Esta acción no podrá ser revertida!",
 				type: 'warning',
 				showCancelButton: true,
@@ -116,7 +116,7 @@
 				if (result.value) {
 					Swal.fire(
 						'Eliminando...',
-						'Este usuario se eliminará para siempre.',
+						'Este doctor se eliminará para siempre.',
 						'error'
 					);
 					$(btn).closest("form").submit();
@@ -142,7 +142,7 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: 'Usuario Editado'
+				title: '¡Doctor editado correctamente!'
 			});
 		</script>
 	@endif
