@@ -24,7 +24,7 @@ class DoctorController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $doctors  = Doctor::all();
+        $doctors = Doctor::all();
 
         return view('doctors.index', compact('doctors'));
     }
@@ -52,13 +52,16 @@ class DoctorController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
-        $consulting_room = ConsultingRoom::where('name', $request->input('consulting_room'))->first();
+        $viality = Viality::where('name', $request->input('viality'))->first();
         $state = State::where('code', $request->input('state'))->first();
         
-        if ($consulting_room && $state) {
+        if ($viality && $state) {
             $doctor = new Doctor();
             $doctor->name = $request->input('name');
-            $doctor->lastname = $request->input('lastname');
+            $doctor->paternal_lastname = $request->input('paternal_lastname');
+            $doctor->maternal_lastname = $request->input('maternal_lastname');
+            $doctor->sex = $request->input('sex');
+            $doctor->birthdate = $request->input('birthdate');
             $doctor->professional_id = $request->input('professional_id');
             $doctor->phone = $request->input('phone');
             $doctor->street = $request->input('street');
@@ -66,7 +69,6 @@ class DoctorController extends Controller
             $doctor->number = $request->input('number');
             $doctor->zip_code = $request->input('zip_code');
     
-            $doctor->consultingRoom()->associate($consulting_room);
             $doctor->state()->associate($state);
     
             if ($doctor->save()) {

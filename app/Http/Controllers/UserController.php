@@ -145,7 +145,7 @@ class UserController extends Controller
         }
         if ($user->save()) {
             $user->roles()->attach(Role::where('name', $request->input('role'))->first());
-            return redirect()->route('users.index')->with('message-update', 'Creado');
+            return redirect()->route('users.index')->with('message-update', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

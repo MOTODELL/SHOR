@@ -63,6 +63,7 @@ class CreateRelationships extends Migration
             $table->foreign('viality_id')->references('id')->on('vialities');
             $table->foreign('locality_id')->references('id')->on('localities');
             $table->foreign('municipality_id')->references('id')->on('municipalities');
+            $table->foreign('settlement_type_id')->references('id')->on('settlement_types');
         });
 
         Schema::table('dates', function (Blueprint $table) {
@@ -132,6 +133,7 @@ class CreateRelationships extends Migration
             $table->dropForeign(['viality_id']);
             $table->dropForeign(['locality_id']);
             $table->dropForeign(['municipality_id']);
+            $table->dropForeign(['settlement_type_id']);
         });
 
         Schema::table('dates', function (Blueprint $table) {

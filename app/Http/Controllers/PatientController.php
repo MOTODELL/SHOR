@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Address;
-use App\Date;
+use App\Locality;
+use App\Municipality;
 use App\Patient;
+use App\SettlementType;
 use App\Ssn;
 use App\SsnType;
 use App\State;
-use App\Status;
-use Carbon\Carbon;
+use App\Viality;
 use Illuminate\Http\Request;
 
-class DateController extends Controller
+class PatientController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -31,11 +32,11 @@ class DateController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles('admin');
 
-        $dates = Date::all();
+        $patients = Patient::all();
 
-        return view('dates.index', compact('dates'));
+        return view('patients.index', compact('patients'));
     }
 
     /**
@@ -45,22 +46,28 @@ class DateController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles('admin');
 
+        $patients = Patient::all();
+        $vialities = Viality::all();
+        $settlement_types = SettlementType::all();
+        $localities = Locality::all();
+        $municipalities = Municipality::all();
         $states = State::all();
         $ssn_types = SsnType::all();
 
-        return view('dates.create', compact(['states', 'ssn_types']));
+        return view('patients.create', compact(['patients', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles('admin');
 
         $address = new Address();
         $address->street = $request->input('street');
@@ -105,17 +112,8 @@ class DateController extends Controller
         $patient->birthplace()->associate(State::where('code', $request->input('birthplace'))->first());
         $patient->ssn()->associate($ssn);
         $patient->address()->associate($address);
-        $patient->save();
-
-        $date = new Date();
-        $date->folio = $request->input('folio');
-        $date->attention_date = Carbon::now();
-        $date->diagnosis = $request->input('diagnosis');
-        $date->status()->associate(Status::where('name', 'pendiente')->first());
-        $date->user()->associate(auth()->user());
-        $date->patient()->associate($patient);
-        if($date->save()) {
-            return redirect()->route('dates.index')->with('message-create', 'Creado');
+        if($patient->save()) {
+            return redirect()->route('patients.index')->with('message-create', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -123,45 +121,53 @@ class DateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Date  $date
+     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Date $date)
+    public function show(Request $request, Patient $patient)
     {
-        //
+        $request->user()->authorizeRoles('admin');
+
+        return view('patients.show', compact('patient'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Date  $date
+     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Date $date)
+    public function edit(Request $request, Patient $patient)
     {
-        //
+        $request->user()->authorizeRoles('admin');
+
+        return view('patients.show', compact('patient'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Date  $date
+     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Date $date)
+    public function update(Request $request, Patient $patient)
     {
-        //
+        $request->user()->authorizeRoles('admin');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Date  $date
+     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Date $date)
+    public function destroy(Request $request, Patient $patient)
     {
-        //
+        $request->user()->authorizeRoles('admin');
+
+        $patient->delete();
+
+        return redirect()->route('patients.index')->with('message-destroy', 'Eliminado');
     }
 }

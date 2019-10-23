@@ -12,6 +12,7 @@ if ( ! function_exists('getDescriptionName')) {
         $name = strtr( $description, $unwanted_array );
         $name = strtolower($name);
         $name = preg_replace('/\s+/', '-', $name);
+        $name = str_replace('.', '', $name);
         return $name;
     }
 }

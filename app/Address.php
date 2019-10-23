@@ -75,4 +75,14 @@ class Address extends Model
     {
         return $this->belongsToMany(State::class);
     }
+
+    /**
+     * Settlement types relationship (One to many - Inverse).
+     * 
+     * @return \App\SettlementType
+     */
+    public function settlement_type()
+    {
+        return $this->belongsToMany(SettlementType::class);
+    }
 }
