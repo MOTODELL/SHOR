@@ -56,9 +56,9 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="profesional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
-                        <input id="profesional_id" type="text" class="form-control form-control-lg @error('profesional_id') is-invalid @enderror" name="profesional_id" required placeholder="********">
-                        @error('profesional_id')
+                        <label for="professional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
+                        <input id="professional_id" type="text" data-mask="professional_id" class="form-control form-control-lg @error('professional_id') is-invalid @enderror" name="professional_id" required placeholder="12345678">
+                        @error('professional_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -67,7 +67,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="birthdate"><span class="text-danger pr-1">*</span>{{ __('Fecha de nacimiento') }}</label>
                         <div class="input-group date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd" data-date="1979-09-16">
-                            <input type="text" name="" id="" class="form-control" size="16" value="" readonly>
+                            <input type="text" name="birthdate" id="birthdate" class="form-control" size="16" value="" readonly>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-primary">
                                     <i class="icon-th mdi mdi-calendar"></i>
@@ -89,13 +89,13 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
-                                <input type="radio" name="radioIcon" id="h" class="custom-control-input">
+                                <input type="radio" name="sex" id="h" value="h" class="custom-control-input">
                                 <span class="custom-control-label">
                                     <i class="icon fas fa-mars"></i>
                                 </span>
                             </label>
                             <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
-                                <input type="radio" name="radioIcon" id="m" class="custom-control-input" >
+                                <input type="radio" name="sex" id="m" value="m" class="custom-control-input" >
                                 <span class="custom-control-label">
                                     <i class="icon fas fa-venus"></i>
                                 </span>
@@ -148,8 +148,8 @@
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                         <div>
                             <select class="select2 select2-lg">
-                                @foreach ($localities as $locality)
-                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                @foreach ($settlementTypes as $settlementType)
+                                    <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
                                 @endforeach
                             </select>
                         </div>

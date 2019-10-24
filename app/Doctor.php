@@ -29,6 +29,15 @@ class Doctor extends Model
         return 'string';
     }
 
+    public function getAddress()
+    {
+        $address = $this->address()->first();
+        if ($address) {
+            return $address->street;
+        }
+        return "";
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

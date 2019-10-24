@@ -23,7 +23,7 @@ class Locality extends Model
     }
 
     /**
-     * Municipalities relationship (One to many).
+     * Municipalities relationship (One to many - Inverse).
      * 
      * @return \App\Municipality
      */

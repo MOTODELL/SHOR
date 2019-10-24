@@ -27,12 +27,13 @@
 									<label class="custom-control-label" for="check1"></label>
 	              </div>
 							</th>
+							<th style="width:5%;">Sexo</th>
+							<th style="width:15%;">Cédula profesional</th>
 							<th style="width:20%;">Nombre completo</th>
-							<th style="width:25%;">Teléfono</th>
-							<th style="width:25%;">Correo</th>
-							<th style="width:20%;">Domicilio</th>
-							<th style="width:20%;">Privilegios</th>
-							<th style="width:15%;"></th>
+							<th style="width:15%;">Teléfono</th>
+							<th style="width:15%;">Correo</th>
+							<th style="width:15%;">Domicilio</th>
+							<th style="width:10%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,9 +45,23 @@
 									<label class="custom-control-label" for="check'.{{$doctor->id}}"></label>
 								</div>
 							</td>
+							<td class="cell-detail">
+								@if ($doctor->sex == 'm')
+									<span class="custom-control-label">
+											<i class="icon fas fa-venus"></i>
+									</span>
+								@else
+										<span class="custom-control-label">
+												<i class="icon fas fa-mars"></i>
+										</span>
+								@endif
+							</td>
+							<td class="cell-detail">
+								<span>{{ $doctor->professional_id }}</span>
+							</td>
 							<td class="doctor-avatar cell-detail doctor-info">
-								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($doctor->avatar) }}" alt="{{ asset($doctor->name) }}">
-								<span>{{ $doctor->name.' '.$doctor->lastname }}</span>
+								{{-- <img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($doctor->avatar) }}" alt="{{ asset($doctor->name) }}"> --}}
+								<span>{{ $doctor->name.' '.$doctor->paternal_lastname.' '.$doctor->maternal_lastname }}</span>
 							</td>
 							<td class="cell-detail" data-project="Bootstrap">
 								<span>{{ $doctor->phone }}</span>
@@ -55,7 +70,7 @@
 								<span>{{ $doctor->email }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $doctor->colony }}</span>
+								<span>{{ $doctor->getAddress() }}</span>
 							</td>
 							<td class="text-right">
 								<a href="{{ route('doctors.edit', $doctor->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">

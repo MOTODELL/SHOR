@@ -23,6 +23,16 @@ class Municipality extends Model
     }
 
     /**
+     * Localities relationship (One to many).
+     * 
+     * @return \App\Locality
+     */
+    public function localities()
+    {
+        return $this->hasMany(Locality::class);
+    }
+
+    /**
      * States relationship (One to many - Inverse).
      * 
      * @return \App\State
