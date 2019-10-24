@@ -12,6 +12,8 @@ class StatusTableSeeder extends Seeder
      */
     public function run()
     {
+        Status::truncate();
+        
         $status = new Status();
         $status->name = 'pendiente';
         $status->description = 'Pendiente';

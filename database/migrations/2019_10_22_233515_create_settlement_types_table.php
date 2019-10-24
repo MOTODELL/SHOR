@@ -17,7 +17,6 @@ class CreateSettlementTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->unsignedInteger('state_id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -154,6 +154,53 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $request->user()->authorizeRoles('admin');
+
+        $address = $patient->address();
+        $address->street = $request->input('street');
+        $address->number_ext = $request->input('number_ext');
+        $address->number_int = $request->input('number_int');
+        $address->colony = $request->input('colony');
+        $address->zip_code = $request->input('zip_code');
+        if ($request->filled('viality')) {
+            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
+        }
+        if ($request->filled('settlement_type')) {
+            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
+        }
+        if ($request->filled('locality')) {
+            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+        }
+        if ($request->filled('municipality')) {
+            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+        }
+        if ($request->filled('state')) {
+            $address->state()->associate(State::where('code', $request->input('state'))->first());
+        }
+        $address->save();
+
+        $ssn = $patient->ssn();
+        $ssn->ssn = $request->input('ssn');
+        $ssn->number = $request->input('number');
+        $ssn->kinship = $request->input('kinship');
+        $ssn->date_start = $request->input('date_start');
+        $ssn->date_end = $request->input('date_end');
+        $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
+        $ssn->save();
+
+        $patient->name = $request->input('name');
+        $patient->paternal_lastname = $request->input('paternal_lastname');
+        $patient->maternal_lastname = $request->input('maternal_lastname');
+        $patient->curp = $request->input('curp');
+        $patient->birthdate = $request->input('birthdate');
+        $patient->sex = $request->input('sex');
+        $patient->phone = $request->input('phone');
+        $patient->birthplace()->associate(State::where('code', $request->input('birthplace'))->first());
+        $patient->ssn()->associate($ssn);
+        $patient->address()->associate($address);
+        if($patient->save()) {
+            return redirect()->route('patients.index')->with('message-update', 'Editado');
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -166,6 +213,8 @@ class PatientController extends Controller
     {
         $request->user()->authorizeRoles('admin');
 
+        $patient->address()->delete();
+        $patient->ssn()->delete();
         $patient->delete();
 
         return redirect()->route('patients.index')->with('message-destroy', 'Eliminado');

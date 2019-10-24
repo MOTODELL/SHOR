@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Date;
+use App\Http\Requests\StoreDateRequest;
 use App\Patient;
 use App\Ssn;
 use App\SsnType;
@@ -58,7 +59,7 @@ class DateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDateRequest $request)
     {
         $request->user()->authorizeRoles(['admin', 'user']);
 
@@ -126,9 +127,11 @@ class DateController extends Controller
      * @param  \App\Date  $date
      * @return \Illuminate\Http\Response
      */
-    public function show(Date $date)
+    public function show(Request $request, Date $date)
     {
-        //
+        $request->user()->authorizeRoles(['admin', 'user']);
+
+        return view('dates.show', compact('date'));
     }
 
     /**
@@ -137,9 +140,11 @@ class DateController extends Controller
      * @param  \App\Date  $date
      * @return \Illuminate\Http\Response
      */
-    public function edit(Date $date)
+    public function edit(Request $request, Date $date)
     {
-        //
+        $request->user()->authorizeRoles(['admin', 'user']);
+
+        return view('dates.edit', compact('date'));
     }
 
     /**
@@ -151,7 +156,63 @@ class DateController extends Controller
      */
     public function update(Request $request, Date $date)
     {
-        //
+        $request->user()->authorizeRoles(['admin', 'user']);
+
+        $address = $date->patient()->address();
+        $address->street = $request->input('street');
+        $address->number_ext = $request->input('number_ext');
+        $address->number_int = $request->input('number_int');
+        $address->colony = $request->input('colony');
+        $address->zip_code = $request->input('zip_code');
+        if ($request->filled('viality')) {
+            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
+        }
+        if ($request->filled('settlement_type')) {
+            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
+        }
+        if ($request->filled('locality')) {
+            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+        }
+        if ($request->filled('municipality')) {
+            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+        }
+        if ($request->filled('state')) {
+            $address->state()->associate(State::where('code', $request->input('state'))->first());
+        }
+        $address->save();
+
+        $ssn = $date->patient()->ssn();
+        $ssn->ssn = $request->input('ssn');
+        $ssn->number = $request->input('number');
+        $ssn->kinship = $request->input('kinship');
+        $ssn->date_start = $request->input('date_start');
+        $ssn->date_end = $request->input('date_end');
+        $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
+        $ssn->save();
+
+        $patient = $ssn->patient();
+        $patient->name = $request->input('name');
+        $patient->paternal_lastname = $request->input('paternal_lastname');
+        $patient->maternal_lastname = $request->input('maternal_lastname');
+        $patient->curp = $request->input('curp');
+        $patient->birthdate = $request->input('birthdate');
+        $patient->sex = $request->input('sex');
+        $patient->phone = $request->input('phone');
+        $patient->birthplace()->associate(State::where('code', $request->input('birthplace'))->first());
+        $patient->ssn()->associate($ssn);
+        $patient->address()->associate($address);
+        $patient->save();
+
+        $date->folio = $request->input('folio');
+        $date->attention_date = Carbon::now();
+        $date->diagnosis = $request->input('diagnosis');
+        $date->status()->associate(Status::where('name', 'pendiente')->first());
+        $date->user()->associate(auth()->user());
+        $date->patient()->associate($patient);
+        if($date->save()) {
+            return redirect()->route('dates.index')->with('message-create', 'Creado');
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
     /**
@@ -160,8 +221,12 @@ class DateController extends Controller
      * @param  \App\Date  $date
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Date $date)
+    public function destroy(Request $request, Date $date)
     {
-        //
+        $request->user()->authorizeRoles(['admin', 'user']);
+
+        $date->delete();
+
+        return redirect()->route('dates.index')->with('message-destroy', 'Eliminado');
     }
 }

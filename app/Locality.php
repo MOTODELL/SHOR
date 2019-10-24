@@ -21,4 +21,14 @@ class Locality extends Model
     {
         return $this->hasMany(Address::class);
     }
+
+    /**
+     * Municipalities relationship (One to many).
+     * 
+     * @return \App\Municipality
+     */
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
+    }
 }
