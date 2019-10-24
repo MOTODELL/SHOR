@@ -31,4 +31,24 @@ class State extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    /**
+     * Municipality relationship (One to many).
+     * 
+     * @return \App\Municipality
+     */
+    public function municipalities()
+    {
+        return $this->hasMany(Municipality::class);
+    }
+
+    /**
+     * States relationship (One to many - Inverse).
+     * 
+     * @return \App\State
+     */
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 }

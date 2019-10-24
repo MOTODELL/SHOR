@@ -21,4 +21,14 @@ class Municipality extends Model
     {
         return $this->hasMany(Address::class);
     }
+
+    /**
+     * States relationship (One to many - Inverse).
+     * 
+     * @return \App\State
+     */
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 }

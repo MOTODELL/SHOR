@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SsnTypesTableSeeder::class);
         $this->call(StatesTableSeeder::class);
         $this->call(VialitiesTableSeeder::class);
+        $this->call(MunicipalitiesTableSeeder::class);
     }
 }

@@ -26,6 +26,8 @@
             <form method="POST" action="{{ route('doctors.store') }}">
                 @csrf
                 <div class="form-row mt-4">
+                    <legend><h4 class="mb-0">Datos personales</h4></legend>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
                         <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -54,7 +56,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="profesional_id"><span class="text-danger pr-1">*</span>{{ __('Cedula profesional') }}</label>
+                        <label for="profesional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
                         <input id="profesional_id" type="text" class="form-control form-control-lg @error('profesional_id') is-invalid @enderror" name="profesional_id" required placeholder="********">
                         @error('profesional_id')
                             <span class="invalid-feedback" role="alert">
@@ -110,7 +112,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electronico') }}</label>
+                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electrónico') }}</label>
                         <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -118,6 +120,8 @@
                             </span>
                         @enderror
                     </div>
+                    <legend><h4 class="mb-0">Domicilio</h4></legend>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                         <div>
@@ -142,7 +146,13 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
+                        <div>
+                            <select class="select2 select2-lg">
+                                @foreach ($localities as $locality)
+                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
@@ -154,11 +164,23 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
+                        <div>
+                            <select class="select2 select2-lg">
+                                @foreach ($localities as $locality)
+                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
+                        <div>
+                            <select class="select2 select2-lg">
+                                @foreach ($municipalities as $municipality)
+                                    <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>

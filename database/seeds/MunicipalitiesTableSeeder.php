@@ -1,10 +1,10 @@
 <?php
 
-use App\Municipality;
 use App\State;
+use App\Municipality;
 use Illuminate\Database\Seeder;
 
-class MunicipalityTableSeeder extends Seeder
+class MunicipalitiesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

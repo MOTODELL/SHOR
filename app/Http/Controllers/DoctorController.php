@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\State;
 use App\Doctor;
 use App\Viality;
+use App\Municipality;
+use App\Locality;
 use App\ConsultingRoom;
 use App\Http\Requests\StoreDoctorRequest;
 use Illuminate\Http\Request;
@@ -39,7 +41,9 @@ class DoctorController extends Controller
         $request->user()->authorizeRoles('admin');
         $vialities = Viality::all();
         $states = State::all();
-        return view('doctors.create', compact(['vialities', 'states']));
+        $municipalities = Municipality::all();
+        $localities = Locality::all();
+        return view('doctors.create', compact(['vialities', 'states', 'municipalities', 'localities']));
     }
 
     /**
