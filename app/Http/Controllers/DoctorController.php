@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\State;
 use App\Doctor;
+use App\Address;
 use App\Viality;
-use App\Municipality;
 use App\Locality;
+use App\Municipality;
+use App\SettlementType;
 use App\ConsultingRoom;
 use App\Http\Requests\StoreDoctorRequest;
 use Illuminate\Http\Request;
@@ -43,7 +45,14 @@ class DoctorController extends Controller
         $states = State::all();
         $municipalities = Municipality::all();
         $localities = Locality::all();
-        return view('doctors.create', compact(['vialities', 'states', 'municipalities', 'localities']));
+        $settlementTypes = SettlementType::all();
+        return view('doctors.create', compact([
+            'vialities', 
+            'states', 
+            'municipalities', 
+            'localities', 
+            'settlementTypes'
+        ]));
     }
 
     /**
@@ -52,32 +61,46 @@ class DoctorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDoctorRequest $request)
+    public function store(Request $request)
     {
         $request->user()->authorizeRoles('admin');
 
-        $viality = Viality::where('name', $request->input('viality'))->first();
-        $state = State::where('code', $request->input('state'))->first();
+        $address = new Address();
+        $address->street = $request->input('street');
+        $address->number_ext = $request->input('number_ext');
+        $address->number_int = $request->input('number_int');
+        $address->colony = $request->input('colony');
+        $address->zip_code = $request->input('zip_code');
+        if ($request->filled('viality')) {
+            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
+        }
+        if ($request->filled('settlement_type')) {
+            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
+        }
+        if ($request->filled('locality')) {
+            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+        }
+        if ($request->filled('municipality')) {
+            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+        }
+        if ($request->filled('state')) {
+            $address->state()->associate(State::where('code', $request->input('state'))->first());
+        }
+        $address->save();
         
-        if ($viality && $state) {
-            $doctor = new Doctor();
-            $doctor->name = $request->input('name');
-            $doctor->paternal_lastname = $request->input('paternal_lastname');
-            $doctor->maternal_lastname = $request->input('maternal_lastname');
-            $doctor->sex = $request->input('sex');
-            $doctor->birthdate = $request->input('birthdate');
-            $doctor->professional_id = $request->input('professional_id');
-            $doctor->phone = $request->input('phone');
-            $doctor->street = $request->input('street');
-            $doctor->colony = $request->input('colony');
-            $doctor->number = $request->input('number');
-            $doctor->zip_code = $request->input('zip_code');
+        $doctor = new Doctor();
+        $doctor->name = $request->input('name');
+        $doctor->paternal_lastname = $request->input('paternal_lastname');
+        $doctor->maternal_lastname = $request->input('maternal_lastname');
+        $doctor->sex = $request->input('sex');
+        $doctor->email = $request->input('email');
+        $doctor->birthdate = $request->input('birthdate');
+        $doctor->professional_id = $request->input('professional_id');
+        $doctor->phone = $request->input('phone');
+        $doctor->address()->associate($address);
     
-            $doctor->state()->associate($state);
-    
-            if ($doctor->save()) {
-                return redirect()->route('doctors.index')->with('message-store', 'Creado');
-            }
+        if ($doctor->save()) {
+            return redirect()->route('doctors.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

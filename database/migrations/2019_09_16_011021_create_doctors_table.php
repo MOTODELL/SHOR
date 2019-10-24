@@ -19,7 +19,7 @@ class CreateDoctorsTable extends Migration
             $table->string('paternal_lastname');
             $table->string('maternal_lastname');
             $table->char('sex', 1);
-            $table->date('bithdate');
+            $table->date('birthdate');
             $table->string('professional_id');
             $table->unsignedInteger('address_id')->nullable();
             $table->string('phone');
