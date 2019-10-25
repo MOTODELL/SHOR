@@ -156,7 +156,7 @@ class PatientController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $address = $patient->address();
-        $address->street = $request->input('street');
+        $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
         $address->number_int = $request->input('number_int');
         $address->colony = $request->input('colony');
@@ -187,9 +187,9 @@ class PatientController extends Controller
         $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
         $ssn->save();
 
-        $patient->name = $request->input('name');
-        $patient->paternal_lastname = $request->input('paternal_lastname');
-        $patient->maternal_lastname = $request->input('maternal_lastname');
+        $patient->name = ucfirst($request->input('name'));
+        $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $patient->curp = $request->input('curp');
         $patient->birthdate = $request->input('birthdate');
         $patient->sex = $request->input('sex');

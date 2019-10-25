@@ -33,7 +33,7 @@ class Doctor extends Model
     {
         $address = $this->address()->first();
         if ($address) {
-            return $address->street;
+            return $address->street. ' ' . $address->number_ext. ' ' . $address->colony;
         }
         return "";
     }

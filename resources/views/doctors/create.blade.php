@@ -19,14 +19,15 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Crear doctor</legend>
+                <legend class="h2 my-0">Crear doctor</legend>
             </div>
         </div>
         <div class="card-body pt-0">
             <form method="POST" action="{{ route('doctors.store') }}">
                 @csrf
-                <div class="form-row mt-4">
-                    <legend><h4 class="mb-0">Datos personales</h4></legend>
+                <div class="form-row">
+                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos requeridos</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
@@ -125,7 +126,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="viality">
                                 @foreach ($vialities as $viality)
                                     <option value="{{ $viality->name }}">{{ $viality->description }}</option>
                                 @endforeach
@@ -137,17 +138,17 @@
                         <input id="street" type="text" class="form-control form-control-lg" name="street" required placeholder="el venado">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="number_ext" required placeholder="644">
+                        <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
+                        <input id="number_ext" type="text" class="form-control form-control-lg" name="number_ext" required placeholder="644">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número interior') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="number_int" required placeholder="44">
+                        <label for="number_int">{{ __('Número interior') }}</label>
+                        <input id="number_int" type="text" class="form-control form-control-lg" name="number_int" placeholder="44">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
+                        <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="settlement_type">
                                 @foreach ($settlementTypes as $settlementType)
                                     <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
                                 @endforeach
@@ -155,17 +156,17 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
+                        <label for="colony"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
+                        <input id="colony" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
+                        <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
+                        <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
+                        <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="locality">
                                 @foreach ($localities as $locality)
                                     <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
                                 @endforeach
@@ -173,9 +174,9 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
+                        <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="municipality">
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
                                 @endforeach
@@ -183,9 +184,9 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
+                        <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="state">
                                 @foreach ($states as $state)
                                     <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
                                 @endforeach

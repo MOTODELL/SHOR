@@ -45,17 +45,15 @@
 									<label class="custom-control-label" for="check'.{{$doctor->id}}"></label>
 								</div>
 							</td>
-							<td class="cell-detail">
-								@if ($doctor->sex == 'm')
-									<span class="custom-control-label">
-											<i class="icon fas fa-venus"></i>
-									</span>
-								@else
-										<span class="custom-control-label">
-												<i class="icon fas fa-mars"></i>
-										</span>
-								@endif
-							</td>
+                            @if ($doctor->sex == 'm')
+                                <td class="cell-detail" data-toggle="tooltip" data-placement="left" title="Mujer">
+									<i class="icon fas fa-venus zmdi-hc-lg"></i>
+                                </td>
+                            @else
+                                <td class="cell-detail" data-toggle="tooltip" data-placement="left" title="Mujer">
+                                    <i class="icon fas fa-mars zmdi-hc-lg"></i>
+                                </td>
+                            @endif
 							<td class="cell-detail">
 								<span>{{ $doctor->professional_id }}</span>
 							</td>
@@ -73,7 +71,7 @@
 								<span>{{ $doctor->getAddress() }}</span>
 							</td>
 							<td class="text-right">
-								<a href="{{ route('doctors.edit', $doctor->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<a href="{{ route('doctors.edit', $doctor) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
 								<form action="{{ route('doctors.destroy', $doctor) }}" method="post" class="d-inline">

@@ -89,18 +89,33 @@
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
-                                <input type="radio" name="sex" id="h" value="h" class="custom-control-input">
-                                <span class="custom-control-label">
-                                    <i class="icon fas fa-mars"></i>
-                                </span>
-                            </label>
-                            <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
-                                <input type="radio" name="sex" id="m" value="m" class="custom-control-input" >
-                                <span class="custom-control-label">
-                                    <i class="icon fas fa-venus"></i>
-                                </span>
-                            </label>
+                            @if ($doctor->sex == 'h')
+                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
+                                    <input type="radio" name="sex" id="h" value="h" class="custom-control-input" checked>
+                                    <span class="custom-control-label">
+                                        <i class="icon fas fa-mars"></i>
+                                    </span>
+                                </label>
+                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
+                                    <input type="radio" name="sex" id="m" value="m" class="custom-control-input">
+                                    <span class="custom-control-label">
+                                        <i class="icon fas fa-venus"></i>
+                                    </span>
+                                </label>
+                                @else
+                                    <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
+                                        <input type="radio" name="sex" id="h" value="h" class="custom-control-input">
+                                        <span class="custom-control-label">
+                                            <i class="icon fas fa-mars"></i>
+                                        </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
+                                        <input type="radio" name="sex" id="m" value="m" class="custom-control-input" checked>
+                                        <span class="custom-control-label">
+                                            <i class="icon fas fa-venus"></i>
+                                        </span>
+                                    </label>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -126,69 +141,89 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="viality">
                                 @foreach ($vialities as $viality)
-                                    <option value="{{ $viality->name }}">{{ $viality->description }}</option>
+                                    @if ($viality->name == $doctor->address->viality->name)
+                                        <option value="{{ $viality->name }}" selected>{{ $viality->description }}</option>
+                                    @else
+                                        <option value="{{ $viality->name }}">{{ $viality->description }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de vialidad') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="street" required placeholder="el venado">
+                    <input id="street" type="text" class="form-control form-control-lg" name="street" value="{{ $doctor->address->street }}" required placeholder="el venado">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="number_ext" required placeholder="644">
+                        <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
+                        <input id="number_ext" type="text" class="form-control form-control-lg" name="number_ext" value="{{ $doctor->address->number_ext }}" required placeholder="644">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Número interior') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="number_int" required placeholder="44">
+                        <label for="number_int">{{ __('Número interior') }}</label>
+                        <input id="number_int" type="text" class="form-control form-control-lg" name="number_int" value="{{ $doctor->address->number_int }}" placeholder="44">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
+                        <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="settlement_type">
                                 @foreach ($settlementTypes as $settlementType)
-                                    <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
+                                    @if ($settlementType->name == $doctor->address->settlement_type->name)
+                                            <option value="{{ $settlementType->name }}" selected>{{ $settlementType->description }}</option>
+                                        @else
+                                            <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
+                        <label for="colony"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
+                        <input id="colony" type="text" class="form-control form-control-lg" name="colony" value="{{ $doctor->address->colony }}"  required placeholder="Las americas">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
+                        <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
+                        <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" value="{{ $doctor->address->zip_code }}"  required placeholder="48290">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
+                        <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="locality">
                                 @foreach ($localities as $locality)
-                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                    @if ($locality->code == $doctor->address->locality->code)
+                                        <option value="{{ $locality->code }}" selected>{{ $locality->code }} - {{ $locality->description }}</option>
+                                        @else
+                                        <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
+                        <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="municipality">
                                 @foreach ($municipalities as $municipality)
-                                    <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                    @if ($municipality->code == $doctor->address->municipality->code)
+                                        <option value="{{ $municipality->code }}" selected>{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                        @else
+                                        <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
+                        <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
                         <div>
-                            <select class="select2 select2-lg">
+                            <select class="select2 select2-lg" name="state">
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
+                                    @if ($state->code == $doctor->address->state->code)
+                                        <option value="{{ $state->code }}" selected>{{ $state->code }} - {{ $state->description }}</option>
+                                    @else
+                                        <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

@@ -43,7 +43,7 @@ class Address extends Model
      */
     public function viality()
     {
-        return $this->belongsToMany(Viality::class);
+        return $this->belongsTo(Viality::class);
     }
 
     /**
@@ -53,7 +53,7 @@ class Address extends Model
      */
     public function locality()
     {
-        return $this->belongsToMany(Locality::class);
+        return $this->belongsTo(Locality::class);
     }
 
     /**
@@ -63,7 +63,7 @@ class Address extends Model
      */
     public function municipality()
     {
-        return $this->belongsToMany(Municipality::class);
+        return $this->belongsTo(Municipality::class);
     }
 
     /**
@@ -73,7 +73,7 @@ class Address extends Model
      */
     public function state()
     {
-        return $this->belongsToMany(State::class);
+        return $this->belongsTo(State::class);
     }
 
     /**
@@ -83,6 +83,6 @@ class Address extends Model
      */
     public function settlement_type()
     {
-        return $this->belongsToMany(SettlementType::class);
+        return $this->belongsTo(SettlementType::class);
     }
 }

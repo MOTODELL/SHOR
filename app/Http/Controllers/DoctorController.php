@@ -65,10 +65,12 @@ class DoctorController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $address = new Address();
-        $address->street = $request->input('street');
+        $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
-        $address->number_int = $request->input('number_int');
-        $address->colony = $request->input('colony');
+        if (filled('number_int')) {
+            $address->number_int = $request->input('number_int');
+        }
+        $address->colony = ucfirst($request->input('colony'));
         $address->zip_code = $request->input('zip_code');
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
@@ -88,9 +90,9 @@ class DoctorController extends Controller
         $address->save();
         
         $doctor = new Doctor();
-        $doctor->name = $request->input('name');
-        $doctor->paternal_lastname = $request->input('paternal_lastname');
-        $doctor->maternal_lastname = $request->input('maternal_lastname');
+        $doctor->name = ucfirst($request->input('name'));
+        $doctor->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $doctor->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $doctor->sex = $request->input('sex');
         $doctor->email = $request->input('email');
         $doctor->birthdate = $request->input('birthdate');
@@ -125,9 +127,21 @@ class DoctorController extends Controller
      */
     public function edit(Request $request, Doctor $doctor)
     {
+        // dd($doctor->address->settlement_type->name);
         $request->user()->authorizeRoles('admin');
-
-        return view('doctors.edit', compact('doctor'));
+        $vialities = Viality::all();
+        $states = State::all();
+        $municipalities = Municipality::all();
+        $localities = Locality::all();
+        $settlementTypes = SettlementType::all();
+        return view('doctors.edit', compact([
+            'doctor',
+            'vialities', 
+            'states', 
+            'municipalities', 
+            'localities', 
+            'settlementTypes'
+        ]));
     }
 
     /**
@@ -140,12 +154,14 @@ class DoctorController extends Controller
     public function update(Request $request, Doctor $doctor)
     {
         $request->user()->authorizeRoles('admin');
-
-        $address = $doctor->address();
-        $address->street = $request->input('street');
+        // dd($request);
+        $address = $doctor->address;
+        $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
-        $address->number_int = $request->input('number_int');
-        $address->colony = $request->input('colony');
+        if (filled('number_int')) {
+            $address->number_int = $request->input('number_int');
+        }
+        $address->colony = ucfirst($request->input('colony'));
         $address->zip_code = $request->input('zip_code');
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
@@ -164,9 +180,9 @@ class DoctorController extends Controller
         }
         $address->save();
         
-        $doctor->name = $request->input('name');
-        $doctor->paternal_lastname = $request->input('paternal_lastname');
-        $doctor->maternal_lastname = $request->input('maternal_lastname');
+        $doctor->name = ucfirst($request->input('name'));
+        $doctor->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $doctor->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $doctor->sex = $request->input('sex');
         $doctor->email = $request->input('email');
         $doctor->birthdate = $request->input('birthdate');
