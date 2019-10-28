@@ -25,6 +25,24 @@ class Patient extends Model
     {
         return 'string';
     }
+
+    public function getAddress()
+    {
+        $address = $this->address()->first();
+        if ($address) {
+            return $address->street. ' ' . $address->number_ext. ' ' . $address->colony;
+        }
+        return "";
+    }
+
+    public function getBirthplace()
+    {
+        $birthplace = $this->birthplace()->first();
+        if ($birthplace) {
+            return $birthplace->description;
+        }
+        return "";
+    }
     
     /*
     |--------------------------------------------------------------------------

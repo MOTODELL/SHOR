@@ -27,7 +27,7 @@
                 @csrf
                 <div class="form-row">
                     <legend class="mb-0 h3 mt-0">Datos personales</legend>
-                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos requeridos</span>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
@@ -122,6 +122,7 @@
                         @enderror
                     </div>
                     <legend><h4 class="mb-0">Domicilio</h4></legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>

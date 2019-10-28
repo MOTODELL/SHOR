@@ -70,10 +70,12 @@ class PatientController extends Controller
         $request->user()->authorizeRoles('admin');
 
         $address = new Address();
-        $address->street = $request->input('street');
+        $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
-        $address->number_int = $request->input('number_int');
-        $address->colony = $request->input('colony');
+        if ($request->filled('number_int')) {
+            $address->number_int = $request->input('number_int');
+        }
+        $address->colony = ucfirst($request->input('colony'));
         $address->zip_code = $request->input('zip_code');
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
@@ -94,7 +96,7 @@ class PatientController extends Controller
 
         $ssn = new Ssn();
         $ssn->ssn = $request->input('ssn');
-        $ssn->number = $request->input('number');
+        $ssn->number = strtoupper($request->input('ssn'));
         $ssn->kinship = $request->input('kinship');
         $ssn->date_start = $request->input('date_start');
         $ssn->date_end = $request->input('date_end');
@@ -102,9 +104,9 @@ class PatientController extends Controller
         $ssn->save();
 
         $patient = new Patient();
-        $patient->name = $request->input('name');
-        $patient->paternal_lastname = $request->input('paternal_lastname');
-        $patient->maternal_lastname = $request->input('maternal_lastname');
+        $patient->name = ucfirst($request->input('name'));
+        $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+        $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         $patient->curp = $request->input('curp');
         $patient->birthdate = $request->input('birthdate');
         $patient->sex = $request->input('sex');
@@ -140,8 +142,14 @@ class PatientController extends Controller
     public function edit(Request $request, Patient $patient)
     {
         $request->user()->authorizeRoles('admin');
+        $vialities = Viality::all();
+        $settlement_types = SettlementType::all();
+        $localities = Locality::all();
+        $municipalities = Municipality::all();
+        $states = State::all();
+        $ssn_types = SsnType::all();
 
-        return view('patients.show', compact('patient'));
+        return view('patients.edit', compact(['patient', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
     }
 
     /**
@@ -158,7 +166,9 @@ class PatientController extends Controller
         $address = $patient->address();
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
-        $address->number_int = $request->input('number_int');
+        if ($request->filled('number_int')) {
+            $address->number_int = $request->input('number_int');
+        }
         $address->colony = $request->input('colony');
         $address->zip_code = $request->input('zip_code');
         if ($request->filled('viality')) {
@@ -180,7 +190,7 @@ class PatientController extends Controller
 
         $ssn = $patient->ssn();
         $ssn->ssn = $request->input('ssn');
-        $ssn->number = $request->input('number');
+        $ssn->number = strtoupper($request->input('ssn'));
         $ssn->kinship = $request->input('kinship');
         $ssn->date_start = $request->input('date_start');
         $ssn->date_end = $request->input('date_end');

@@ -33,7 +33,7 @@
     				</thead>
     				<tbody>
     				@foreach ($dependencies as $dependency)
-    					<tr>
+    					<tr class="success done">
     						<td>
     							<div class="custom-control custom-control-sm custom-checkbox">
     								<input class="custom-control-input" type="checkbox" id="check6">

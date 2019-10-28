@@ -57,6 +57,14 @@ $(document).ready(function() {
     if ($('script[src="' + host + '/lib/jquery.maskedinput/jquery.maskedinput.js"]').length > 0) {
         App.masks();
     }
+    // if ($('script[src="' + host + '/lib/jquery.niftymodals/js/jquery.niftymodals.js"]').length > 0) {
+    //     $.fn.niftyModal('setDefaults', {
+    //         overlaySelector: '.modal-overlay',
+    //         contentSelector: '.modal-content',
+    //         closeSelector: '.modal-close',
+    //         classAddAfterOpen: 'modal-show'
+    //     });
+    // }
     if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
