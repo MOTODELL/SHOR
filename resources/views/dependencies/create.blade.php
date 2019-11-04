@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Áreas médicas</h2>
+    <h2 class="page-head-title">Servicio</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Áreas médicas</span></a>
+                <a href="{{ route('users.index') }}"><span class="text-primary">Servicio</span></a>
             </li>
-            <li class="breadcrumb-item active">Crear área médica</li>
+            <li class="breadcrumb-item active">Crear servicio</li>
         </ol>
     </nav>
 @endsection
@@ -14,17 +14,20 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Crear área médica</legend>
+                <legend class="h2 my-0">Crear servicio</legend>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('dependencies.store') }}">
                 @csrf
                 @method('POST')
-                <div class="form-row mt-4 justify-content-md-center">
-                    <div class="form-group col-sm-8">
+                <div class="form-row">
+                    <legend class="mb-0 h3 mt-0">Datos requeridos</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
+                    <div class="form-group col-sm-12 col-md-6">
                         <label for="description"><span class="text-danger pr-1">*</span>Nombre</label>
-                        <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
+                        <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Nombre" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

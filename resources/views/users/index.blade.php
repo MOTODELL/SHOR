@@ -16,6 +16,18 @@
 				</a>
 			</div>
 		</div>
+		<div class="col-12 col-lg-6 table-filters pb-xl-4"><span class="table-filter-title">Privilegios</span>
+			<div class="filter-container">
+				<div class="col-12">
+					@foreach ($roles as $role)
+						<div class="custom-control custom-checkbox custom-control-inline">
+							<input class="custom-control-input" type="checkbox" id="check'.{{ $role->name }}">
+							<label class="custom-control-label" for="check'.{{ $role->name }}">{{ $role->description }}</label>
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
 		<div class="card-body">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
@@ -28,10 +40,12 @@
 	              </div>
 							</th>
 							<th style="width:20%;">Nombre completo</th>
-							<th style="width:25%;">Correo electrónico</th>
-							<th style="width:20%;">Área médica</th>
-							<th style="width:20%;">Privilegios</th>
-							<th style="width:15%;"></th>
+							<th style="width:15%;">CURP</th>
+							<th style="width:15%;">Correo electrónico</th>
+							<th style="width:10%;">Teléfono</th>
+							<th style="width:13%;">Área de servicio</th>
+							<th style="width:10%;">Privilegios</th>
+							<th style="width:12%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,10 +61,16 @@
 								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
 								<span>{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
 							</td>
-							<td class="cell-detail" data-project="Bootstrap">
+							<td class="cell-detail">
+								<span>{{ $user->curp }}</span>
+							</td>
+							<td class="cell-detail">
 								<span>{{ $user->email }}</span>
 							</td>
-							<td class="cell-detail" data-progress="0,45">
+							<td class="cell-detail">
+								<span>{{ $user->phone }}</span>
+							</td>
+							<td class="cell-detail">
 								<span>{{ $user->getDependency() }}</span>
 							</td>
 							<td class="cell-detail">
@@ -146,6 +166,7 @@
 		</script>
 	@endif
 
+	<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('lib/select2/css/select2.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('lib/bootstrap-slider/css/bootstrap-slider.min.css') }}"/>
+@endpush
 @section('header')
     <h2 class="page-head-title">Usuarios</h2>
     <nav aria-label="breadcrumb" role="navigation">
@@ -16,16 +20,19 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Crear usuario</legend>
+                <legend class="h2 my-0">Crear usuario</legend>
             </div>
         </div>
         <div class="card-body pt-0">
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
-                <div class="form-row mt-4">
+                <div class="form-row">
+                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
-                        <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre(s)" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -34,7 +41,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
-                        <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
+                        <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido paterno" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
                         @error('paternal_lastname')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -43,8 +50,54 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
-                        <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
+                        <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido materno" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
                         @error('maternal_lastname')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
+                        <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}" required placeholder="MAVA000804MMNNRRNA9">
+                        @error('curp')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="role"><span class="text-danger pr-1">*</span>{{ __('Tipo de usuario') }}</label>
+                        <select name="role" id="role" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->description }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <div id="professionalId" class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="professional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
+                        <input id="professional_id" type="text" data-mask="professional_id" class="form-control form-control-lg @error('professional_id') is-invalid @enderror" name="professional_id" placeholder="12345678">
+                        @error('professional_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div id="selectDependency" class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Área de servicio') }}</label>
+                        <select name="dependency" id="dependency" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        @foreach ($dependencies as $dependency)
+                            <option value="{{ $dependency->name }}">{{ $dependency->description }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                    <legend class="mb-0 h3 mt-0">Datos de contacto</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
+                        <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="(999) 999-9999">
+                        @error('phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -59,22 +112,9 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="role"><span class="text-danger pr-1">*</span>{{ __('Tipo de usuario') }}</label>
-                        <select name="role" id="role" class="form-control form-control-lg custom-select select2" style="width: 100%">
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->name }}">{{ $role->description }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                    <div id="selectDependency" class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Área médica') }}</label>
-                        <select name="dependency" id="dependency" class="form-control form-control-lg custom-select select2" style="width: 100%">
-                        @foreach ($dependencies as $dependency)
-                            <option value="{{ $dependency->name }}">{{ $dependency->description }}</option>
-                        @endforeach
-                        </select>
-                    </div>
+                    <legend class="mb-0 h3 mt-0">Datos de usuario</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="username"><span class="text-danger pr-1">*</span>{{ __('Nombre de usuario') }}</label>
                         <input id="username" type="text" class="form-control form-control-lg text-lowercase @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
@@ -117,16 +157,35 @@
 @endsection
 @push('scripts')
     <script>
-        function showDependency() {
-            if($('#role').val() == 'admin'){
-                $('#selectDependency').hide();
-            } else {
-                $('#selectDependency').show();
+        function roles() {
+            switch ($('#role').val()) {
+                case 'admin':
+                    $('#selectDependency').hide();
+                    $('#professionalId').hide();
+                    break;
+                case 'user':
+                    $('#selectDependency').show();
+                    $('#professionalId').hide();
+                    break;
+                case 'doctor':
+                    $('#selectDependency').hide();
+                    $('#professionalId').show();
+                    break;
+            
+                default:
+                    break;
             }
         }
         $('#role').change(function(){
-            showDependency();
+            roles();
         });
-        showDependency();
+        roles();
     </script>
+    <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/jquery.maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/bootstrap-slider/bootstrap-slider.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/bs-custom-file-input/bs-custom-file-input.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('lib/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 @endpush

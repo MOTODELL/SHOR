@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Áreas médicas</h2>
+    <h2 class="page-head-title">Servicios</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Áreas médicas</span></a>
+                <a href="{{ route('users.index') }}"><span class="text-primary">Servicios</span></a>
             </li>
-            <li class="breadcrumb-item active">Editar área médica</li>
+            <li class="breadcrumb-item active">Editar servicio</li>
         </ol>
     </nav>
 @endsection
@@ -14,16 +14,19 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Editar área médica</legend>
+                <legend class="h2 my-0">Editar servicio</legend>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('dependencies.update', $dependency) }}">
                 @csrf
                 @method('PUT')
-                <div class="form-row mt-4 justify-content-md-center">
+                <div class="form-row">
+                    <legend class="mb-0 h3 mt-0">Datos requeridos</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-8">
-                        <label for="description">Nombre</label>
+                        <label for="description"><span class="text-danger pr-1">*</span>Nombre</label>
                         <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ $dependency->description }}" required autocomplete="description" autofocus>
                         @error('description')
                         <span class="invalid-feedback" role="alert">

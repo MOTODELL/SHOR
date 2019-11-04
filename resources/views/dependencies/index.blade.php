@@ -4,15 +4,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Áreas médicas</h2>
+    <h2 class="page-head-title">Servicios</h2>
 @endsection
 @section('content')
     <div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva área médica">
+				<a class="btn btn-primary pt-1" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo servicio">
 					<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
-					<span class="h4 my-0">Nueva</span>
+					<span class="h4 my-0">Nuevo</span>
 				</a>
 			</div>
 		</div>
@@ -74,7 +74,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: '¡área médica creada correctamente!'
+				title: '¡Servicio creado correctamente!'
 			});
 		</script>
 	@endif
@@ -89,7 +89,7 @@
 				buttonsStyling: false
 			});
 			Swal.fire({
-				title: '¿Deseas eliminar esta área médica?',
+				title: '¿Deseas eliminar este servicio?',
 				text: "¡Esta acción no podrá ser revertida!",
 				type: 'warning',
 				showCancelButton: true,
@@ -102,7 +102,7 @@
 				if (result.value) {
 					Swal.fire(
 						'Eliminando...',
-						'Este área médica se eliminará.',
+						'Este servicio se eliminará.',
 						'error'
 					);
 					$(btn).closest("form").submit();
@@ -128,93 +128,10 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: '¡área médica editada!'
+				title: '¡Servicio editado correctamente!'
 			});
 		</script>
 	@endif
-    <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.flash.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/jszip/jszip.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/pdfmake/pdfmake.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/pdfmake/vfs_fonts.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.colVis.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.print.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.html5.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('lib/datatables/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
-@endpush
-@push('inline-scripts')
-    @if (session('message-store'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            Toast.fire({
-                type: 'success',
-                title: 'Área médica creada'
-            });
-        </script>
-    @endif
-    <script>
-        $(document).on("click", ".remove-link", function(e) {
-        var btn = $(this);
-            Swal.mixin({
-                customClass: {
-                    cancelButton: 'btn btn-danger',
-                    confirmButton: 'btn btn-success'
-                },
-                buttonsStyling: false
-            });
-            Swal.fire({
-                title: '¿Deseas eliminar esta área médica?',
-                text: "¡Esta acción no podrá ser revertida!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, eliminar',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    Swal.fire(
-                        'Eliminando...',
-                        'Esta área médica se eliminará para siempre.',
-                        'error'
-                    );
-                    $(btn).closest("form").submit();
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire(
-                    '¡Cancelado!',
-                    'Acción revertida',
-                    'error'
-                    );
-                }
-            });
-            e.preventDefault();
-            return false;
-        });
-    </script>
-    @if (session('message-update'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            Toast.fire({
-                type: 'info',
-                title: 'Área médica editada'
-            });
-        </script>
-    @endif
     <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

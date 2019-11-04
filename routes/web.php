@@ -22,6 +22,7 @@ Route::get('/icons', function () {
 Route::resources([
     // 'home' => 'HomeController',
     'users' => 'UserController',
+    'dates' => 'DateController',
     'causes' => 'CauseController',
     'doctors' => 'DoctorController',
     'patients' => 'PatientController',

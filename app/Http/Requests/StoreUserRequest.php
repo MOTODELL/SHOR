@@ -38,6 +38,15 @@ class StoreUserRequest extends FormRequest
                 'email',
                 'unique:users'
             ],
+            'curp' => [
+                'required',
+                'unique:users',
+                'size:18'
+            ],
+            'phone' => [
+                'required',
+                'size:14'
+            ],
             'username' => [
                 'required',
                 'unique:users',

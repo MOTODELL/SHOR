@@ -41,6 +41,15 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 "unique:users,email,$id"
             ],
+            'curp' => [
+                'required',
+                "unique:users,curp,$id",
+                'size:18'
+            ],
+            'phone' => [
+                'required',
+                'size:14'
+            ],
             'username' => [
                 'required',
                 "unique:users,username,$id",

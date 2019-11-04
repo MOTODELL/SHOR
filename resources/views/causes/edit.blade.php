@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Causas</h2>
+    <h2 class="page-head-title">Causes</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('causes.index') }}"><span class="text-primary">Causas</span></a>
+                <a href="{{ route('causes.index') }}"><span class="text-primary">Causes</span></a>
             </li>
-            <li class="breadcrumb-item active">Editar Causa</li>
+            <li class="breadcrumb-item active">Editar cause</li>
         </ol>
     </nav>
 @endsection
@@ -14,7 +14,7 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Editar Causa</legend>
+                <legend>Editar cause</legend>
             </div>
         </div>
         <div class="card-body">
@@ -41,7 +41,7 @@
                         @enderror
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('causas.index') }}" class="btn btn-secondary pt-1 mr-5">
+                        <a  href="{{ route('Causes.index') }}" class="btn btn-secondary pt-1 mr-5">
                             <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
                             <span class="h4 my-0">Regresar</span>
                         </a>

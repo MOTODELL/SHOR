@@ -95,11 +95,8 @@ class PatientController extends Controller
         $address->save();
 
         $ssn = new Ssn();
-        $ssn->ssn = $request->input('ssn');
-        $ssn->number = strtoupper($request->input('ssn'));
-        $ssn->kinship = $request->input('kinship');
-        $ssn->date_start = $request->input('date_start');
-        $ssn->date_end = $request->input('date_end');
+        $ssn->number = $request->input('number');
+        $ssn->ssn = strtoupper($request->input('ssn'));
         $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
         $ssn->save();
 
@@ -107,12 +104,17 @@ class PatientController extends Controller
         $patient->name = ucfirst($request->input('name'));
         $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
         $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
-        $patient->curp = $request->input('curp');
-        $patient->birthdate = $request->input('birthdate');
-        $patient->sex = $request->input('sex');
         $patient->phone = $request->input('phone');
-        $patient->birthplace()->associate(State::where('code', $request->input('birthplace'))->first());
-        $patient->ssn()->associate($ssn);
+        if ($request->filled('curp')) {
+            $patient->curp = strtoupper($request->input('curp'));
+            $yy = substr($request->input('curp'), 4, -12);
+            $mm = substr($request->input('curp'), 6, -10);
+            $dd = substr($request->input('curp'), 8, -8);
+            // $patient->birthdate = $yy.'-'.$mm.'-'.$dd;
+            $patient->sex = substr($request->input('curp'), 10, -7);
+            $patient->birthplace()->associate(State::where('code', substr($request->input('curp'), 11, -5))->first());
+            $patient->ssn()->associate($ssn);
+        }
         $patient->address()->associate($address);
         if($patient->save()) {
             return redirect()->route('patients.index')->with('message-create', 'Creado');

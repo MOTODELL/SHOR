@@ -92,4 +92,22 @@ class Date extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+
+    public function getPatient()
+    {
+        $patient = $this->patient()->first();
+        if ($patient) {
+            return $patient->name. ' ' . $patient->paternal_lastname. ' ' . $patient->maternal_lastname;
+        }
+        return "";
+    }
+
+    public function getStatus()
+    {
+        $state = $this->status()->first();
+        if ($state) {
+            return $state->description;
+        }
+        return "";
+    }
 }
