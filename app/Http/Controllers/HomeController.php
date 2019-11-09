@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Municipality;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +25,14 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function test()
+    {
+        dd(Municipality::with('state')->whereHas('state', function ($q)
+        {
+            $q->where('municipalities.code', '001')
+            ->where('states.code', 'BC');
+        })->first());
     }
 }

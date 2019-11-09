@@ -3,6 +3,7 @@
 use App\State;
 use App\Municipality;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class MunicipalitiesTableSeeder extends Seeder
 {
@@ -15,40 +16,23 @@ class MunicipalitiesTableSeeder extends Seeder
     {
         Municipality::truncate();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Jalisco
-        |--------------------------------------------------------------------------
-        */
-        
-        $municipality = new Municipality();
-        $municipality->code = '001';
-        $municipality->description = 'Acatic';
-        $municipality->state()->associate(State::where('code', 'JC')->first());
-        $municipality->save();
-
-        $municipality = new Municipality();
-        $municipality->code = '002';
-        $municipality->description = 'Acatlán de Juárez';
-        $municipality->state()->associate(State::where('code', 'JC')->first());
-        $municipality->save();
-
-        $municipality = new Municipality();
-        $municipality->code = '003';
-        $municipality->description = 'Ahualulco de Mercado';
-        $municipality->state()->associate(State::where('code', 'JC')->first());
-        $municipality->save();
-
-        $municipality = new Municipality();
-        $municipality->code = '004';
-        $municipality->description = 'Amacueca';
-        $municipality->state()->associate(State::where('code', 'JC')->first());
-        $municipality->save();
-
-        $municipality = new Municipality();
-        $municipality->code = '005';
-        $municipality->description = 'Amatitán';
-        $municipality->state()->associate(State::where('code', 'JC')->first());
-        $municipality->save();
+        $municipios = Storage::disk('local')->get('public/municipios.csv');
+        $municipios = explode("\r\n", $municipios);
+        if ($municipios[count($municipios) - 1] == "") {
+            array_pop($municipios);
+        }
+        foreach ($municipios as $municipio) {
+            $municipio = explode("\",\"", $municipio);
+            $municipio = str_replace("\"", "", $municipio);
+            $municipality = new Municipality();
+            $municipality->code = $municipio[0];
+            $municipality->description = $municipio[1];
+            if (State::where('code', $municipio[2])->first()) {
+                $municipality->state()->associate(State::where('code', $municipio[2])->first());
+            } else {
+                dd($municipio[0], $municipio[1], $municipio[2]);
+            }
+            $municipality->save();
+        }
     }
 }

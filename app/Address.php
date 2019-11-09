@@ -47,6 +47,16 @@ class Address extends Model
     }
 
     /**
+     * Zip codes relationship (One to many - Inverse).
+     * 
+     * @return \App\ZipCode
+     */
+    public function zip_code()
+    {
+        return $this->belongsTo(ZipCode::class);
+    }
+
+    /**
      * Localities relationship (One to many - Inverse).
      * 
      * @return \App\Locality

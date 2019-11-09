@@ -41,4 +41,14 @@ class Municipality extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    /**
+     * Zip codes relationship (One to many - Inverse).
+     * 
+     * @return \App\ZipCode
+     */
+    public function zip_code()
+    {
+        return $this->belongsTo(ZipCode::class);
+    }
 }
