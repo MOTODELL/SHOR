@@ -28,7 +28,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="divider">Divididor</li>
                         @can('view-icons')
                             <li class="{{ (request()->is('icons')) ? 'active' : '' }}">
                                 <a href="{{ route('icons') }}">
@@ -37,34 +36,29 @@
                                 </a>
                             </li>
                         @endcan
+                        <li class="divider">Divididor</li>
+                        <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
+                            <a href="{{ route('dates.index') }}">
+                                <i class="icon zmdi zmdi-calendar-alt"></i>
+                                <span>Citas</span>
+                            </a>
+                        </li>
+                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
+                            <a href="{{ route('causes.index') }}">
+                                <i class="icon fas fa-book-medical"></i>
+                                <span>Causes</span>
+                            </a>
+                        </li>
                         <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
                             <a href="{{ route('patients.index') }}">
                                 <i class="icon zmdi zmdi-male-female"></i>
                                 <span>Pacientes</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
-                            <a href="{{ route('doctors.index') }}">
-                                <i class="icon fas fa-user-md"></i>
-                                <span>Doctores</span>
-                            </a>
-                        </li>
-                        {{-- <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
-                            <a href="{{ route('doctors.index') }}">
-                                <i class="icon fas fa-briefcase-medical"></i>
-                                <span>Urgencias</span>
-                            </a>
-                        </li> --}}
-                        <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
-                            <a href="{{ route('causes.index') }}">
-                                <i class="icon fas fa-book-medical"></i>
-                                <span>Causas</span>
-                            </a>
-                        </li>
                         <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
                             <a href="{{ route('dependencies.index') }}">
-                                <i class="icon fas fa-clinic-medical"></i>
-                                <span>Áreas médicas</span>
+                                <i class="icon fas fa-briefcase-medical"></i>
+                                <span>Servicios</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('users*')) ? 'active' : '' }}">

@@ -18,13 +18,13 @@ class CreatePatientsTable extends Migration
             $table->string('name');
             $table->string('paternal_lastname');
             $table->string('maternal_lastname');
-            $table->string('curp');
-            $table->date('birthdate');
-            $table->unsignedInteger('birthplace_id');
-            $table->char('sex', 1);
+            $table->char('curp', 18);
+            $table->char('phone', 14);
+            $table->date('birthdate')->nullable();
+            $table->unsignedInteger('birthplace_id')->nullable();
+            $table->char('sex', 1)->nullable();
             $table->uuid('ssn_id');
             $table->unsignedInteger('address_id');
-            $table->string('phone');
             $table->timestamps();
             $table->softDeletes();
         });

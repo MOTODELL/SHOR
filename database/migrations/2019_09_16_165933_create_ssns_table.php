@@ -17,10 +17,7 @@ class CreateSsnsTable extends Migration
             $table->uuid('id')->primary();
             $table->unsignedInteger('ssn_type_id');
             $table->string('ssn');
-            $table->bigInteger('number');
-            $table->string('kinship');
-            $table->date('date_start')->nullable();
-            $table->date('date_end')->nullable();
+            $table->char('number', 1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -53,10 +53,30 @@
 							</div>
 							<div class="row">
 								<div class="col">
+									<div class="alert alert-grey alert-simple border-0 shadow-none">
+										<div class="icon"><i class="icon fas fa-fingerprint"></i></div>
+										<div class="message">
+											<span class="user-timeline-date">CURP</span>
+											<div class="user-timeline-title">{{ $user->curp }}</div>
+										</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="alert alert-info alert-simple border-0 shadow-none">
+										<div class="icon"><i class="zmdi zmdi-phone"></i></div>
+										<div class="message">
+											<span class="user-timeline-date">Teléfono</span>
+											<div class="user-timeline-title">{{ $user->phone }}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
 									<div class="alert alert-success alert-simple border-0 shadow-none">
 										<div class="icon"><i class="zmdi zmdi-city-alt zmdi-hc-lg"></i></div>
 										<div class="message">
-											<span class="user-timeline-date">Area a la que pertenece</span>
+											<span class="user-timeline-date">Área de servicio</span>
 											<div class="user-timeline-title">{{ (!$user->getDependency() == '') ? $user->getDependency() : ''  }}</div>
 										</div>
 									</div>
@@ -113,17 +133,17 @@
 											</span>
 										@enderror
 									</div>
+									<span class="text-primary h4 mb-0 col-12">Sino desea cambiar su contraseña, favor de dejar los campos en blanco.</span>
+									<hr width="100%" class="mt-1">
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="username">{{ __('Nombre de usuario') }}</label>
-										<input id="username" type="text" class="form-control form-control-lg @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" required autocomplete="username" placeholder="example123">
+										<input id="username" type="text" class="form-control form-control-lg @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" readonly autocomplete="username" placeholder="example123">
 										@error('username')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
 											</span>
 										@enderror
 									</div>
-									<span class="text-primary h4 mb-0 col-12">Sino desea cambiar su contraseña, favor de dejar los campos en blanco.</span>
-									<hr width="100%" class="mt-1">
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="password">{{ __('Contraseña') }}</label>
 										<input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="********">

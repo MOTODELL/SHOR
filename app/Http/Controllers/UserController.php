@@ -61,7 +61,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $request->user()->authorizeRoles('admin');
-
         $user = new User();
         if ($request->input('password') == $request->input('password_confirmation')) {
             $user->password = Hash::make($request->input('password'));
@@ -73,8 +72,13 @@ class UserController extends Controller
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
         $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
         $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
+        if ($request->filled('professional_id')) {
+            $user->professional_id = $request->input('professional_id');
+        }
+        $user->curp = strtoupper($request->input('curp'));
+        $user->phone = $request->input('phone');
         $user->email = $request->input('email');
-        if ($request->input('role') != 'admin') {
+        if ($request->input('role') == 'user') {
             $dependency = Dependency::where('name', $request->input('dependency'))->first();
             $user->dependency()->associate($dependency);
         }
@@ -136,6 +140,11 @@ class UserController extends Controller
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
         $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
         $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
+        if ($request->filled('professional_id')) {
+            $user->professional_id = $request->input('professional_id');
+        }
+        $user->curp = strtoupper($request->input('curp'));
+        $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         if ($request->input('role') != 'admin') {
             $dependency = Dependency::where('name', $request->input('dependency'))->first();

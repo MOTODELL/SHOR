@@ -66,44 +66,16 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="birthdate"><span class="text-danger pr-1">*</span>{{ __('Fecha de nacimiento') }}</label>
-                        <div class="input-group date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd" data-date="1979-09-16">
-                            <input type="text" name="birthdate" id="birthdate" class="form-control" size="16" value="" readonly>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="icon-th mdi mdi-calendar"></i>
-                                </button>
-                            </div>
-                        </div>
-                        @error('birthdate')
+                        <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
+                        <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}" required placeholder="MAVA000804MMNNRRNA9">
+                        @error('curp')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-                        <div>
-                            <label>
-                                <span class="text-danger pr-1">*</span>
-                                {{ __('Sexo') }}
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
-                                <input type="radio" name="sex" id="h" value="h" class="custom-control-input">
-                                <span class="custom-control-label">
-                                    <i class="icon fas fa-mars"></i>
-                                </span>
-                            </label>
-                            <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
-                                <input type="radio" name="sex" id="m" value="m" class="custom-control-input" >
-                                <span class="custom-control-label">
-                                    <i class="icon fas fa-venus"></i>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                    
+                    {{-- <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
                         <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="(999) 999-9999">
                         @error('phone')
@@ -203,7 +175,7 @@
                             <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
                             <span class="h4 my-0">Guardar</span>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </form>
         </div>

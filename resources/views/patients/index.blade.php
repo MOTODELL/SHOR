@@ -177,7 +177,7 @@
 	<script src="{{ asset('lib/datatables/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}" type="text/javascript"></script>
 @endpush
-<div class="modal fade colored-header colored-header-primary" id="show-patient" tabindex="-1" role="dialog">
+{{-- <div class="modal fade colored-header colored-header-primary" id="show-patient" tabindex="-1" role="dialog">
 	<div class="modal-dialog full-width">
 		<div class="modal-content">
 			<div class="modal-header modal-header-colored">
@@ -396,4 +396,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}

@@ -21,6 +21,8 @@ class UsersTableSeeder extends Seeder
         $user->paternal_lastname = 'Ponce';
         $user->maternal_lastname = 'Ibarra';
         $user->username = 'charly12';
+        $user->phone = '(999) 999-9999';
+        $user->curp = 'CHLY120997HMNREMR2';
         $user->email = 'ch.1209@hotmail.com';
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
         $user->password = Hash::make('charly12');
@@ -35,6 +37,8 @@ class UsersTableSeeder extends Seeder
         $user->paternal_lastname = 'Martinez';
         $user->maternal_lastname = 'Vargas';
         $user->username = 'ang';
+        $user->phone = '(999) 999-9999';
+        $user->curp = 'MAVA000804MMNRRNA9';
         $user->email = 'angelesmava0@gamil.com';
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
         $user->password = Hash::make('123');

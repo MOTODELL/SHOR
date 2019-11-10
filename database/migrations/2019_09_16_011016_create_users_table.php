@@ -19,8 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('avatar');
             $table->string('paternal_lastname');
             $table->string('maternal_lastname');
+            $table->char('curp', 18)->nullable();
             $table->string('username');
             $table->string('email', 100); //MySQL
+            $table->char('phone', 14)->nullable();
+            $table->string('professional_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('dependency_id')->nullable();
