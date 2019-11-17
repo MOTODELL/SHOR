@@ -27,7 +27,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <legend class="my-0 font-weight-light">Datos personales</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -67,59 +67,6 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="birthdate"><span class="text-danger pr-1">*</span>{{ __('Fecha de nacimiento') }}</label>
-                        <div class="input-group date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd" data-date="1979-09-16">
-                            <input type="text" name="birthdate" id="birthdate" value="{{ $patient->birthdate }}" class="form-control" readonly>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="icon-th mdi mdi-calendar"></i>
-                                </button>
-                            </div>
-                        </div>
-                        @error('birthdate')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center">
-                        <div>
-                            <label>
-                                <span class="text-danger pr-1">*</span>
-                                {{ __('Sexo') }}
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            @if ($patient->sex == 'h')
-                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
-                                    <input type="radio" name="sex" id="h" value="h" class="custom-control-input" checked>
-                                    <span class="custom-control-label">
-                                        <i class="icon fas fa-mars"></i>
-                                    </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
-                                    <input type="radio" name="sex" id="m" value="m" class="custom-control-input">
-                                    <span class="custom-control-label">
-                                        <i class="icon fas fa-venus"></i>
-                                    </span>
-                                </label>
-                            @else
-                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Hombre">
-                                    <input type="radio" name="sex" id="h" value="h" class="custom-control-input">
-                                    <span class="custom-control-label">
-                                        <i class="icon fas fa-mars"></i>
-                                    </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-radio-icon custom-control-inline" data-toggle="tooltip" data-placement="bottom" title="Mujer">
-                                    <input type="radio" name="sex" id="m" value="m" class="custom-control-input" checked>
-                                    <span class="custom-control-label">
-                                        <i class="icon fas fa-venus"></i>
-                                    </span>
-                                </label>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
                         <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ $patient->phone }}" required autocomplete="phone" placeholder="(999) 999-9999">
                         @error('phone')
@@ -128,30 +75,7 @@
                             </span>
                         @enderror
                     </div>
-                    {{-- <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electrónico') }}</label>
-                        <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div> --}}
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="birthplace"><span class="text-danger pr-1">*</span>{{ __('Lugar de nacimiento') }}</label>
-                        <div>
-                            <select class="select2 select2-lg" name="birthplace" id="birthplace">
-                                @foreach ($states as $state)
-                                    @if ($state->code == $patient->birthplace->code)
-                                        <option value="{{ $state->code }}" selected>{{ $state->code }} - {{ $state->description }}</option>
-                                        @else
-                                        <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <legend><h4 class="mb-0">Número del seguro social</h4></legend>
+                    <legend class="my-0 font-weight-light">Datos del seguro social</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -178,47 +102,15 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="kinship"><span class="text-danger pr-1">*</span>{{ __('Número de paréntesco') }}</label>
-                        <input id="kinship" type="text" data-mask="kinship" class="form-control form-control-lg text-uppercase @error('kinship') is-invalid @enderror" name="kinship" value="{{ $patient->ssn->kinship }}" required placeholder="1">
-                        @error('kinship')
+                        <label for="number"><span class="text-danger pr-1">*</span>{{ __('Número de paréntesco') }}</label>
+                        <input id="number" type="text" data-mask="number" class="form-control form-control-lg text-uppercase @error('number') is-invalid @enderror" name="number" value="{{ $patient->ssn->number }}" required placeholder="1">
+                        @error('number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="date_start"><span class="text-danger pr-1">*</span>{{ __('Fecha de inicio') }}</label>
-                        <div class="input-group date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd">
-                            <input type="text" name="date_start" id="date_start" class="form-control" value="{{ $patient->ssn->date_start }}" readonly>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="icon-th mdi mdi-calendar"></i>
-                                </button>
-                            </div>
-                        </div>
-                        @error('date_start')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="date_end"><span class="text-danger pr-1">*</span>{{ __('Fecha de finalización') }}</label>
-                        <div class="input-group date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd">
-                            <input type="text" name="date_end" id="date_end" class="form-control" value="{{ $patient->ssn->date_end }}" readonly>
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary">
-                                    <i class="icon-th mdi mdi-calendar"></i>
-                                </button>
-                            </div>
-                        </div>
-                        @error('date_end')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <legend><h4 class="mb-0">Domicilio</h4></legend>
+                    <legend class="my-0 font-weight-light">Domicilio</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">

@@ -49,12 +49,7 @@ class UpdateUserRequest extends FormRequest
             'phone' => [
                 'required',
                 'size:14'
-            ],
-            'username' => [
-                'required',
-                "unique:users,username,$id",
-                'min:8'
-            ],
+            ]
         ];
     }
 }

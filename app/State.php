@@ -33,6 +33,16 @@ class State extends Model
     }
 
     /**
+     * Users relationship (One to many).
+     * 
+     * @return \App\Patient
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
      * Municipality relationship (One to many).
      * 
      * @return \App\Municipality

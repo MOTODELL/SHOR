@@ -26,7 +26,7 @@
             <form method="POST" action="{{ route('patients.store') }}">
                 @csrf
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <legend class="my-0 font-weight-light">Datos personales</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -74,7 +74,7 @@
                             </span>
                         @enderror
                     </div>
-                    <legend><h4 class="mb-0">Número del seguro social</h4></legend>
+                    <legend class="my-0 font-weight-light">Datos del seguro social</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -97,7 +97,7 @@
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="number"><span class="text-danger pr-1">*</span>{{ __('Orden de afiliación') }}</label>
+                        <label for="number"><span class="text-danger pr-1">*</span>{{ __('Número de integrante') }}</label>
                         <input id="number" type="text" data-mask="number" class="form-control form-control-lg text-uppercase @error('number') is-invalid @enderror" name="number" required placeholder="1">
                         @error('number')
                             <span class="invalid-feedback" role="alert">
@@ -105,7 +105,7 @@
                             </span>
                         @enderror
                     </div>
-                    <legend><h4 class="mb-0">Domicilio</h4></legend>
+                    <legend class="my-0 font-weight-light">Domicilio</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">

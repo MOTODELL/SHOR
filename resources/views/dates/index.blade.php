@@ -4,87 +4,85 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Pacientes</h2>
+    <h2 class="page-head-title">Citas</h2>
 @endsection
 @section('content')
 	<div class="card card-table">
 		<div class="card-header">
 			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('patients.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo paciente">
+				<a class="btn btn-primary pt-1" href="{{ route('dates.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva cita">
 					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-					<span class="h4 my-0">Nuevo</span>
+					<span class="h4 my-0">Nueva</span>
 				</a>
 			</div>
 		</div>
+		{{-- <div class="col-12 col-lg-6 table-filters pb-xl-4"><span class="table-filter-title">Privilegios</span>
+			<div class="filter-container">
+				<div class="col-12">
+					@foreach ($roles as $role)
+						<div class="custom-control custom-checkbox custom-control-inline">
+							<input class="custom-control-input" type="checkbox" id="check'.{{ $role->name }}">
+							<label class="custom-control-label" for="check'.{{ $role->name }}">{{ $role->description }}</label>
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div> --}}
 		<div class="card-body">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
 							<th style="width:5%;">
-								<div class="custom-control custom-control-sm custom-checkbox be-select-all">
+	              <div class="custom-control custom-control-sm custom-checkbox be-select-all">
 									<input class="custom-control-input" type="checkbox" id="check1">
 									<label class="custom-control-label" for="check1"></label>
-								</div>
+	              </div>
 							</th>
-							<th style="width:5%;">Sexo</th>
-							<th style="width:15%;">CURP</th>
+							<th style="width:10%;">Folio</th>
 							<th style="width:20%;">Nombre completo</th>
-							<th style="width:10%;">Teléfono</th>
-							<th style="width:15%;">Lugar de nacimiento</th>
-							<th style="width:15%;">Domicilio</th>
+							<th style="width:20%;">Día de atención</th>
+							<th style="width:20%;">Diagnostico inicial</th>
+							<th style="width:10%;">Estado</th>
 							<th style="width:15%;"></th>
 						</tr>
 					</thead>
 					<tbody>
-					@foreach ($patients as $patient)
+					@foreach ($dates as $date)
 						<tr class="success done">
 							<td>
 								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check'.{{$patient->id}}">
-									<label class="custom-control-label" for="check'.{{$patient->id}}"></label>
+									<input class="custom-control-input" type="checkbox" id="check'.{{$date->id}}">
+									<label class="custom-control-label" for="check'.{{$date->id}}"></label>
 								</div>
 							</td>
-								@php
-										if($patient->sex === "h") {
-											$icon = 'mars';
-											$title = 'Hombre';
-										} else {
-											$icon = 'venus';
-											$title = 'Mujer';
-										}
-								@endphp
-								<td class="cell-detail" data-toggle="tooltip" data-placement="left" title="{{$title}}">
-									<i class="icon fas fa-{{$icon}} zmdi-hc-lg"></i>
-								</td>
 							<td class="cell-detail">
-								<span>{{ $patient->curp }}</span>
+								<span>{{ $date->folio }}</span>
 							</td>
-							<td class="patient-avatar cell-detail patient-info">
-								{{-- <img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($patient->avatar) }}" alt="{{ asset($patient->name) }}"> --}}
-								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
-							</td>
-							<td class="cell-detail" data-project="Bootstrap">
-								<span>{{ $patient->phone }}</span>
+							<td class="date-avatar cell-detail date-info">
+								<span>{{ $date->getPatient() }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $patient->getBirthplace() }}</span>
+								<span>{{ $date->attention_date }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $patient->getAddress() }}</span>
+								<span>{{ $date->diagnosis }}</span>
+							</td>
+							<td class="cell-detail">
+								<span>{{ $date->getStatus() }}</span>
 							</td>
 							<td class="text-right">
-								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<a href="{{ route('dates.edit', $date->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
-								<form action="{{ route('patients.destroy', $patient) }}" method="post" class="d-inline">
+								<form action="{{ route('dates.destroy', $date) }}" method="post" class="d-inline">
 									@csrf
 									@method('DELETE')
 									<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
 										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
 									</button>
 								</form>
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="bottom" title="Ver">
+								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-date" data-tooltip="tooltip" data-placement="bottom" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
 							</td>
@@ -95,7 +93,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade colored-header colored-header-primary" id="show-patient" tabindex="-1" role="dialog">
+	{{-- <div class="modal fade colored-header colored-header-primary" id="show-date" tabindex="-1" role="dialog">
 		<div class="modal-dialog full-width">
 			<div class="modal-content">
 				<div class="modal-header modal-header-colored">
@@ -295,7 +293,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 @endsection
 @push('scripts')
 	<script>$('[data-tooltip="tooltip"]').tooltip();</script>
@@ -309,7 +307,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: 'Paciente creado correctamente'
+				title: '¡Cita creada correctamente!'
 			});
 		</script>
 	@endif
@@ -324,7 +322,7 @@
 				buttonsStyling: false
 			});
 			Swal.fire({
-				title: '¿Deseas eliminar este paciente?',
+				title: '¿Deseas eliminar esta cita?',
 				text: "¡Esta acción no podrá ser revertida!",
 				type: 'warning',
 				showCancelButton: true,
@@ -337,7 +335,7 @@
 				if (result.value) {
 					Swal.fire(
 						'Eliminando...',
-						'Este paciente se eliminará para siempre.',
+						'Este cita se eliminará para siempre.',
 						'error'
 					);
 					$(btn).closest("form").submit();
@@ -363,10 +361,12 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: 'paciente Editado'
+				title: '¡Cita editada!'
 			});
 		</script>
 	@endif
+
+	<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>
@@ -374,7 +374,6 @@
 	<script src="{{ asset('lib/datatables/jszip/jszip.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/pdfmake/pdfmake.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/pdfmake/vfs_fonts.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('lib/jquery.niftymodals/js/jquery.niftymodals.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.colVis.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.print.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.html5.min.js') }}" type="text/javascript"></script>

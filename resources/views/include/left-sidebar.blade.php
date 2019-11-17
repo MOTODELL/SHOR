@@ -43,7 +43,13 @@
                                 <span>Citas</span>
                             </a>
                         </li>
-                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
+                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
+                            <a href="{{ route('doctors.index') }}">
+                                <i class="icon zmdi zmdi-calendar-alt"></i>
+                                <span>Doctor</span>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon fas fa-book-medical"></i>
                                 <span>Causes</span>

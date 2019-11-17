@@ -16,47 +16,23 @@
 				</a>
 			</div>
 		</div>
-		<div class="col-12 col-lg-6 table-filters pb-xl-4"><span class="table-filter-title">Privilegios</span>
-			<div class="filter-container">
-				<div class="col-12">
-					@foreach ($roles as $role)
-						<div class="custom-control custom-checkbox custom-control-inline">
-							<input class="custom-control-input" type="checkbox" id="check'.{{ $role->name }}">
-							<label class="custom-control-label" for="check'.{{ $role->name }}">{{ $role->description }}</label>
-						</div>
-					@endforeach
-				</div>
-			</div>
-		</div>
 		<div class="card-body">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
-							<th style="width:5%;">
-	              <div class="custom-control custom-control-sm custom-checkbox be-select-all">
-									<input class="custom-control-input" type="checkbox" id="check1">
-									<label class="custom-control-label" for="check1"></label>
-	              </div>
-							</th>
-							<th style="width:20%;">Nombre completo</th>
+							<th style="width:25%;">Nombre completo</th>
 							<th style="width:15%;">CURP</th>
 							<th style="width:15%;">Correo electrónico</th>
 							<th style="width:10%;">Teléfono</th>
 							<th style="width:13%;">Área de servicio</th>
-							<th style="width:10%;">Privilegios</th>
+							<th style="width:10%;">Tipo de usuario</th>
 							<th style="width:12%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 					@foreach ($users as $user)
 						<tr class="success done">
-							<td>
-								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check'.{{$user->id}}">
-									<label class="custom-control-label" for="check'.{{$user->id}}"></label>
-								</div>
-							</td>
 							<td class="user-avatar cell-detail user-info">
 								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
 								<span>{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
@@ -77,6 +53,9 @@
 								<span>{{ $user->getRole() }}</span>
 							</td>
 							<td class="text-right">
+								<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="bottom" title="Ver">
+									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
+								</span>
 								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
@@ -92,6 +71,98 @@
 						@endforeach
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade colored-header colored-header-primary" id="show-user" tabindex="-1" role="dialog">
+		<div class="modal-dialog full-width">
+			<div class="modal-content">
+				<div class="modal-header modal-header-colored">
+					<h3 class="modal-title">Información del paciente</h3>
+					<button class="close md-close" type="button" data-dismiss="modal" aria-hidden="true"><span class="mdi mdi-close"></span></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-row">
+						<legend class="mb-0 h4 mt-0 ml-2">Datos personales</legend>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Nombre completo</span>
+									<div class="user-timeline-title">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="icon fas fa-fingerprint"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">CURP</span>
+									<div class="user-timeline-title">{{ $user->curp }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="zmdi zmdi-calendar-alt zmdi-hc-lg"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Fecha de nacimiento</span>
+									<div class="user-timeline-title">{{ $user->birthdate }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon">
+									@if ($user->sex == 'm')
+										<i class="icon fas fa-venus"></i>
+									@else
+										<i class="icon fas fa-mars"></i>
+									@endif
+								</div>
+								<div class="message">
+									<span class="user-timeline-date">Sexo</span>
+									@if ($user->sex == 'm')
+										<div class="user-timeline-title">Mujer</div>
+										@else
+										<div class="user-timeline-title">Hombre</div>
+									@endif
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="icon fas fa-map-marker-alt"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Lugar de nacimiento</span>
+									<div class="user-timeline-title">{{ $user->getBirthplace() }}</div>
+								</div>
+							</div>
+						</div>
+						<legend class="mb-0 h4 mt-0 ml-2">Datos de contacto</legend>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="zmdi zmdi-phone zmdi-hc-lg"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Teléfono</span>
+									<div class="user-timeline-title">{{ $user->phone }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="zmdi zmdi-email zmdi-hc-lg"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Correo electrónico</span>
+									<div class="user-timeline-title">{{ $user->email }}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary md-close" type="button" data-dismiss="modal">Cerrar</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -165,7 +236,28 @@
 			});
 		</script>
 	@endif
-
+	<script>
+	$(document).ready(function(){
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+   $('#show-user').click(function(){
+     var user_id = $(this).attr("data-id");
+     $.ajax({
+       url:"/users",
+       method:"POST",
+       data: {user_id : user_id},
+       success:function(data){
+        //  $('#project-content').html(user);
+        //  console.log(user);
+        //  $('#show-user').modal("show");
+       }
+     });
+   });
+});
+	</script>
 	<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>

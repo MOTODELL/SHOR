@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\State;
+use App\Cause;
 use App\Doctor;
-use App\Address;
-use App\Viality;
-use App\Locality;
-use App\Municipality;
-use App\SettlementType;
+use App\Status;
+use App\Patient;
+use App\Service;
 use App\Http\Requests\StoreDoctorRequest;
 use Illuminate\Http\Request;
 
@@ -40,17 +38,15 @@ class DoctorController extends Controller
     public function create(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-        $vialities = Viality::all();
-        $states = State::all();
-        $municipalities = Municipality::all();
-        $localities = Locality::all();
-        $settlementTypes = SettlementType::all();
+        $causes = Cause::all();
+        $status = Status::all();
+        $services = Service::all();
+        $patients = Patient::all();
         return view('doctors.create', compact([
-            'vialities', 
-            'states', 
-            'municipalities', 
-            'localities', 
-            'settlementTypes'
+            'patients',
+            'services',
+            'status',
+            'causes'
         ]));
     }
 
@@ -63,31 +59,6 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-
-        $address = new Address();
-        $address->street = ucfirst($request->input('street'));
-        $address->number_ext = $request->input('number_ext');
-        if (filled('number_int')) {
-            $address->number_int = $request->input('number_int');
-        }
-        $address->colony = ucfirst($request->input('colony'));
-        $address->zip_code = $request->input('zip_code');
-        if ($request->filled('viality')) {
-            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
-        }
-        if ($request->filled('settlement_type')) {
-            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
-        }
-        if ($request->filled('locality')) {
-            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
-        }
-        if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
-        }
-        if ($request->filled('state')) {
-            $address->state()->associate(State::where('code', $request->input('state'))->first());
-        }
-        $address->save();
         
         $doctor = new Doctor();
         $doctor->name = ucfirst($request->input('name'));
@@ -127,20 +98,16 @@ class DoctorController extends Controller
      */
     public function edit(Request $request, Doctor $doctor)
     {
-        // dd($doctor->address->settlement_type->name);
         $request->user()->authorizeRoles('admin');
-        $vialities = Viality::all();
-        $states = State::all();
-        $municipalities = Municipality::all();
-        $localities = Locality::all();
-        $settlementTypes = SettlementType::all();
+        $causes = Cause::all();
+        $status = Status::all();
+        $services = Service::all();
+        $patients = Patient::all();
         return view('doctors.edit', compact([
-            'doctor',
-            'vialities', 
-            'states', 
-            'municipalities', 
-            'localities', 
-            'settlementTypes'
+            'patients', 
+            'services',
+            'status', 
+            'causes'
         ]));
     }
 
@@ -153,32 +120,6 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        $request->user()->authorizeRoles('admin');
-        // dd($request);
-        $address = $doctor->address;
-        $address->street = ucfirst($request->input('street'));
-        $address->number_ext = $request->input('number_ext');
-        if (filled('number_int')) {
-            $address->number_int = $request->input('number_int');
-        }
-        $address->colony = ucfirst($request->input('colony'));
-        $address->zip_code = $request->input('zip_code');
-        if ($request->filled('viality')) {
-            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
-        }
-        if ($request->filled('settlement_type')) {
-            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
-        }
-        if ($request->filled('locality')) {
-            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
-        }
-        if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
-        }
-        if ($request->filled('state')) {
-            $address->state()->associate(State::where('code', $request->input('state'))->first());
-        }
-        $address->save();
         
         $doctor->name = ucfirst($request->input('name'));
         $doctor->paternal_lastname = ucfirst($request->input('paternal_lastname'));
