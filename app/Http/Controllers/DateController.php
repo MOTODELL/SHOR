@@ -16,7 +16,6 @@ use App\Municipality;
 use App\SettlementType;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDateRequest;
-use App\ZipCode;
 
 class DateController extends Controller
 {
@@ -79,9 +78,7 @@ class DateController extends Controller
             $address->number_ext = $request->input('number_ext');
             $address->number_int = $request->input('number_int');
             $address->colony = $request->input('colony');
-            if (ZipCode::where('code', $request->input('zip_code'))->first()) {
-                $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
-            }
+            $address->zip_code = $request->input('zip_code');
             if ($request->filled('viality')) {
                 $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
             }
