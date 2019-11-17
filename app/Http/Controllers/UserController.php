@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Dependency;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Role;
 use App\User;
+use App\State;
+use Carbon\Carbon;
+use App\Dependency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
@@ -75,7 +77,15 @@ class UserController extends Controller
         if ($request->filled('professional_id')) {
             $user->professional_id = $request->input('professional_id');
         }
-        $user->curp = strtoupper($request->input('curp'));
+        if ($request->filled('curp')) {
+            $user->curp = strtoupper($request->input('curp'));
+            $yy = substr($request->input('curp'), 4, -12);
+            $mm = substr($request->input('curp'), 6, -10);
+            $dd = substr($request->input('curp'), 8, -8);
+            $user->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
+            $user->sex = substr($request->input('curp'), 10, -7);
+            $user->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
+        }
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         if ($request->input('role') == 'user') {
@@ -126,8 +136,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        dd($request);
         $request->user()->authorizeRoles('admin');
-
         if ($request->has('password')) {
             if ($request->input('password') == $request->input('password_confirmation')) {
                 $user->password = Hash::make($request->input('password'));
@@ -135,7 +145,6 @@ class UserController extends Controller
                 return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
             }
         }
-        $user->username = $request->input('username');
         $user->name = ucfirst($request->input('name'));
         $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
         $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
@@ -143,7 +152,15 @@ class UserController extends Controller
         if ($request->filled('professional_id')) {
             $user->professional_id = $request->input('professional_id');
         }
-        $user->curp = strtoupper($request->input('curp'));
+        if ($request->filled('curp')) {
+            $user->curp = strtoupper($request->input('curp'));
+            $yy = substr($request->input('curp'), 4, -12);
+            $mm = substr($request->input('curp'), 6, -10);
+            $dd = substr($request->input('curp'), 8, -8);
+            $user->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
+            $user->sex = substr($request->input('curp'), 10, -7);
+            $user->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
+        }
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         if ($request->input('role') != 'admin') {
@@ -153,7 +170,7 @@ class UserController extends Controller
             $user->dependency()->delete();
         }
         if ($user->save()) {
-            $user->roles()->attach(Role::where('name', $request->input('role'))->first());
+            $user->roles()->sync(Role::where('name', $request->input('role'))->first());
             return redirect()->route('users.index')->with('message-update', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);

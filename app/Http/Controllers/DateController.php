@@ -16,7 +16,6 @@ use App\Municipality;
 use App\SettlementType;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDateRequest;
-use App\ZipCode;
 
 class DateController extends Controller
 {
@@ -75,13 +74,13 @@ class DateController extends Controller
         // dd($request);
         if ($request->input('patient_id') == "") {
             $address = new Address();
-            $address->street = $request->input('street');
+            $address->street = ucfirst($request->input('street'));
             $address->number_ext = $request->input('number_ext');
-            $address->number_int = $request->input('number_int');
-            $address->colony = $request->input('colony');
-            if (ZipCode::where('code', $request->input('zip_code'))->first()) {
-                $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+            if ($request->filled('number_int')) {
+                $address->number_int = $request->input('number_int');
             }
+            $address->colony = ucfirst($request->input('colony'));
+            $address->zip_code = $request->input('zip_code');
             if ($request->filled('viality')) {
                 $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
             }
@@ -111,13 +110,14 @@ class DateController extends Controller
             $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
             $patient->phone = $request->input('phone');
             if ($request->filled('curp')) {
-                $patient->curp = strtoupper($request->input('curp'));
+                $curp = strtoupper($request->input('curp'));
+                $patient->curp = $curp;
                 $yy = substr($request->input('curp'), 4, -12);
                 $mm = substr($request->input('curp'), 6, -10);
                 $dd = substr($request->input('curp'), 8, -8);
-                // $patient->birthdate = $yy.'-'.$mm.'-'.$dd;
+                $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
                 $patient->sex = substr($request->input('curp'), 10, -7);
-                $patient->birthplace()->associate(State::where('code', substr($request->input('curp'), 11, -5))->first());
+                $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
                 $patient->ssn()->associate($ssn);
             }
             $patient->address()->associate($address);
@@ -134,7 +134,7 @@ class DateController extends Controller
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
         if($date->save()) {
-            return redirect()->route('dates.index')->with('message-create', 'Creado');
+            return redirect()->route('dates.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -238,7 +238,7 @@ class DateController extends Controller
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
         if($date->save()) {
-            return redirect()->route('dates.index')->with('message-create', 'Creado');
+            return redirect()->route('dates.index')->with('message-update', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

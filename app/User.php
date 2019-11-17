@@ -59,6 +59,15 @@ class User extends Authenticatable
         return 'string';
     }
 
+     public function getBirthplace()
+    {
+        $birthplace = $this->birthplace()->first();
+        if ($birthplace) {
+            return $birthplace->description;
+        }
+        return "";
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -97,6 +106,17 @@ class User extends Authenticatable
     public function dependency()
     {
         return $this->belongsTo(Dependency::class);
+    }
+
+    /**
+     * State relationship (One to Many - Inverse).
+     * 
+     * @return \App\State
+     */
+
+    public function birthplace()
+    {
+        return $this->belongsTo(State::class);
     }
 
     /*

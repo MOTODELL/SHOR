@@ -85,7 +85,7 @@
 									<div class="alert alert-warning alert-simple border-0 shadow-none">
 										<div class="icon"><i class="zmdi zmdi-shield-security zmdi-hc-lg"></i></div>
 										<div class="message">
-											<span class="user-timeline-date">Privilegios</span>
+											<span class="user-timeline-date">Tipo de usuario</span>
 											<div class="user-timeline-title">{{ auth()->user()->getRole() }}</div>
 										</div>
 									</div>
@@ -125,7 +125,16 @@
 										@enderror
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
-										<label for="email">{{ __('Correo electronico') }}</label>
+										<label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
+										<input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ $user->phone }}" required autocomplete="phone" placeholder="(999) 999-9999">
+										@error('phone')
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
+									<div class="form-group col-sm-12 col-md-6 col-lg-4">
+										<label for="email">{{ __('Correo electrónico') }}</label>
 										<input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" placeholder="ejemplo@correo.com">
 										@error('email')
 											<span class="invalid-feedback" role="alert">

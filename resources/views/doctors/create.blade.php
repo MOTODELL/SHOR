@@ -3,6 +3,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/select2/css/select2.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/bootstrap-slider/css/bootstrap-slider.min.css') }}"/>
+    <style scoped>
+        #diagnosis{
+            resize: vertical; 
+            min-height: 70px;
+            max-height: 100px;
+        }
+    </style>
 @endpush
 @section('header')
     <h2 class="page-head-title">Doctores</h2>
@@ -26,156 +33,108 @@
             <form method="POST" action="{{ route('doctors.store') }}">
                 @csrf
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <legend class="mb-0 h3 mt-0">Datos del paciente</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
-                        <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                        @error('name')
+                        <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre del paciente') }}</label>
+                            <div>
+                                <select class="select2 select2-lg" name="patient">
+                                    @foreach ($patients as $patient)
+                                        <option value="{{ $patient->id }}">{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->folio }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @error('patient')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div> 
+                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="date_start"><span class="text-danger pr-1">*</span>{{ __('Fecha de inicio') }}</label>
+                        <div class="input-group input-group-lg date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd">
+                            <input type="text" name="date_start" id="date_start" class="form-control" size="16" value="" readonly>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="icon-th mdi mdi-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                        @error('date_start')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
-                        <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
-                        @error('paternal_lastname')
+                        <label for="date_end"><span class="text-danger pr-1">*</span>{{ __('Fecha de finalización') }}</label>
+                        <div class="input-group input-group-lg date datetimepicker" data-start-view="4" data-min-view="2" data-date-format="yyyy-mm-dd">
+                            <input type="text" name="date_end" id="date_end" class="form-control" size="16" value="" readonly>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="icon-th mdi mdi-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                        @error('date_end')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
-                        <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
-                        @error('maternal_lastname')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="professional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
-                        <input id="professional_id" type="text" data-mask="professional_id" class="form-control form-control-lg @error('professional_id') is-invalid @enderror" name="professional_id" required placeholder="12345678">
-                        @error('professional_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
-                        <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}" required placeholder="MAVA000804MMNNRRNA9">
-                        @error('curp')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    
-                    {{-- <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
-                        <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="(999) 999-9999">
-                        @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electrónico') }}</label>
-                        <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <legend><h4 class="mb-0">Domicilio</h4></legend>
-                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
-                    <hr class="w-100 mt-0 mb-5">
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
+                        <label for="cause"><span class="text-danger pr-1">*</span>{{ __('Causes') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="viality">
-                                @foreach ($vialities as $viality)
-                                    <option value="{{ $viality->name }}">{{ $viality->description }}</option>
+                            <select class="select2 select2-lg" name="cause" id="cause">
+                                @foreach ($causes as $cause)
+                                    <option value="{{ $cause->code }}">{{ $cause->description }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de vialidad') }}</label>
-                        <input id="street" type="text" class="form-control form-control-lg" name="street" required placeholder="el venado">
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                        <input id="number_ext" type="text" class="form-control form-control-lg" name="number_ext" required placeholder="644">
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="number_int">{{ __('Número interior') }}</label>
-                        <input id="number_int" type="text" class="form-control form-control-lg" name="number_int" placeholder="44">
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
+                        <label for="service"><span class="text-danger pr-1">*</span>{{ __('Causes') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="settlement_type">
-                                @foreach ($settlementTypes as $settlementType)
-                                    <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
+                            <select class="select2 select2-lg" name="service" id="service">
+                                @foreach ($services as $service)
+                                    <option value="{{ $service->code }}">{{ $service->description }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="colony"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
-                        <input id="colony" type="text" class="form-control form-control-lg" name="colony" required placeholder="Las americas">
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                        <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" required placeholder="48290">
-                    </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
+                        <label for="status"><span class="text-danger pr-1">*</span>{{ __('Estado de la cita') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="locality">
-                                @foreach ($localities as $locality)
-                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                            <select class="select2 select2-lg" name="status" id="status">
+                                @foreach ($status as $state)
+                                    <option value="{{ $state->name }}">{{ $state->description }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
-                        <div>
-                            <select class="select2 select2-lg" name="municipality">
-                                @foreach ($municipalities as $municipality)
-                                    <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
-                                @endforeach
-                            </select>
+                        <label for="extra_cost"><span class="text-danger pr-1">*</span>{{ __('Costo extra') }}</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-prepend"><span class="input-group-text">$</span></span>
+                            <input id="extra_cost" type="text" data-mask="extra_cost" class="form-control form-control-lg text-uppercase @error('extra_cost') is-invalid @enderror" name="extra_cost" value="{{ old('extra_cost') }}"  placeholder="500">
+                            <span class="input-group-append"><span class="input-group-text">MXN</span></span>
                         </div>
+                        @error('extra_cost')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
-                        <div>
-                            <select class="select2 select2-lg" name="state">
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div id="observations" class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="observations"><span class="text-danger pr-1">*</span>{{ __('Observaciones') }}</label>
+                        <textarea id="observations" type="text" class="form-control @error('observations') is-invalid @enderror" placeholder="Dolor de cabeza..." name="observations" value="{{ old('observations') }}" rows="1" ></textarea>
+                        @error('observations')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    <div class="col-md-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('doctors.index') }}" class="btn btn-secondary pt-1 mr-5">
-                            <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
-                            <span class="h4 my-0">Regresar</span>
-                        </a>
-                        <button type="submit" class="btn btn-primary pt-1 mr-5">
-                            <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
-                            <span class="h4 my-0">Guardar</span>
-                        </button>
-                    </div> --}}
                 </div>
             </form>
         </div>

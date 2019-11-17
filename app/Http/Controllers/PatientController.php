@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
-use App\Locality;
-use App\Municipality;
-use App\Patient;
-use App\SettlementType;
 use App\Ssn;
-use App\SsnType;
 use App\State;
+use App\SsnType;
+use App\Address;
+use App\Patient;
 use App\Viality;
+use App\Locality;
+use Carbon\Carbon;
+use App\Municipality;
+use App\SettlementType;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -110,9 +111,9 @@ class PatientController extends Controller
             $yy = substr($request->input('curp'), 4, -12);
             $mm = substr($request->input('curp'), 6, -10);
             $dd = substr($request->input('curp'), 8, -8);
-            // $patient->birthdate = $yy.'-'.$mm.'-'.$dd;
+            $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
             $patient->sex = substr($request->input('curp'), 10, -7);
-            $patient->birthplace()->associate(State::where('code', substr($request->input('curp'), 11, -5))->first());
+            $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
             $patient->ssn()->associate($ssn);
         }
         $patient->address()->associate($address);
