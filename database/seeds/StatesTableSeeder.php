@@ -23,15 +23,25 @@ class StatesTableSeeder extends Seeder
         $state->code = 'BC';
         $state->description = 'Baja California';
         $state->save();
-
+        
         $state = new State();
         $state->code = 'BS';
         $state->description = 'Baja California Sur';
         $state->save();
-
+        
         $state = new State();
         $state->code = 'CC';
         $state->description = 'Campeche';
+        $state->save();
+        
+        $state = new State();
+        $state->code = 'CL';
+        $state->description = 'Coahuila de Zaragoza';
+        $state->save();
+
+        $state = new State();
+        $state->code = 'CM';
+        $state->description = 'Colima';
         $state->save();
 
         $state = new State();
@@ -47,16 +57,6 @@ class StatesTableSeeder extends Seeder
         $state = new State();
         $state->code = 'DF';
         $state->description = 'Ciudad de México';
-        $state->save();
-
-        $state = new State();
-        $state->code = 'CL';
-        $state->description = 'Coahuila';
-        $state->save();
-
-        $state = new State();
-        $state->code = 'CM';
-        $state->description = 'Colima';
         $state->save();
 
         $state = new State();
@@ -91,7 +91,7 @@ class StatesTableSeeder extends Seeder
 
         $state = new State();
         $state->code = 'MN';
-        $state->description = 'Michoacán';
+        $state->description = 'Michoacán de Ocampo';
         $state->save();
 
         $state = new State();
@@ -161,7 +161,7 @@ class StatesTableSeeder extends Seeder
 
         $state = new State();
         $state->code = 'VZ';
-        $state->description = 'Veracruz';
+        $state->description = 'Veracruz de Ignacio de la Llave';
         $state->save();
 
         $state = new State();

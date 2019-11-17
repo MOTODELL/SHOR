@@ -21,7 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string('number_int')->nullable();
             $table->unsignedInteger('settlement_type_id')->nullable();
             $table->string('colony')->nullable();
-            $table->string('zip_code')->nullable();
+            $table->unsignedInteger('zip_code_id')->nullable();
             $table->unsignedInteger('locality_id')->nullable();
             $table->unsignedInteger('municipality_id')->nullable();
             $table->unsignedInteger('state_id')->nullable();
