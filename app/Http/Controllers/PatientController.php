@@ -69,7 +69,7 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $request->user()->authorizeRoles('admin');
-
+        // dd($request);
         $address = new Address();
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
@@ -165,7 +165,6 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $request->user()->authorizeRoles('admin');
-
         $address = $patient->address();
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');

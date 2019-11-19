@@ -21,7 +21,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text pr-4" id="basic-addon1"><i class="icon zmdi zmdi-account zmdi-hc-lg text-primary"></i></span>
                             </div>
-                            <input class="form-control text-lowercase @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" type="text" placeholder="Usuario" autocomplete="off" autofocus>
+                            <input class="form-control @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" type="text" placeholder="Usuario" autocomplete="off" autofocus>
                             @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -54,11 +54,10 @@
                         </div>
                     </form>
                     <div class="splash-footer pb-2">
-                        <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+                        <a href="{{ route('password.request') }}">¿Olvidaste la contraseña?</a>
                     </div>
                 </div>
             </div>
-            {{-- <div class="splash-footer"><span>Don't have an account? <a href="#">Sign Up</a></span></div> --}}
         </div>
     </div>
 @endsection
