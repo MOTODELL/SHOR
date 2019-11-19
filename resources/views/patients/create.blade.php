@@ -199,6 +199,21 @@
     </div>
 @endsection
 @push('scripts')
+    <script>
+        function ssnTypeChangeVal() {
+        if( $('#ssn_type').val() != 'issste' ) {
+            $('#ssn').removeAttr('required');
+            $('#ssn').removeAttr('data-mask');
+        } else {
+            $('#ssn').attr('required');
+            $('#ssn').attr('data-mask');
+        }
+    }
+    $('#ssn_type').change(function() {
+        ssnTypeChangeVal();
+    });
+    ssnTypeChangeVal();
+    </script>
     <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
