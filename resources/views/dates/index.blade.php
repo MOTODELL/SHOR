@@ -1,34 +1,20 @@
 @extends('layouts.app')
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Citas</h2>
+<div class="d-flex justify-content-between align-items-center">
+		<h2 class="page-head-title">Citas</h2>
+		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('dates.create') }}" title="Nueva cita">
+			<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+			<span class="h4">Nueva cita</span>
+		</a>
+	</div>
 @endsection
 @section('content')
 	<div class="card card-table">
-		<div class="card-header">
-			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('dates.create') }}" data-toggle="tooltip" data-placement="right" title="Nueva cita">
-					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-					<span class="h4 my-0">Nueva</span>
-				</a>
-			</div>
-		</div>
-		{{-- <div class="col-12 col-lg-6 table-filters pb-xl-4"><span class="table-filter-title">Privilegios</span>
-			<div class="filter-container">
-				<div class="col-12">
-					@foreach ($roles as $role)
-						<div class="custom-control custom-checkbox custom-control-inline">
-							<input class="custom-control-input" type="checkbox" id="check'.{{ $role->name }}">
-							<label class="custom-control-label" for="check'.{{ $role->name }}">{{ $role->description }}</label>
-						</div>
-					@endforeach
-				</div>
-			</div>
-		</div> --}}
-		<div class="card-body">
+		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
@@ -365,8 +351,6 @@
 			});
 		</script>
 	@endif
-
-	<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

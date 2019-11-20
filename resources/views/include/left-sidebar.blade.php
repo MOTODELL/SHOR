@@ -5,13 +5,14 @@
             <div class="left-sidebar-scroll">
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
-                        <li class="divider pt-2">Menu</li>
+                        <li class="divider pt-2">Menú</li>
                         <li class="{{ (request()->is('/')) ? 'active' : '' }}">
-                            <a href="#"><i class="icon zmdi zmdi-home"></i>
+                            <a href="{{ route('home') }}">
+                                <i class="icon zmdi zmdi-home"></i>
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li class="parent">
+                        {{-- <li class="parent">
                             <a href="#">
                                 <i class="icon zmdi zmdi-face"></i>
                                 <span>Dropdown</span>
@@ -39,7 +40,7 @@
                                 </a>
                             </li>
                         @endcan
-                        <li class="divider">Divididor</li>
+                        <li class="divider">Divididor</li> --}}
                         <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
                             <a href="{{ route('dates.index') }}">
                                 <i class="icon zmdi zmdi-calendar-alt"></i>
@@ -52,12 +53,12 @@
                                 <span>Causes</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
+                        {{-- <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
                             <a href="{{ route('doctors.index') }}">
                                 <i class="icon fas fa-stethoscope"></i>
                                 <span>Diagnósticos</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
                             <a href="{{ route('patients.index') }}">
                                 <i class="icon zmdi zmdi-male-female"></i>

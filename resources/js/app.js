@@ -51,9 +51,6 @@ $(document).ready(function() {
             }
         });
     }
-    if ($('script[src="' + host + '/lib/jquery-ui/jquery-ui.min.js"]').length > 0) {
-        App.tableFilters();
-    }
     if ($('script[src="' + host + '/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"]').length > 0) {
         App.formElements();
     }

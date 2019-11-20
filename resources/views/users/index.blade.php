@@ -1,32 +1,30 @@
 @extends('layouts.app')
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Usuarios</h2>
+	<div class="d-flex justify-content-between align-items-center">
+		<h2 class="page-head-title">Usuarios</h2>
+		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('users.create') }}" title="Nuevo usuario">
+			<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+			<span class="h4">Nuevo usuario</span>
+		</a>
+	</div>
 @endsection
 @section('content')
 	<div class="card card-table">
-		<div class="card-header">
-			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('users.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo usuario">
-					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-					<span class="h4 my-0">Nuevo</span>
-				</a>
-			</div>
-		</div>
-		<div class="card-body">
+		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
 							<th style="width:25%;">Nombre completo</th>
-							<th style="width:15%;">CURP</th>
+							<th style="width:14%;">CURP</th>
 							<th style="width:15%;">Correo electrónico</th>
 							<th style="width:10%;">Teléfono</th>
-							<th style="width:13%;">Área de servicio</th>
-							<th style="width:10%;">Tipo de usuario</th>
+							<th style="width:12%;">Área de servicio</th>
+							<th style="width:12%;">Tipo de usuario</th>
 							<th style="width:12%;"></th>
 						</tr>
 					</thead>
@@ -53,10 +51,10 @@
 								<span>{{ $user->getRole() }}</span>
 							</td>
 							<td class="text-right">
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="bottom" title="Ver">
+								<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="left" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
-								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
 								<form action="{{ route('users.destroy', $user) }}" method="post" class="d-inline">
@@ -168,6 +166,7 @@
 	</div>
 @endsection
 @push('scripts')
+<script>$('[data-tooltip="tooltip"]').tooltip();</script>
 	@if (session('message-store'))
 		<script>
 			const Toast = Swal.mixin({
@@ -237,28 +236,27 @@
 		</script>
 	@endif
 	<script>
-	$(document).ready(function(){
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-   $('#show-user').click(function(){
-     var user_id = $(this).attr("data-id");
-     $.ajax({
-       url:"/users",
-       method:"POST",
-       data: {user_id : user_id},
-       success:function(data){
-        //  $('#project-content').html(user);
-        //  console.log(user);
-        //  $('#show-user').modal("show");
-       }
-     });
-   });
-});
+		$(document).ready(function(){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		$('#show-user').click(function(){
+			var user_id = $(this).attr("data-id");
+			$.ajax({
+				url:"/users",
+				method:"POST",
+				data: {user_id : user_id},
+				success:function(data){
+					//  $('#project-content').html(user);
+					//  console.log(user);
+					//  $('#show-user').modal("show");
+				}
+			});
+			});
+		});
 	</script>
-	<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

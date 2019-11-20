@@ -4,29 +4,21 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-  <h2 class="page-head-title">Causes</h2>
+	<div class="d-flex justify-content-between align-items-center">
+		<h2 class="page-head-title">Causes</h2>
+		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('causes.create') }}" title="Nuevo cause">
+			<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
+			<span class="h4">Nuevo cause</span>
+		</a>
+	</div>
 @endsection
 @section('content')
 <div class="card card-table">
-	<div class="card-header">
-		<div class="d-flex justify-content-center">
-			<a class="btn btn-primary pt-1" href="{{ route('causes.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo cause">
-				<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
-				<span class="h4 my-0">Nuevo</span>
-			</a>
-		</div>
-	</div>
 	<div class="card-body">
-		<div class="container-fluid pb-3">
+		<div class="container-fluid py-5">
 			<table class="table table-striped table-hover table-fw-widget dataTable">
 				<thead>
 					<tr>
-						<th style="width:5%;">
-							<div class="custom-control custom-control-sm custom-checkbox">
-								<input class="custom-control-input" type="checkbox" id="check5">
-								<label class="custom-control-label" for="check5"></label>
-							</div>
-						</th>
 						<th style="width:35%;">Código</th>
 						<th style="width:50%;">Descripción</th>
 						<th style="width:10%;"></th>
@@ -35,12 +27,6 @@
 				<tbody>
 					@foreach ($causes as $cause)
 						<tr class="success done">
-							<td>
-								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check6">
-									<label class="custom-control-label" for="check6"></label>
-								</div>
-							</td>
 							<td class="cell-detail" data-project="Bootstrap">
 								<span>{{ $cause->code }}</span>
 							</td>

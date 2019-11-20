@@ -11,6 +11,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/material-design-icons/css/material-design-iconic-font.min.css') }}" />
+    <style>
+		.dt-buttons.btn-group {
+			width: 25%;
+		}
+		.dataTables_wrapper .dataTables_filter {
+			text-align: right;
+			width: 75%;
+			display: inline-block;
+		}
+		</style>
     @stack('styles')
     <link rel="stylesheet" href="{{ asset('css/beagle.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css" />

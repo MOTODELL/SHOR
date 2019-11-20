@@ -1,80 +1,47 @@
 @extends('layouts.app')
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Pacientes</h2>
+	<div class="d-flex justify-content-between align-items-center">
+		<h2 class="page-head-title">Pacientes</h2>
+		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('patients.create') }}" title="Nuevo paciente">
+			<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+			<span class="h4">Nuevo paciente</span>
+		</a>
+	</div>
 @endsection
 @section('content')
 	<div class="card card-table">
-		<div class="card-header">
-			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('patients.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo paciente">
-					<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-					<span class="h4 my-0">Nuevo</span>
-				</a>
-			</div>
-		</div>
-		<div class="card-body">
+		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
-							<th style="width:5%;">
-								<div class="custom-control custom-control-sm custom-checkbox be-select-all">
-									<input class="custom-control-input" type="checkbox" id="check1">
-									<label class="custom-control-label" for="check1"></label>
-								</div>
-							</th>
-							<th style="width:5%;">Sexo</th>
-							<th style="width:15%;">CURP</th>
-							<th style="width:20%;">Nombre completo</th>
-							<th style="width:10%;">Teléfono</th>
-							<th style="width:15%;">Lugar de nacimiento</th>
-							<th style="width:15%;">Domicilio</th>
+							<th style="width:20%;">Número de seguro social</th>
+							<th style="width:20%;">CURP</th>
+							<th style="width:35%;">Nombre completo</th>
 							<th style="width:15%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 					@foreach ($patients as $patient)
 						<tr class="success done">
-							<td>
-								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check'.{{$patient->id}}">
-									<label class="custom-control-label" for="check'.{{$patient->id}}"></label>
-								</div>
+							<td class="cell-detail" data-toggle="tooltip" data-placement="left" title="ssn">
+								<span>{{ $patient->ssn['ssn'] }}</span>
 							</td>
-								@php
-										if($patient->sex === "h") {
-											$icon = 'mars';
-											$title = 'Hombre';
-										} else {
-											$icon = 'venus';
-											$title = 'Mujer';
-										}
-								@endphp
-								<td class="cell-detail" data-toggle="tooltip" data-placement="left" title="{{$title}}">
-									<i class="icon fas fa-{{$icon}} zmdi-hc-lg"></i>
-								</td>
 							<td class="cell-detail">
 								<span>{{ $patient->curp }}</span>
 							</td>
 							<td class="patient-avatar cell-detail patient-info">
-								{{-- <img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($patient->avatar) }}" alt="{{ asset($patient->name) }}"> --}}
 								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
 							</td>
-							<td class="cell-detail" data-project="Bootstrap">
-								<span>{{ $patient->phone }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $patient->getBirthplace() }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $patient->getAddress() }}</span>
-							</td>
 							<td class="text-right">
-								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
+									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
+								</span>
+								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
 								<form action="{{ route('patients.destroy', $patient) }}" method="post" class="d-inline">
@@ -84,9 +51,6 @@
 										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
 									</button>
 								</form>
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="bottom" title="Ver">
-									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
-								</span>
 							</td>
 						</tr>
 						@endforeach

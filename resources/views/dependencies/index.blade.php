@@ -2,23 +2,13 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
 		<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
-		<style scoped>
-		.dt-buttons.btn-group {
-			width: 25%;
-		}
-		.dataTables_wrapper .dataTables_filter {
-			text-align: right;
-			width: 75%;
-			display: inline-block;
-		}
-		</style>
 @endpush
 @section('header')
 	<div class="d-flex justify-content-between align-items-center">
 		<h2 class="page-head-title">Servicios</h2>
-		<a class="btn btn-lg btn-primary pt-1 shadow-sm" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo servicio">
+		<a class="btn btn-lg btn-primary pt-1 shadow-sm" href="{{ route('dependencies.create') }}" title="Nuevo servicio">
 			<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
-			<span class="h4">Nuevo</span>
+			<span class="h4">Nuevo servicio</span>
 		</a>
 	</div>
 @endsection
