@@ -15,12 +15,18 @@
                 </div>
                 <div class="card-body">
                     <form>
-                        <p>Se enviara un código al correo electrónico proporcionado.</p>
+                        <legend class="font-weight-light text-muted">Restablecer contraseña</legend>
                         <div class="form-group pt-4">
                             <input class="form-control" type="email" name="email" required placeholder="Correo eletrónico" autocomplete="off">
                         </div>
                         {{-- <p class="pt-1 pb-4">Don't remember your email? <a href="#">Contact Support</a>.</p> --}}
-                        <div class="form-group pt-1"><a class="btn btn-block btn-primary btn-xl" href="index.html">Recuperar contraseña</a></div>
+                        <div class="form-group pt-1">
+                            <a  href="" class="btn btn-secondary pt-1 mr-5">
+                                <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                                <span class="h4 my-0">Regresar</span>
+                            </a>
+                            <a class="btn btn-primary btn-xl" href="index.html">Recuperar contraseña</a>
+                        </div>
                     </form>
                 </div>
             </div>

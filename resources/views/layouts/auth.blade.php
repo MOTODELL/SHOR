@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/material-design-icons/css/material-design-iconic-font.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/beagle.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css" />
     @stack('styles')
 </head>
 

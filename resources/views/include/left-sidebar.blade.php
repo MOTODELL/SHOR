@@ -1,12 +1,15 @@
 <div class="be-left-sidebar">
-    <div class="left-sidebar-wrapper"><a class="left-sidebar-toggle" href="#">Primary Header</a>
+    <div class="left-sidebar-wrapper">
+        <a class="left-sidebar-toggle" href="#">Primary Header</a>
         <div class="left-sidebar-spacer">
             <div class="left-sidebar-scroll">
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menu</li>
-                        <li class="{{ (request()->is('/')) ? 'active' : '' }}"><a href="#"><i class="icon zmdi zmdi-home"></i><span>Inicio</span></a>
-                        
+                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                            <a href="#"><i class="icon zmdi zmdi-home"></i>
+                                <span>Inicio</span>
+                            </a>
                         </li>
                         <li class="parent">
                             <a href="#">
@@ -43,16 +46,16 @@
                                 <span>Citas</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
-                            <a href="{{ route('doctors.index') }}">
-                                <i class="icon zmdi zmdi-calendar-alt"></i>
-                                <span>Doctor</span>
-                            </a>
-                        </li>
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon fas fa-book-medical"></i>
                                 <span>Causes</span>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
+                            <a href="{{ route('doctors.index') }}">
+                                <i class="icon fas fa-stethoscope"></i>
+                                <span>Diagnósticos</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">

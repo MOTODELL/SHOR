@@ -1,8 +1,11 @@
 <footer class="be-footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 mb-3 pt-4"><img class="mb-3" src="assets/img/logo.png" alt="Logo-symbol">
-                <p class="mb-3">Autum - ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            <div class="col-md-4 mb-3 pt-4">
+                <img class="mb-3" src="assets/img/logo.png" alt="Logo-symbol">
+                <p class="mb-3">
+                    Autum - ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+                </p>
                 <p>&copy; 2018 Your Company</p>
             </div>
             <div class="col-md-7 offset-md-1 pt-4">

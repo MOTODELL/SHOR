@@ -1,58 +1,54 @@
 @extends('layouts.app')
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
+		<link rel="stylesheet" type="text/css" href="{{ asset('lib/datatables/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"/>
+		<style scoped>
+		.dt-buttons.btn-group {
+			width: 25%;
+		}
+		.dataTables_wrapper .dataTables_filter {
+			text-align: right;
+			width: 75%;
+			display: inline-block;
+		}
+		</style>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Servicios</h2>
+	<div class="d-flex justify-content-between align-items-center">
+		<h2 class="page-head-title">Servicios</h2>
+		<a class="btn btn-lg btn-primary pt-1 shadow-sm" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo servicio">
+			<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
+			<span class="h4">Nuevo</span>
+		</a>
+	</div>
 @endsection
 @section('content')
-    <div class="card card-table">
-		<div class="card-header">
-			<div class="d-flex justify-content-center">
-				<a class="btn btn-primary pt-1" href="{{ route('dependencies.create') }}" data-toggle="tooltip" data-placement="right" title="Nuevo servicio">
-					<i class="zmdi zmdi-collection-plus zmdi-hc-lg pr-1"></i>
-					<span class="h4 my-0">Nuevo</span>
-				</a>
-			</div>
-		</div>
-        <div class="card-body">
+	<div class="card card-table">
+		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
 			    <table class="table table-striped table-hover table-fw-widget dataTable">
     				<thead>
     					<tr>
-    						<th style="width:5%;">
-                                <div class="custom-control custom-control-sm custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="check5">
-                                <label class="custom-control-label" for="check5"></label>
-                                </div>
-                            </th>
-                            <th style="width:85%;">Nombre</th>
-                            <th style="width:10%;"></th>
+								<th style="width:88%;">Nombre</th>
+								<th style="width:12%;"></th>
     					</tr>
     				</thead>
     				<tbody>
     				@foreach ($dependencies as $dependency)
     					<tr class="success done">
-    						<td>
-    							<div class="custom-control custom-control-sm custom-checkbox">
-    								<input class="custom-control-input" type="checkbox" id="check6">
-    								<label class="custom-control-label" for="check6"></label>
-    							</div>
-    						</td>
-                            <td class="cell-detail" data-project="Bootstrap">
-                                <span>{{ $dependency->description }}</span>
-                            </td>
+								<td class="cell-detail" data-project="Bootstrap">
+									<span>{{ $dependency->description }}</span>
+								</td>
     						<td class="text-right">
-                                <a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
-                                    <i class="zmdi zmdi-edit zmdi-hc-lg"></i>
-                                </a>
+									<a href="{{ route('dependencies.edit', $dependency->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+										<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
+									</a>
     							<form action="{{ route('dependencies.destroy', $dependency) }}" method="post" class="d-inline">
     								@csrf
     								@method('DELETE')
     								<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-                                        <i class="zmdi zmdi-delete zmdi-hc-lg"></i>
-                                    </button>
+											<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+										</button>
     							</form>
     						</td>
     					</tr>
@@ -60,8 +56,8 @@
     				</tbody>
     			</table>
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 @endsection
 @push('scripts')
 	@if (session('message-store'))

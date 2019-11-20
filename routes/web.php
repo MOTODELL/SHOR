@@ -28,13 +28,10 @@ Route::resources([
     'patients' => 'PatientController',
     'dependencies' => 'DependencyController'
 ]);
+// Password Reset Routes
+// Route::get('password/reset', 'Auth\RegistrerController@showRegistrationForm')->name
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::resource('users', 'UserController');
-// Route::resource('causes', 'CauseController');
-// Route::resource('doctors', 'DoctorController');
-// Route::resource('dependencies', 'DependencyController');
-// Route::resource('consulting-rooms', 'ConsultingRoomController');
 
 /**
  * Esas rutas las agregue de prueba, para comprobar lo de urgencias

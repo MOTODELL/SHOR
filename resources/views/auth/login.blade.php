@@ -1,5 +1,4 @@
 @extends('layouts.auth')
-
 @section('content')
     <div class="main-content container-fluid">
         <div class="splash-container">
@@ -48,8 +47,9 @@
                             </div>
                         </div>
                         <div class="form-group login-submit mb-5">
-                            <button type="submit" class="btn btn-rounded btn-lg btn-primary">
-                                {{ __('Ingresar') }}
+                            <button type="submit" class="btn btn-xl btn-primary">
+                                <span class="font-weight-normal h4">Iniciar sesión</span>
+                                {{-- <i class="fas fa-arrow-circle-right"></i> --}}
                             </button>
                         </div>
                     </form>
