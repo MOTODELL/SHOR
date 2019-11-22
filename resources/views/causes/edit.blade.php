@@ -14,14 +14,17 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Editar cause</legend>
+                <legend class="h2 mt-0 mb-4">Editar cause</legend>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('dependencies.update', $cause) }}">
                 @csrf
                 @method('PUT')
-                <div class="form-row mt-4">
+                <div class="form-row">
+                    <legend class="my-0 font-weight-light">Datos del cause</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="code"><span class="text-danger pr-1">*</span>{{ __('Código') }}</label>
                         <input id="code" type="text" class="form-control form-control-lg @error('code') is-invalid @enderror" placeholder="Urgencias" name="code" value="{{ $cause->code }}" required autocomplete="code" autofocus>
@@ -41,7 +44,7 @@
                         @enderror
                     </div>
                     <div class="col-sm-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('Causes.index') }}" class="btn btn-secondary pt-1 mr-5">
+                        <a  href="{{ route('causes.index') }}" class="btn btn-secondary pt-1 mr-5">
                             <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
                             <span class="h4 my-0">Regresar</span>
                         </a>

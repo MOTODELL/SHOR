@@ -12,8 +12,9 @@
     </style>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Citas</h2>
+<div class="d-flex justify-content-between">
     <nav aria-label="breadcrumb" role="navigation">
+            <h2 class="page-head-title">Citas</h2>
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
                 <a href="{{ route('dates.index') }}"><span class="text-primary">Citas</span></a>
@@ -21,28 +22,34 @@
             <li class="breadcrumb-item active">Crear cita</li>
         </ol>
     </nav>
+    <div class="d-flex align-items-end text-muted">
+        <span class="h4 ">
+            <strong class="mr-1">Fecha: </strong>
+            {{ $today }}
+        </span>
+    </div>
+</div>
 @endsection
 @section('content')
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <div class="position-absolute r-0">
-                    <span class="text-muted"><strong>Fecha: </strong>{{ $today }}</span>
-                </div>
-                <legend class="h2 my-0">Crear cita</legend>
+                <legend class="h2 mt-0 mb-4">Crear cita</legend>
             </div>
         </div>
         <div class="card-body pt-0">
             <form method="POST" action="{{ route('dates.store') }}">
                 @csrf
-                <hr class="w-100 mt-0 mb-5">
                 <div class="forms main-form">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-10">
                             <input id="search" type="text" class="form-control form-control-lg" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
                         </div>
                         <div class="form-group col-2">
-                            <button type="button" class="btn btn-primary btn-navigate h-100 w-100" data-show="patient-form">Nuevo paciente</button>
+                            <button type="button" class="btn btn-primary btn-navigate h-100 w-100 shadow-sm" data-show="patient-form" title="Nuevo paciente">
+                                <i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
+                                <span class="h2"><small>Nuevo paciente</small></span>
+                            </button>
                         </div>
                     </div>
                     <div class="form-row justify-content-center">
@@ -70,7 +77,8 @@
                                         </td>
                                         <td class="text-right">
                                             <button type="button" class="btn btn-outline-success btn-navigate" data-id="{{ $patient->id }}" data-name="{{ $patient->getFullName() }}" data-show="diagnosis-form">
-                                                <i class="zmdi zmdi-check zmdi-hc-lg mr-2"></i> Seleccionar
+                                                <i class="zmdi zmdi-check zmdi-hc-lg mr-2"></i>
+                                                <span class="h3"><small>Seleccionar</small></span>
                                             </button>
                                         </td>
                                     </tr>
@@ -84,9 +92,9 @@
                     <input type="hidden" name="id-exist">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-10">
-                            <span class="h3 text-muted"><strong>Cita para:</strong> <span class="patient-name"></span></span>
+                            <span class="h3 text-muted"><strong>Para:</strong> <span class="patient-name"></span></span>
                             <hr class="mt-0 mb-5">
-                            <legend class="my-0 font-weight-light">Diagnóstico inicial (opcional)</legend>
+                            <legend class="font-weight-light">Diagnóstico inicial (opcional)</legend>
                             <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5" style="resize:none"></textarea>
                         </div>
                     </div>
@@ -261,7 +269,7 @@
                             </div>
                         </div>
                         <legend class="my-0 font-weight-light">Diagnóstico inicial (opcional)</legend>
-                        <hr class="w-100 mt-0 mb-5">
+                        <hr class="w-100 mt-1 mb-5">
                         <textarea class="form-control" placeholder="Diagnóstico inicial" name="diagnosis" id="diagnosis" cols="30" rows="10" style="resize:none"></textarea>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">

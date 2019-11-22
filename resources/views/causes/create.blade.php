@@ -12,16 +12,19 @@
 @endsection
 @section('content')
     <div class="card card-border-color card-border-color-primary">
-        <div class="card-header">
+        <div class="card-header pb-0">
             <div class="text-center">
-                <legend>Crear cause</legend>
+                <legend class="h2 mt-0 mb-4">Crear cause</legend>
             </div>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('causes.store') }}">
                 @csrf
                 @method('POST')
-                <div class="form-row mt-4">
+                <div class="form-row">
+                    <legend class="my-0 font-weight-light">Datos del cause</legend>
+                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                    <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="code"><span class="text-danger pr-1">*</span>{{ __('Código') }}</label>
                         <input id="code" type="text" class="form-control form-control-lg @error('code') is-invalid @enderror" placeholder="13" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>

@@ -7,7 +7,7 @@
 	<div class="d-flex justify-content-between align-items-center">
 		<h2 class="page-head-title">Pacientes</h2>
 		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('patients.create') }}" title="Nuevo paciente">
-			<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
+			<i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
 			<span class="h4">Nuevo paciente</span>
 		</a>
 	</div>

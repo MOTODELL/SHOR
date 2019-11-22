@@ -7,8 +7,8 @@
 	<div class="d-flex justify-content-between align-items-center">
 		<h2 class="page-head-title">Usuarios</h2>
 		<a class="btn btn-lg btn-primary shadow-sm pt-1" href="{{ route('users.create') }}" title="Nuevo usuario">
-			<i class="zmdi zmdi-account-add zmdi-hc-lg"></i>
-			<span class="h4">Nuevo usuario</span>
+			<i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
+			<span class="h2"><small>Nuevo usuario</small></span>
 		</a>
 	</div>
 @endsection

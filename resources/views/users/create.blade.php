@@ -27,7 +27,7 @@
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos personales</legend>
+                    <legend class="my-0 font-weight-light">Datos personales</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -91,7 +91,7 @@
                         @endforeach
                         </select>
                     </div>
-                    <legend class="mb-0 h3 mt-0">Datos de contacto</legend>
+                    <legend class="my-0 font-weight-light">Datos de contacto</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
@@ -112,7 +112,7 @@
                             </span>
                         @enderror
                     </div>
-                    <legend class="mb-0 h3 mt-0">Datos de usuario</legend>
+                    <legend class="my-0 font-weight-light">Datos de usuario</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">

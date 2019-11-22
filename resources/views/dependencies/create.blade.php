@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Servicio</h2>
+    <h2 class="page-head-title">Servicios</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Servicio</span></a>
+                <a href="{{ route('users.index') }}"><span class="text-primary">Servicios</span></a>
             </li>
             <li class="breadcrumb-item active">Crear servicio</li>
         </ol>
@@ -22,7 +22,7 @@
                 @csrf
                 @method('POST')
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos requeridos</legend>
+                    <legend class="my-0 font-weight-light">Datos del área de servicio</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6">

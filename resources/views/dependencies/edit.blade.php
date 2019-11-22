@@ -22,7 +22,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-row">
-                    <legend class="mb-0 h3 mt-0">Datos requeridos</legend>
+                    <legend class="my-0 font-weight-light">Datos del área de servicio</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-8">
