@@ -33,14 +33,4 @@ Route::resources([
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/**
- * Esas rutas las agregue de prueba, para comprobar lo de urgencias
- */
-Route::post('dates/urgency', 'DateController@storeUrgency')->name('dates.urgency.store');
-Route::get('dates/urgency', 'DateController@createUrgency')->name('dates.urgency.create');
-
-Route::get('/test', 'HomeController@test');
-Route::get('/pdf', function ()
-{
-    return view('pdf.date');
-});
+Route::get('/pdf/{date}', 'PdfController@print')->name('pdf');

@@ -15,7 +15,7 @@ class CreateDatesTable extends Migration
     {
         Schema::create('dates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('folio');
+            $table->uuid('uuid');
             $table->timestamp('attention_date');
             $table->timestamp('date_start')->nullable();
             $table->timestamp('date_end')->nullable();

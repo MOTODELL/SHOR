@@ -26,60 +26,88 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
+                <div class="position-absolute r-0">
+                    <span class="text-muted"><strong>Fecha: </strong>{{ $today }}</span>
+                </div>
                 <legend class="h2 my-0">Crear cita</legend>
             </div>
         </div>
         <div class="card-body pt-0">
             <form method="POST" action="{{ route('dates.store') }}">
                 @csrf
-                <div class="form-row">
-                    <legend class="my-0 font-weight-light">Información general</legend>
-                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
-                    <hr class="w-100 mt-0 mb-5">
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="folio"><span class="text-danger pr-1">*</span>{{ __('Folio') }}</label>
-                        <input id="folio" type="text" class="form-control form-control-lg @error('folio') is-invalid @enderror" placeholder="12345" name="folio" value="{{ old('folio') }}"  autocomplete="folio">
-                        @error('folio')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div id="diagnosis" class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="diagnosis"><span class="text-danger pr-1">*</span>{{ __('Diagnostico') }}</label>
-                        <textarea id="diagnosis" type="text" class="form-control @error('diagnosis') is-invalid @enderror" placeholder="Dolor de cabeza..." name="diagnosis" value="{{ old('diagnosis') }}" rows="1" ></textarea>
-                        @error('diagnosis')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <legend class="my-0 font-weight-light">Datos del paciente</legend>
-                    <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
-                    <hr class="w-100 mt-0 mb-5">
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4 mb-0">
-                        <div class="d-flex justify-content-between">
-                            <label class="mb-0" for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre del paciente') }}</label>
-                            <div class="be-checkbox custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="newPatient">
-                                <label class="custom-control-label" for="newPatient">¿Nuevo?</label>
-                            </div>
+                <hr class="w-100 mt-0 mb-5">
+                <div class="forms main-form">
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-10">
+                            <input id="search" type="text" class="form-control form-control-lg" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
                         </div>
-                        <div id="patientSelect">
-                            <select class="select2 select2-lg" name="patient">
+                        <div class="form-group col-2">
+                            <button type="button" class="btn btn-primary btn-navigate h-100 w-100" data-show="patient-form">Nuevo paciente</button>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-center">
+                        <div class="col-12">
+                            <table class="table table-striped table-hover table-fw-widget dataTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%;">Núm. Afiliación</th>
+                                        <th style="width:30%;">Nombre completo</th>
+                                        <th style="width:30%;">CURP</th>
+                                        <th style="width:20%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                 @foreach ($patients as $patient)
-                                    <option value="{{ $patient->id }}">{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->folio }}</option>
-                                @endforeach
-                            </select>
+                                    <tr class="success">
+                                        <td class="cell-detail">
+                                            <span>{{ $patient->ssn->ssn }}</span>
+                                        </td>
+                                        <td class="date-avatar cell-detail date-info">
+                                            <span>{{ $patient->getFullName() }}</span>
+                                        </td>
+                                        <td class="cell-detail">
+                                            <span>{{ $patient->curp}}</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <button type="button" class="btn btn-outline-success btn-navigate" data-id="{{ $patient->id }}" data-name="{{ $patient->getFullName() }}" data-show="diagnosis-form">
+                                                <i class="zmdi zmdi-check zmdi-hc-lg mr-2"></i> Seleccionar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        @error('patient')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div> 
+                    </div>
+                </div>
+                <div class="forms diagnosis-form" style="display:none">
+                    <input type="hidden" name="id-exist">
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-10">
+                            <span class="h3 text-muted"><strong>Cita para:</strong> <span class="patient-name"></span></span>
+                            <hr class="mt-0 mb-5">
+                            <legend class="my-0 font-weight-light">Diagnóstico inicial (opcional)</legend>
+                            <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5" style="resize:none"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center mt-2">
+                            <button type="button" class="btn btn-secondary pt-1 mr-5 btn-navigate" data-show="main-form">
+                                <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                                <span class="h4 my-0">Seleccionar otro paciente</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary pt-1 mr-5">
+                                <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
+                                <span class="h4 my-0">Guardar</span>
+                            </button>
+                        </div>
+                </div>
+                <div class="forms patient-form" style="display:none">
                     <div id="patientForm" class="form-row pl-1">
-                        <div class="form-group col-sm-12 col-md-6 col-lg-4 mt-5">
+                        <legend class="my-0 font-weight-light">Datos del paciente</legend>
+                        <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                        <hr class="w-100 mt-0 mb-5">
+                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                            <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre del paciente') }}</label>
                             <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -231,13 +259,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>    
-                    </div>                  
+                        </div>
+                        <legend class="my-0 font-weight-light">Diagnóstico inicial (opcional)</legend>
+                        <hr class="w-100 mt-0 mb-5">
+                        <textarea class="form-control" placeholder="Diagnóstico inicial" name="diagnosis" id="diagnosis" cols="30" rows="10" style="resize:none"></textarea>
+                    </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
-                        <a  href="{{ route('dates.index') }}" class="btn btn-secondary pt-1 mr-5">
+                        <button type="button" class="btn btn-secondary pt-1 mr-5 btn-navigate" data-show="main-form">
                             <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
                             <span class="h4 my-0">Regresar</span>
-                        </a>
+                        </button>
                         <button type="submit" class="btn btn-primary pt-1 mr-5">
                             <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
                             <span class="h4 my-0">Guardar</span>
@@ -250,20 +281,27 @@
 @endsection
 @push('scripts')
     <script>
-        function showFormPatient() {
-            if($('#newPatient').prop('checked')){
-                $('#patientForm').show();
-                $('#patientSelect').hide();
+        $('.btn-navigate').click(function () {
+            $('.forms').each(function () {
+                $(this).hide();
+            });
+
+            $('.' + $(this).data('show')).show('500');
+            if($(this).data('show') == 'diagnosis-form') {
+                $('input[name="id-exist"]').val($(this).data('id'));
+                $('.patient-name').html($(this).data('name'));
             } else {
-                $('#patientForm').hide();
-                $('#patientSelect').show();
+                $('input[name="id-exist"]').val('');
             }
-        }
-        $('#newPatient').change(function(){
-            showFormPatient();
         });
-        showFormPatient();
     </script>
+    <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/buttons.flash.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/jszip/jszip.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/pdfmake/pdfmake.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/datatables/pdfmake/vfs_fonts.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>

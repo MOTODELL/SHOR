@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $users = User::all();
         $dependencies = Dependency::all();
-        $roles = Role::all();
+        $roles = Role::all()->sortBy('description');
         return view('users.index', compact(['users', 'dependencies', 'roles']));
     }
 

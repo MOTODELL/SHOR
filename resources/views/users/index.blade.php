@@ -16,6 +16,34 @@
 	<div class="card card-table">
 		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
+				<div class="row">
+					<div class="col-5">
+						<div class="ml-1">
+							<span class="font-weight-bold">Filtrar por:<br></span>
+							<div class="pt-1">
+								@foreach ($roles as $role)
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input class="custom-control-input" type="checkbox" id="check-{{ $role->name }}">
+										<label class="custom-control-label" for="check-{{ $role->name }}">{{ $role->description }}</label>
+									</div>
+								@endforeach
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+							</div>
+							<input type="text" class="form-control" id="search" placeholder="Buscar">
+						</div>
+					</div>
+					<div class="col-2 d-flex justify-content-end">
+						<div class="mt-1">
+							<button class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
+						</div>
+					</div>
+				</div>
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
@@ -30,10 +58,10 @@
 					</thead>
 					<tbody>
 					@foreach ($users as $user)
-						<tr class="success done">
+						<tr class="success {{ $user->getRole() }}">
 							<td class="user-avatar cell-detail user-info">
 								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
-								<span>{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
+								<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
 							</td>
 							<td class="cell-detail">
 								<span>{{ $user->curp }}</span>

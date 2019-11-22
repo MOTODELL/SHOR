@@ -205,8 +205,8 @@
             $('#ssn').removeAttr('required');
             $('#ssn').removeAttr('data-mask');
         } else {
-            $('#ssn').attr('required');
-            $('#ssn').attr('data-mask');
+            $('#ssn').prop('required', true);
+            $('#ssn').prop('data-mask', 'ssn');
         }
     }
     $('#ssn_type').change(function() {

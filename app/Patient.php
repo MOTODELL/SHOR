@@ -35,6 +35,11 @@ class Patient extends Model
         return "";
     }
 
+    public function getFullName()
+    {
+        return $this->name . ' ' . $this->paternal_lastname . ' ' . $this->maternal_lastname;
+    }
+
     public function getBirthplace()
     {
         $birthplace = $this->birthplace()->first();

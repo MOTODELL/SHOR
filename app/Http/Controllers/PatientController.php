@@ -12,6 +12,7 @@ use App\Locality;
 use Carbon\Carbon;
 use App\Municipality;
 use App\SettlementType;
+use App\ZipCode;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -77,7 +78,10 @@ class PatientController extends Controller
             $address->number_int = $request->input('number_int');
         }
         $address->colony = ucfirst($request->input('colony'));
-        $address->zip_code = $request->input('zip_code');
+        // $address->zip_code = $request->input('zip_code');
+        if ($request->filled('zip_code')) {
+            $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+        }
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
         }
@@ -172,7 +176,9 @@ class PatientController extends Controller
             $address->number_int = $request->input('number_int');
         }
         $address->colony = $request->input('colony');
-        $address->zip_code = $request->input('zip_code');
+        if ($request->filled('zip_code')) {
+            $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+        }
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
         }

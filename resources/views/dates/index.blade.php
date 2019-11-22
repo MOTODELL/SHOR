@@ -16,15 +16,26 @@
 	<div class="card card-table">
 		<div class="card-body pt-5">
 			<div class="container-fluid pb-3">
+				<div class="row">
+					<div class="col-5">
+					</div>
+					<div class="col-5">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+							</div>
+							<input type="text" class="form-control" id="search" placeholder="Buscar">
+						</div>
+					</div>
+					<div class="col-2 d-flex justify-content-end">
+						<div class="mt-1">
+							<button class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
+						</div>
+					</div>
+				</div>
 				<table class="table table-striped table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
-							<th style="width:5%;">
-	              <div class="custom-control custom-control-sm custom-checkbox be-select-all">
-									<input class="custom-control-input" type="checkbox" id="check1">
-									<label class="custom-control-label" for="check1"></label>
-	              </div>
-							</th>
 							<th style="width:10%;">Folio</th>
 							<th style="width:20%;">Nombre completo</th>
 							<th style="width:20%;">Día de atención</th>
@@ -35,15 +46,9 @@
 					</thead>
 					<tbody>
 					@foreach ($dates as $date)
-						<tr class="success done">
-							<td>
-								<div class="custom-control custom-control-sm custom-checkbox">
-									<input class="custom-control-input" type="checkbox" id="check'.{{$date->id}}">
-									<label class="custom-control-label" for="check'.{{$date->id}}"></label>
-								</div>
-							</td>
+						<tr class="success">
 							<td class="cell-detail">
-								<span>{{ $date->folio }}</span>
+								<span>{{ str_pad($date->id, 8, '0', STR_PAD_LEFT) }}</span>
 							</td>
 							<td class="date-avatar cell-detail date-info">
 								<span>{{ $date->getPatient() }}</span>
@@ -52,13 +57,13 @@
 								<span>{{ $date->attention_date }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $date->diagnosis }}</span>
+								<span>{!! !empty($date->diagnosis) > 0 ? $date->diagnosis : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
 							</td>
 							<td class="cell-detail">
 								<span>{{ $date->getStatus() }}</span>
 							</td>
 							<td class="text-right">
-								<a href="{{ route('dates.edit', $date->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
+								<a href="{{ route('dates.edit', $date->uuid) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
 								<form action="{{ route('dates.destroy', $date) }}" method="post" class="d-inline">
@@ -326,11 +331,12 @@
 					);
 					$(btn).closest("form").submit();
 				} else if (result.dismiss === Swal.DismissReason.cancel) {
-					Swal.fire(
-					'¡Cancelado!',
-					'Acción revertida',
-					'error'
-					);
+					Swal.fire({
+						type: 'error',
+						title: '¡Cancelado!',
+						text: 'Acción revertida',
+						timer: 1500
+					});
 				}
 			});
 			e.preventDefault();
