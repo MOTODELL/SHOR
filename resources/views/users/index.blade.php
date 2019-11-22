@@ -58,42 +58,45 @@
 					</thead>
 					<tbody>
 					@foreach ($users as $user)
-						<tr class="success {{ $user->getRole() }}">
-							<td class="user-avatar cell-detail user-info">
-								<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
-								<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $user->curp }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $user->email }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $user->phone }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $user->getDependency() }}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $user->getRole() }}</span>
-							</td>
-							<td class="text-right">
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="left" title="Ver">
-									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
-								</span>
-								<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
-									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
-								</a>
-								<form action="{{ route('users.destroy', $user) }}" method="post" class="d-inline">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
-									</button>
-								</form>
-							</td>
-						</tr>
+						@if (auth()->user()->id == $user->id)
+						@else
+							<tr class="success {{ $user->getRole() }}">
+								<td class="user-avatar cell-detail user-info">
+									<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
+									<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
+								</td>
+								<td class="cell-detail">
+									<span>{{ $user->curp }}</span>
+								</td>
+								<td class="cell-detail">
+									<span>{{ $user->email }}</span>
+								</td>
+								<td class="cell-detail">
+									<span>{{ $user->phone }}</span>
+								</td>
+								<td class="cell-detail">
+									<span>{{ $user->getDependency() }}</span>
+								</td>
+								<td class="cell-detail">
+									<span>{{ $user->getRole() }}</span>
+								</td>
+								<td class="text-right">
+									<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="left" title="Ver">
+										<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
+									</span>
+									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
+										<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
+									</a>
+									<form action="{{ route('users.destroy', $user) }}" method="post" class="d-inline">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+											<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+						@endif
 						@endforeach
 					</tbody>
 				</table>
