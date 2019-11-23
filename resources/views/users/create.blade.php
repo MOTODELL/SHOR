@@ -32,7 +32,7 @@
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre(s)') }}</label>
-                        <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre(s)" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nombre(s)" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
-                        <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido paterno" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
+                        <input id="paternal_lastname" type="text" class="form-control @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido paterno" name="paternal_lastname" value="{{ old('paternal_lastname') }}" required autocomplete="paternal_lastname">
                         @error('paternal_lastname')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
-                        <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido materno" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
+                        <input id="maternal_lastname" type="text" class="form-control @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido materno" name="maternal_lastname" value="{{ old('maternal_lastname') }}" required autocomplete="maternal_lastname">
                         @error('maternal_lastname')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
-                        <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}" required placeholder="MAVA000804MMNNRRNA9">
+                        <input id="curp" type="text" data-mask="curp" class="form-control text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}" required placeholder="MAVA000804MMNNRRNA9">
                         @error('curp')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="role"><span class="text-danger pr-1">*</span>{{ __('Tipo de usuario') }}</label>
-                        <select name="role" id="role" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        <select name="role" id="role" class="form-control custom-select select2" style="width: 100%">
                         @foreach ($roles as $role)
                             <option value="{{ $role->name }}">{{ $role->description }}</option>
                         @endforeach
@@ -76,7 +76,7 @@
                     </div>
                     <div id="professionalId" class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="professional_id"><span class="text-danger pr-1">*</span>{{ __('Cédula profesional') }}</label>
-                        <input id="professional_id" type="text" data-mask="professional_id" class="form-control form-control-lg @error('professional_id') is-invalid @enderror" name="professional_id" placeholder="12345678">
+                        <input id="professional_id" type="text" data-mask="professional_id" class="form-control @error('professional_id') is-invalid @enderror" name="professional_id" placeholder="12345678">
                         @error('professional_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
                     </div>
                     <div id="selectDependency" class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="dependency"><span class="text-danger pr-1">*</span>{{ __('Área de servicio') }}</label>
-                        <select name="dependency" id="dependency" class="form-control form-control-lg custom-select select2" style="width: 100%">
+                        <select name="dependency" id="dependency" class="form-control custom-select select2" style="width: 100%">
                         @foreach ($dependencies as $dependency)
                             <option value="{{ $dependency->name }}">{{ $dependency->description }}</option>
                         @endforeach
@@ -96,7 +96,7 @@
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
-                        <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="(999) 999-9999">
+                        <input type="phone" data-mask="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" required autocomplete="phone" placeholder="(999) 999-9999">
                         @error('phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="email"><span class="text-danger pr-1">*</span>{{ __('Correo electrónico') }}</label>
-                        <input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="ejemplo@correo.com">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -117,7 +117,7 @@
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="username"><span class="text-danger pr-1">*</span>{{ __('Nombre de usuario') }}</label>
-                        <input id="username" type="text" class="form-control form-control-lg text-lowercase @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
+                        <input id="username" type="text" class="form-control text-lowercase @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
                         <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                         @error('username')
                             <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="password"><span class="text-danger pr-1">*</span>{{ __('Contraseña') }}</label>
-                        <input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required placeholder="********">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="********">
                         <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                         @error('password')
                             <span class="invalid-feedback" role="alert">

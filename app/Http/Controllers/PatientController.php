@@ -237,4 +237,37 @@ class PatientController extends Controller
 
         return redirect()->route('patients.index')->with('message-destroy', 'Eliminado');
     }
+
+    public function fetch(Request $request)
+    {
+        $patient = patient::where('id', $request->input('id'))->first();
+        $data = [];
+        // dd($patient);
+        if ($patient) {
+            $data = [
+                "fullname" => $patient->fullname,
+                "curp" => $patient->curp,
+                "birthdate" => $patient->birthdate,
+                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "birthplace" => $patient->getBirthplace(),
+                "phone" => $patient->phone,
+                "ssn_type" => $patient->ssn->ssn_type->description,
+                "ssn" => $patient->ssn->ssn,
+                "number" => $patient->ssn->number,
+                "viality_type" => $patient->address->viality->description,
+                "viality_name" => $patient->address->street,
+                "number_ext" => $patient->address->number_ext,
+                "number_int" => $patient->address->number_int,
+                "settlement_type" => $patient->address->settlement_type->description,
+                "settlement_name" => $patient->address->colony,
+                "zip_code" => $patient->address->zip_code->id,
+                "locality" => $patient->address->locality->description,
+                "municipality" => $patient->address->municipality->description,
+                "state" => $patient->address->state->description
+            ];
+        }
+
+        return response()->json($data);
+    }
 }

@@ -99,7 +99,7 @@
 								<div class="form-row mt-4">
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="name">{{ __('Nombre(s)') }}</label>
-										<input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
+										<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
 										@error('name')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -108,7 +108,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="paternal_lastname">{{ __('Apellido paterno') }}</label>
-										<input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ $user->paternal_lastname }}" required autocomplete="paternal_lastname">
+										<input id="paternal_lastname" type="text" class="form-control @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ $user->paternal_lastname }}" required autocomplete="paternal_lastname">
 										@error('paternal_lastname')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -117,7 +117,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="maternal_lastname">{{ __('Apellido materno') }}</label>
-										<input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ $user->maternal_lastname }}" required autocomplete="maternal_lastname">
+										<input id="maternal_lastname" type="text" class="form-control @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ $user->maternal_lastname }}" required autocomplete="maternal_lastname">
 										@error('maternal_lastname')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -126,7 +126,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
-										<input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ $user->phone }}" required autocomplete="phone" placeholder="(999) 999-9999">
+										<input type="phone" data-mask="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ $user->phone }}" required autocomplete="phone" placeholder="(999) 999-9999">
 										@error('phone')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -135,7 +135,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="email">{{ __('Correo electrónico') }}</label>
-										<input id="email" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" placeholder="ejemplo@correo.com">
+										<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" placeholder="ejemplo@correo.com">
 										@error('email')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -146,7 +146,7 @@
 									<hr width="100%" class="mt-1">
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="username">{{ __('Nombre de usuario') }}</label>
-										<input id="username" type="text" class="form-control form-control-lg @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" readonly autocomplete="username" placeholder="example123">
+										<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $user->username }}" readonly autocomplete="username" placeholder="example123">
 										@error('username')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -155,7 +155,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="password">{{ __('Contraseña') }}</label>
-										<input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" placeholder="********">
+										<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="********">
 										@error('password')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>

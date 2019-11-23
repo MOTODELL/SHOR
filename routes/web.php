@@ -29,7 +29,14 @@ Route::resources([
     'dependencies' => 'DependencyController'
 ]);
 // Password Reset Routes
-// Route::get('password/reset', 'Auth\RegistrerController@showRegistrationForm')->name
+// Route::get('password/reset', 'Auth\RegistrerController@showRegistrationForm')->name('password.reset');
+Route::prefix('fetch')->group(function ()
+{
+    Route::post('user', 'UserController@fetchUser')->name('fetch.user');
+    Route::post('patient', 'PatientController@fetch')->name('fetch.patient');
+});
+
+// Route::post('/fetch/user', 'UserController@fetchUser')->name('fetch.user');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

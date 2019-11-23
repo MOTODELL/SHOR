@@ -68,6 +68,20 @@ class User extends Authenticatable
         return "";
     }
 
+    public function hasDependency(String $dependency)
+    {
+        if ($this->dependency) {
+            $dependency = $this->dependency->name == $dependency;
+            if($dependency) return true;
+        }
+        return false;
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->name . " " . $this->paternal_lastname . " " . $this->maternal_lastname;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

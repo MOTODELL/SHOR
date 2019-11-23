@@ -33,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-			<table class="table table-striped table-hover table-fw-widget dataTable">
+			<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 				<thead>
 					<tr>
 						<th style="width:35%;">Código</th>

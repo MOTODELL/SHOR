@@ -40,7 +40,7 @@
                         <hr class="w-100 mt-0 mb-5">
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre del paciente') }}</label>
-                            <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ empty(old('name')) ? $date->patient->name : old('name') }}"  autocomplete="name" autofocus>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ empty(old('name')) ? $date->patient->name : old('name') }}"  autocomplete="name" autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
                         </div>                       
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
-                            <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ empty(old('paternal_lastname')) ? $date->patient->paternal_lastname : old('paternal_lastname') }}"  autocomplete="paternal_lastname">
+                            <input id="paternal_lastname" type="text" class="form-control @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ empty(old('paternal_lastname')) ? $date->patient->paternal_lastname : old('paternal_lastname') }}"  autocomplete="paternal_lastname">
                             @error('paternal_lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
-                            <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ empty(old('maternal_lastname')) ? $date->patient->maternal_lastname : old('maternal_lastname') }}"  autocomplete="maternal_lastname">
+                            <input id="maternal_lastname" type="text" class="form-control @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ empty(old('maternal_lastname')) ? $date->patient->maternal_lastname : old('maternal_lastname') }}"  autocomplete="maternal_lastname">
                             @error('maternal_lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
-                            <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ empty(old('curp')) ? $date->patient->curp : old('curp') }}"  placeholder="MAVA000804MMNNRRNA9">
+                            <input id="curp" type="text" data-mask="curp" class="form-control text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ empty(old('curp')) ? $date->patient->curp : old('curp') }}"  placeholder="MAVA000804MMNNRRNA9">
                             @error('curp')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
-                            <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ empty(old('phone')) ? $date->patient->phone : old('phone') }}"  autocomplete="phone" placeholder="(999) 999-9999">
+                            <input type="phone" data-mask="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ empty(old('phone')) ? $date->patient->phone : old('phone') }}"  autocomplete="phone" placeholder="(999) 999-9999">
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="ssn"><span class="text-danger pr-1">*</span>{{ __('Número del seguro social') }}</label>
-                            <input id="ssn" type="text" data-mask="ssn" class="form-control form-control-lg text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ empty(old('ssn')) ? $date->patient->ssn->ssn : old('ssn') }}" placeholder="07985671496">
+                            <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ empty(old('ssn')) ? $date->patient->ssn->ssn : old('ssn') }}" placeholder="07985671496">
                             @error('ssn')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number"><span class="text-danger pr-1">*</span>{{ __('Orden de afiliación') }}</label>
-                            <input id="number" type="text" data-mask="number" class="form-control form-control-lg text-uppercase @error('number') is-invalid @enderror" name="number" value="{{ empty(old('ssn_type')) ? $date->patient->ssn->ssn_type : old('ssn_type') }}" placeholder="1">
+                            <input id="number" type="text" data-mask="number" class="form-control text-uppercase @error('number') is-invalid @enderror" name="number" value="{{ empty(old('ssn_type')) ? $date->patient->ssn->ssn_type : old('ssn_type') }}" placeholder="1">
                             @error('number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

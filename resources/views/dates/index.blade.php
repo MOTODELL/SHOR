@@ -33,7 +33,7 @@
 						</div>
 					</div>
 				</div>
-				<table class="table table-striped table-hover table-fw-widget dataTable">
+				<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
 							<th style="width:10%;">Folio</th>
@@ -63,6 +63,9 @@
 								<span>{{ $date->getStatus() }}</span>
 							</td>
 							<td class="text-right">
+								<span class="btn btn-space btn-view btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-date" data-id="{{ $date->uuid }}" data-tooltip="tooltip" data-placement="bottom" title="Ver">
+									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
+								</span>
 								<a href="{{ route('dates.edit', $date->uuid) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
@@ -73,9 +76,6 @@
 										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
 									</button>
 								</form>
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-date" data-tooltip="tooltip" data-placement="bottom" title="Ver">
-									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
-								</span>
 							</td>
 						</tr>
 						@endforeach
@@ -330,18 +330,16 @@
 						'error'
 					);
 					$(btn).closest("form").submit();
-				} else if (result.dismiss === Swal.DismissReason.cancel) {
-					Swal.fire({
-						type: 'error',
-						title: '¡Cancelado!',
-						text: 'Acción revertida',
-						timer: 1500
-					});
 				}
 			});
 			e.preventDefault();
 			return false;
 		});
+		$('.btn-view').click(function () {
+			$.ajax({
+				url: 
+			})
+		})
 	</script>
 	@if (session('message-update'))
 		<script>

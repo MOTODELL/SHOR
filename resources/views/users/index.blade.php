@@ -40,20 +40,17 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<button class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
+							<button class="btn btn-sm btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
 						</div>
 					</div>
 				</div>
-				<table class="table table-striped table-hover table-fw-widget dataTable">
+				<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
-							<th style="width:25%;">Nombre completo</th>
-							<th style="width:14%;">CURP</th>
-							<th style="width:15%;">Correo electrónico</th>
-							<th style="width:10%;">Teléfono</th>
-							<th style="width:12%;">Área de servicio</th>
-							<th style="width:12%;">Tipo de usuario</th>
-							<th style="width:12%;"></th>
+							<th style="width:40%;">Nombre completo</th>
+							<th style="width:20%;">Tipo de usuario</th>
+							<th style="width:20%;">Área de servicio</th>
+							<th style="width:20%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,22 +63,13 @@
 									<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
 								</td>
 								<td class="cell-detail">
-									<span>{{ $user->curp }}</span>
-								</td>
-								<td class="cell-detail">
-									<span>{{ $user->email }}</span>
-								</td>
-								<td class="cell-detail">
-									<span>{{ $user->phone }}</span>
-								</td>
-								<td class="cell-detail">
-									<span>{{ $user->getDependency() }}</span>
-								</td>
-								<td class="cell-detail">
 									<span>{{ $user->getRole() }}</span>
 								</td>
+								<td class="cell-detail">
+									<span>{!! !empty($user->getDependency()) > 0 ? $user->getDependency() : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
+								</td>
 								<td class="text-right">
-									<span class="btn btn-space btn-primary mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="modal" data-target="#show-user" data-tooltip="tooltip" data-placement="left" title="Ver">
+									<span class="btn btn-primary btn-view cursor-pointer mb-0 mr-0" data-id="{{ $user->id }}" data-toggle="tooltip" data-placement="left" title="Ver">
 										<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 									</span>
 									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
@@ -103,7 +91,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade colored-header colored-header-primary" id="show-user" tabindex="-1" role="dialog">
+	<div class="modal fade colored-header colored-header-primary" id="modal-show" tabindex="-1" role="dialog">
 		<div class="modal-dialog full-width">
 			<div class="modal-content">
 				<div class="modal-header modal-header-colored">
@@ -118,7 +106,7 @@
 								<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Nombre completo</span>
-									<div class="user-timeline-title">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</div>
+									<div class="user-timeline-title user-fullname"></div>
 								</div>
 							</div>
 						</div>
@@ -127,7 +115,7 @@
 								<div class="icon"><i class="icon fas fa-fingerprint"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">CURP</span>
-									<div class="user-timeline-title">{{ $user->curp }}</div>
+									<div class="user-timeline-title user-curp"></div>
 								</div>
 							</div>
 						</div>
@@ -136,26 +124,16 @@
 								<div class="icon"><i class="zmdi zmdi-calendar-alt zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Fecha de nacimiento</span>
-									<div class="user-timeline-title">{{ $user->birthdate }}</div>
+									<div class="user-timeline-title user-birthdate"></div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
-								<div class="icon">
-									@if ($user->sex == 'm')
-										<i class="icon fas fa-venus"></i>
-									@else
-										<i class="icon fas fa-mars"></i>
-									@endif
-								</div>
+								<div class="icon user-sex-icon"></div>
 								<div class="message">
 									<span class="user-timeline-date">Sexo</span>
-									@if ($user->sex == 'm')
-										<div class="user-timeline-title">Mujer</div>
-										@else
-										<div class="user-timeline-title">Hombre</div>
-									@endif
+									<div class="user-timeline-title user-sex"></div>
 								</div>
 							</div>
 						</div>
@@ -164,7 +142,7 @@
 								<div class="icon"><i class="icon fas fa-map-marker-alt"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Lugar de nacimiento</span>
-									<div class="user-timeline-title">{{ $user->getBirthplace() }}</div>
+									<div class="user-timeline-title user-birthplace"></div>
 								</div>
 							</div>
 						</div>
@@ -174,7 +152,7 @@
 								<div class="icon"><i class="zmdi zmdi-phone zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Teléfono</span>
-									<div class="user-timeline-title">{{ $user->phone }}</div>
+									<div class="user-timeline-title user-phone"></div>
 								</div>
 							</div>
 						</div>
@@ -183,7 +161,7 @@
 								<div class="icon"><i class="zmdi zmdi-email zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Correo electrónico</span>
-									<div class="user-timeline-title">{{ $user->email }}</div>
+									<div class="user-timeline-title user-email"></div>
 								</div>
 							</div>
 						</div>
@@ -197,7 +175,6 @@
 	</div>
 @endsection
 @push('scripts')
-<script>$('[data-tooltip="tooltip"]').tooltip();</script>
 	@if (session('message-store'))
 		<script>
 			const Toast = Swal.mixin({
@@ -273,18 +250,24 @@
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
 			});
-		$('#show-user').click(function(){
-			var user_id = $(this).attr("data-id");
-			$.ajax({
-				url:"/users",
-				method:"POST",
-				data: {user_id : user_id},
-				success:function(data){
-					//  $('#project-content').html(user);
-					//  console.log(user);
-					//  $('#show-user').modal("show");
-				}
-			});
+			$('.btn-view').click(function(){
+				let id = $(this).data('id');
+				$.ajax({
+					url: '{{ route("fetch.user") }}',
+					method:"POST",
+					data: {id : id},
+					success:function(user){
+						$('.user-fullname').html(user.fullname);
+						$('.user-curp').html(user.curp);
+						$('.user-birthdate').html(user.birthdate);
+						$('.user-sex-icon').html(user.sex_icon);
+						$('.user-sex').html(user.sex);
+						$('.user-birthplace').html(user.birthplace);
+						$('.user-phone').html(user.phone);
+						$('.user-email').html(user.email);
+						$('#modal-show').modal('show');
+					}
+				});
 			});
 		});
 	</script>

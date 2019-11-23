@@ -48,6 +48,11 @@ class Patient extends Model
         }
         return "";
     }
+
+    public function getFullnameAttribute()
+    {
+        return $this->name . " " . $this->paternal_lastname . " " . $this->maternal_lastname;
+    }
     
     /*
     |--------------------------------------------------------------------------

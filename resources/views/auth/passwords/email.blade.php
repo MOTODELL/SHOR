@@ -14,21 +14,22 @@
                     <span class="splash-description">¿Olvidaste la contraseña?</span>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
                         <legend class="font-weight-light">Restablecer contraseña</legend>
                         <div class="form-group mb-5">
                             <input class="form-control form-control-lg" type="email" name="email" required placeholder="Correo eletrónico" autocomplete="off">
                         </div>
                         {{-- <p class="pt-1 pb-4">Don't remember your email? <a href="#">Contact Support</a>.</p> --}}
                         <div class="form-group pt-1 d-flex justify-content-between">
-                        <a  href="{{ route('login') }}" class="btn btn-secondary btn-xl">
+                            <a  href="{{ route('login') }}" class="btn btn-secondary btn-xl">
                                 <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
                                 <span class="h4 my-0">Regresar</span>
                             </a>
-                            <a class="btn btn-primary btn-xl" href="#">
+                            <button type="submit" class="btn btn-primary btn-xl" href="#">
                                 <span class="h4 my-0">Enviar código</span>
                                 <i class="zmdi zmdi-mail-send zmdi-hc-lg pl-1"></i>
-                            </a>
+                            </button>
                         </div>
                     </form>
                 </div>

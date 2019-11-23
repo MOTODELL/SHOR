@@ -49,6 +49,24 @@
     <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/beagle.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    <script>
+        if (window.screen.availWidth <= 1024) {
+			if (!$('.be-wrapper').hasClass('be-collapsible-sidebar-collapsed')) {
+				$('.be-wrapper').addClass('be-collapsible-sidebar-collapsed');
+			}
+		}
+		$(window).on('resize', function () {
+			if (window.screen.availWidth <= 1024) {
+				if (!$('.be-wrapper').hasClass('be-collapsible-sidebar-collapsed')) {
+					$('.be-toggle-left-sidebar').click();
+				}
+			} else {
+				if ($('.be-wrapper').hasClass('be-collapsible-sidebar-collapsed')) {
+					$('.be-toggle-left-sidebar').click();
+				}
+			}
+		});
+    </script>
     @stack('scripts')
 </body>
 </html>

@@ -136,7 +136,6 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        dd($request);
         $request->user()->authorizeRoles('admin');
         if ($request->has('password')) {
             if ($request->input('password') == $request->input('password_confirmation')) {
@@ -188,5 +187,26 @@ class UserController extends Controller
 
         $user->delete();
         return redirect()->route('users.index')->with('message-destroy', 'Eliminado');
+    }
+
+    public function fetchUser(Request $request)
+    {
+        $user = User::where('id', $request->input('id'))->first();
+        $data = [];
+        // dd($user);
+        if ($user) {
+            $data = [
+                "fullname" => $user->fullname,
+                "curp" => $user->curp,
+                "birthdate" => $user->birthdate,
+                "sex_icon" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? "Hombre" : "Mujer" ),
+                "birthplace" => $user->getBirthplace(),
+                "phone" => $user->phone,
+                "email" => $user->email
+            ];
+        }
+
+        return response()->json($data);
     }
 }

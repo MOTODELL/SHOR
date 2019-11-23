@@ -42,10 +42,10 @@
                 @csrf
                 <div class="forms main-form">
                     <div class="form-row justify-content-center">
-                        <div class="form-group col-10">
+                        <div class="form-group col-9">
                             <input id="search" type="text" class="form-control form-control-lg" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
                         </div>
-                        <div class="form-group col-2">
+                        <div class="form-group col-3">
                             <button type="button" class="btn btn-primary btn-navigate h-100 w-100 shadow-sm" data-show="patient-form" title="Nuevo paciente">
                                 <i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
                                 <span class="h2"><small>Nuevo paciente</small></span>
@@ -99,15 +99,15 @@
                         </div>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
-                            <button type="button" class="btn btn-secondary pt-1 mr-5 btn-navigate" data-show="main-form">
-                                <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
-                                <span class="h4 my-0">Seleccionar otro paciente</span>
-                            </button>
-                            <button type="submit" class="btn btn-primary pt-1 mr-5">
-                                <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
-                                <span class="h4 my-0">Guardar</span>
-                            </button>
-                        </div>
+                        <button type="button" class="btn btn-secondary pt-1 mr-5 btn-navigate" data-show="main-form">
+                            <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Seleccionar otro paciente</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary pt-1 mr-5">
+                            <i class="zmdi zmdi-floppy zmdi-hc-lg pr-1"></i>
+                            <span class="h4 my-0">Guardar</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="forms patient-form" style="display:none">
                     <div id="patientForm" class="form-row pl-1">
@@ -116,7 +116,7 @@
                         <hr class="w-100 mt-0 mb-5">
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="name"><span class="text-danger pr-1">*</span>{{ __('Nombre del paciente') }}</label>
-                            <input id="name" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nombre" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -125,7 +125,7 @@
                         </div>                       
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="paternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido paterno') }}</label>
-                            <input id="paternal_lastname" type="text" class="form-control form-control-lg @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ old('paternal_lastname') }}"  autocomplete="paternal_lastname">
+                            <input id="paternal_lastname" type="text" class="form-control @error('paternal_lastname') is-invalid @enderror" placeholder="Apellido" name="paternal_lastname" value="{{ old('paternal_lastname') }}"  autocomplete="paternal_lastname">
                             @error('paternal_lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="maternal_lastname"><span class="text-danger pr-1">*</span>{{ __('Apellido materno') }}</label>
-                            <input id="maternal_lastname" type="text" class="form-control form-control-lg @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ old('maternal_lastname') }}"  autocomplete="maternal_lastname">
+                            <input id="maternal_lastname" type="text" class="form-control @error('maternal_lastname') is-invalid @enderror" placeholder="Apellido" name="maternal_lastname" value="{{ old('maternal_lastname') }}"  autocomplete="maternal_lastname">
                             @error('maternal_lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="curp"><span class="text-danger pr-1">*</span>{{ __('CURP') }}</label>
-                            <input id="curp" type="text" data-mask="curp" class="form-control form-control-lg text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}"  placeholder="MAVA000804MMNNRRNA9">
+                            <input id="curp" type="text" data-mask="curp" class="form-control text-uppercase @error('curp') is-invalid @enderror" name="curp" value="{{ old('curp') }}"  placeholder="MAVA000804MMNNRRNA9">
                             @error('curp')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="phone"><span class="text-danger pr-1">*</span>{{ __('Teléfono') }}</label>
-                            <input type="phone" data-mask="phone" class="form-control form-control-lg @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}"  autocomplete="phone" placeholder="(999) 999-9999">
+                            <input type="phone" data-mask="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}"  autocomplete="phone" placeholder="(999) 999-9999">
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -174,7 +174,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="ssn"><span class="text-danger pr-1">*</span>{{ __('Número del seguro social') }}</label>
-                            <input id="ssn" type="text" data-mask="ssn" class="form-control form-control-lg text-uppercase @error('ssn') is-invalid @enderror" name="ssn"  placeholder="07985671496">
+                            <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn"  placeholder="07985671496">
                             @error('ssn')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -183,7 +183,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number"><span class="text-danger pr-1">*</span>{{ __('Orden de afiliación') }}</label>
-                            <input id="number" type="text" data-mask="number" class="form-control form-control-lg text-uppercase @error('number') is-invalid @enderror" name="number"  placeholder="1">
+                            <input id="number" type="text" data-mask="number" class="form-control text-uppercase @error('number') is-invalid @enderror" name="number"  placeholder="1">
                             @error('number')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

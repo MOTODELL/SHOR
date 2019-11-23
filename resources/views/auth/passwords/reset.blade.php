@@ -11,13 +11,39 @@
                         <span class="text-warning">O</span>
                         <span class="text-success">R</span>
                     </h1>
-                    <span class="splash-description">¿Olvidaste la contraseña?</span>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="POST" action="{{ route('password.update') }}">
+                        @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
                         <legend class="font-weight-light text-muted">Restablecer contraseña</legend>
-                        <div class="form-group pt-4">
-                            <input class="form-control" type="email" name="email" required placeholder="Correo eletrónico" autocomplete="off">
+                        <div class="form-group">
+                            <label for="email">{{ __('E-Mail Address') }}</label>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="email">{{ __('Nueva contraseña') }}</label>
+                            <input class="form-control" type="password" name="password" required placeholder="Nueva contraseña" autocomplete="off">
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="email">{{ __('Confirmar contraseña') }}</label>
+                            <input class="form-control" type="password" name="password_confirmation" required placeholder="Confirmar contraseña" autocomplete="off">
+                            @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         {{-- <p class="pt-1 pb-4">Don't remember your email? <a href="#">Contact Support</a>.</p> --}}
                         <div class="form-group pt-1">
@@ -25,7 +51,7 @@
                                 <i class="zmdi zmdi-long-arrow-return zmdi-hc-lg pr-1"></i>
                                 <span class="h4 my-0">Regresar</span>
                             </a>
-                            <a class="btn btn-primary btn-xl" href="index.html">Recuperar contraseña</a>
+                            <button type="submit" class="btn btn-primary btn-xl">Recuperar contraseña</button>
                         </div>
                     </form>
                 </div>

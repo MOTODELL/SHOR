@@ -33,7 +33,7 @@
 						</div>
 					</div>
 				</div>
-				<table class="table table-striped table-hover table-fw-widget dataTable">
+				<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
 							<th style="width:20%;">Número de seguro social</th>
@@ -55,7 +55,7 @@
 								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
 							</td>
 							<td class="text-right">
-								<span class="btn btn-space btn-primary mb-0 mr-0" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
+								<span class="btn btn-space btn-primary mb-0 mr-0 btn-view" data-id="{{ $patient->id }}" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
 								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
@@ -91,7 +91,7 @@
 								<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Nombre completo</span>
-									<div class="user-timeline-title">{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</div>
+									<div class="user-timeline-title patient-fullname"></div>
 								</div>
 							</div>
 						</div>
@@ -100,7 +100,7 @@
 								<div class="icon"><i class="icon fas fa-fingerprint"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">CURP</span>
-									<div class="user-timeline-title">{{ $patient->curp }}</div>
+									<div class="user-timeline-title patient-curp"></div>
 								</div>
 							</div>
 						</div>
@@ -109,26 +109,16 @@
 								<div class="icon"><i class="zmdi zmdi-calendar-alt zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Fecha de nacimiento</span>
-									<div class="user-timeline-title">{{ $patient->birthdate }}</div>
+									<div class="user-timeline-title patient-birthdate"></div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
-								<div class="icon">
-									@if ($patient->sex == 'm')
-										<i class="icon fas fa-venus"></i>
-									@else
-										<i class="icon fas fa-mars"></i>
-									@endif
-								</div>
+								<div class="icon patient-sex_icon"></div>
 								<div class="message">
 									<span class="user-timeline-date">Sexo</span>
-									@if ($patient->sex == 'm')
-										<div class="user-timeline-title">Mujer</div>
-										@else
-										<div class="user-timeline-title">Hombre</div>
-									@endif
+										<div class="user-timeline-title patient-sex">Mujer</div>
 								</div>
 							</div>
 						</div>
@@ -137,7 +127,7 @@
 								<div class="icon"><i class="zmdi zmdi-phone zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Teléfono</span>
-									<div class="user-timeline-title">{{ $patient->phone }}</div>
+									<div class="user-timeline-title patient-phone"></div>
 								</div>
 							</div>
 						</div>
@@ -146,7 +136,7 @@
 								<div class="icon"><i class="icon fas fa-map-marker-alt"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Lugar de nacimiento</span>
-									<div class="user-timeline-title">{{ $patient->getBirthplace() }}</div>
+									<div class="user-timeline-title patient-birthplace"></div>
 								</div>
 							</div>
 						</div>
@@ -156,7 +146,7 @@
 								<div class="icon">NSS</div>
 								<div class="message">
 									<span class="user-timeline-date">Tipo de seguro social</span>
-									<div class="user-timeline-title">{{ $patient->ssn->ssn_type['description'] }}</div>
+									<div class="user-timeline-title patient-ssn_type"></div>
 								</div>
 							</div>
 						</div>
@@ -165,7 +155,7 @@
 								<div class="icon">NSS</div>
 								<div class="message">
 									<span class="user-timeline-date">Número de seguro social</span>
-									<div class="user-timeline-title">{{ $patient->ssn['ssn'] }}</div>
+									<div class="user-timeline-title patient-ssn"></div>
 								</div>
 							</div>
 						</div>
@@ -174,7 +164,7 @@
 								<div class="icon"><i class="icon fas fa-list-ol"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Número de parentesco</span>
-									<div class="user-timeline-title">{{ $patient->ssn->number }}</div>
+									<div class="user-timeline-title patient-number"></div>
 								</div>
 							</div>
 						</div>
@@ -184,7 +174,7 @@
 								<div class="icon"><i class="icon fas fa-road"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Tipo de vialidad</span>
-									<div class="user-timeline-title">{{ $patient->address->viality->name }}</div>
+									<div class="user-timeline-title patient-viality"></div>
 								</div>
 							</div>
 						</div>
@@ -193,7 +183,7 @@
 								<div class="icon"><i class="icon fas fa-road"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Nombre de la vialidad</span>
-									<div class="user-timeline-title">{{ $patient->address->street }}</div>
+									<div class="user-timeline-title patient-street"></div>
 								</div>
 							</div>
 						</div>
@@ -202,7 +192,7 @@
 								<div class="icon"><i class="icon fas fa-hashtag"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Número exterior</span>
-									<div class="user-timeline-title">{{ $patient->address->number_ext }}</div>
+									<div class="user-timeline-title patient-number_ext></div>
 								</div>
 							</div>
 						</div>
@@ -211,7 +201,7 @@
 								<div class="icon"><i class="icon fas fa-hashtag"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Número interior</span>
-									<div class="user-timeline-title">{{ $patient->address->number_int }}</div>
+									<div class="user-timeline-title patient-number_int"></div>
 								</div>
 							</div>
 						</div>
@@ -220,7 +210,7 @@
 								<div class="icon"><i class="zmdi zmdi-city zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Tipo de asentamiento humano</span>
-									<div class="user-timeline-title">{{ $patient->address->settlement_type->name }}</div>
+									<div class="user-timeline-title patient-settlement_type"></div>
 								</div>
 							</div>
 						</div>
@@ -229,7 +219,7 @@
 								<div class="icon"><i class="zmdi zmdi-city zmdi-hc-lg"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Nombre del asentamiento humano</span>
-									<div class="user-timeline-title">{{ $patient->address->colony }}</div>
+									<div class="user-timeline-title patient-settlement_name"></div>
 								</div>
 							</div>
 						</div>
@@ -238,7 +228,7 @@
 								<div class="icon">CP.</div>
 								<div class="message">
 									<span class="user-timeline-date">Código postal</span>
-									<div class="user-timeline-title">{{ $patient->address->zip_code }}</div>
+									<div class="user-timeline-title patient-zip_code"></div>
 								</div>
 							</div>
 						</div>
@@ -247,7 +237,7 @@
 								<div class="icon"><i class="icon fas fa-map-marked-alt"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Localidad</span>
-									<div class="user-timeline-title">{{ $patient->address->locality->description	 }}</div>
+									<div class="user-timeline-title patient-locality"></div>
 								</div>
 							</div>
 						</div>
@@ -256,7 +246,7 @@
 								<div class="icon"><i class="icon fas fa-map-marked-alt"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Municipio</span>
-									<div class="user-timeline-title">{{ $patient->address->municipality->description	 }}</div>
+									<div class="user-timeline-title patient-municipality"></div>
 								</div>
 							</div>
 						</div>
@@ -266,7 +256,7 @@
 							<div class="icon"><i class="icon fas fa-flag"></i></div>
 							<div class="message">
 								<span class="user-timeline-date">Estado</span>
-								<div class="user-timeline-title">{{ $patient->address->state->description	 }}</div>
+								<div class="user-timeline-title patient-state"></div>
 							</div>
 						</div>
 					</div>
@@ -348,6 +338,46 @@
 			});
 		</script>
 	@endif
+	<script>
+		$(document).ready(function(){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$('.btn-view').click(function(){
+				let id = $(this).data('id');
+				$.ajax({
+					url: '{{ route("fetch.patient") }}',
+					method:"POST",
+					data: {id : id},
+					success:function(patient){
+						$('.patient-fullname').html(patient.fullname);
+						$('.patient-curp').html(patient.curp);
+						$('.patient-birthdate').html(patient.birthdate);
+						$('.patient-sex-icon').html(patient.sex_icon);
+						$('.patient-sex').html(patient.sex);
+						$('.patient-birthplace').html(patient.birthplace);
+						$('.patient-phone').html(patient.phone);
+						$('.patient-ssn_type').html(patient.ssn_type);
+						$('.patient-ssn').html(patient.ssn);
+						$('.patient-number').html(patient.number);
+						$('.patient-viality_type').html(patient.viality_type);
+						$('.patient-viality_name').html(patient.viality_name);
+						$('.patient-number_ext').html(patient.number_ext);
+						$('.patient-number_int').html(patient.number_int);
+						$('.patient-settlement_type').html(patient.settlement_type);
+						$('.patient-settlement_name').html(patient.settlement_name);
+						$('.patient-zip_code').html(patient.zip_code);
+						$('.patient-locality').html(patient.locality);
+						$('.patient-municipality').html(patient.municipality);
+						$('.patient-state').html(patient.state);
+						$('#modal-show').modal('show');
+					}
+				});
+			});
+		});
+	</script>
 	<script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>

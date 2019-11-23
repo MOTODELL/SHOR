@@ -27,7 +27,7 @@
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="code"><span class="text-danger pr-1">*</span>{{ __('Código') }}</label>
-                        <input id="code" type="text" class="form-control form-control-lg @error('code') is-invalid @enderror" placeholder="13" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>
+                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="13" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>
                         @error('code')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6">
                         <label for="description"><span class="text-danger pr-1">*</span>{{ __('Descripción') }}</label>
-                        <input id="description" type="text" class="form-control form-control-lg @error('description') is-invalid @enderror" placeholder="Diarrea" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
+                        <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" placeholder="Diarrea" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
