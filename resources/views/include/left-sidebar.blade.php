@@ -6,12 +6,12 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menú</li>
-                        <li class="{{ (request()->is('/')) ? 'active' : '' }}">
+                        {{-- <li class="{{ (request()->is('/')) ? 'active' : '' }}">
                             <a href="{{ route('home') }}">
                                 <i class="icon zmdi zmdi-home"></i>
                                 <span>Inicio</span>
                             </a>
-                        </li>
+                        </li> --}}
                         {{-- <li class="parent">
                             <a href="#">
                                 <i class="icon zmdi zmdi-face"></i>

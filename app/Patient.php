@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Patient extends Model
 {
+    use SoftDeletes;
     protected static function boot()
     {
         parent::boot();
@@ -52,6 +54,22 @@ class Patient extends Model
     public function getFullnameAttribute()
     {
         return $this->name . " " . $this->paternal_lastname . " " . $this->maternal_lastname;
+    }
+
+    public function hasASsn()
+    {
+        if ($this->ssn()->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasASex()
+    {
+        if ($this->sex === null || empty($this->sex) || (($this->sex != "H") && ($this->sex != "M"))) {
+            return false;
+        }
+        return true;
     }
     
     /*

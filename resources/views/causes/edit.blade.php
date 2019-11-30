@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('dependencies.update', $cause) }}">
+            <form method="POST" action="{{ route('causes.update', $cause) }}">
                 @csrf
                 @method('PUT')
                 <div class="form-row">

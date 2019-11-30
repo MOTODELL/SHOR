@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Date extends Model
 {
+    use SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -68,7 +70,7 @@ class Date extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     /**
@@ -90,7 +92,7 @@ class Date extends Model
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Patient::class)->withTrashed();
     }
 
     public function getPatient()

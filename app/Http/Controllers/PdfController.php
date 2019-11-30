@@ -32,7 +32,7 @@ class PdfController extends Controller
         $edad = Carbon::parse($patient->birthdate)->age;
         $sexo_h = '';
         $sexo_m = '';
-        if ($patient->sex == 'H') {
+        if ($patient->sex == 'H' || $patient->sex == 'h') {
             $sexo_h = 'X';
         } else {
             $sexo_m = 'X';

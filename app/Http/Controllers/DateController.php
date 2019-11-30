@@ -9,6 +9,7 @@ use App\Status;
 use App\Patient;
 use App\SsnType;
 use App\Address;
+use App\Exports\DatesExport;
 use App\Viality;
 use App\Locality;
 use Carbon\Carbon;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreDateRequest;
 use App\ZipCode;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DateController extends Controller
 {
@@ -98,7 +100,7 @@ class DateController extends Controller
                 $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
             }
             if ($request->filled('municipality')) {
-                $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+                $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
             }
             if ($request->filled('state')) {
                 $address->state()->associate(State::where('code', $request->input('state'))->first());
@@ -170,13 +172,15 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user']);
         
-        $date = Date::where('uuid', $date)->first();
+        $date = Date::withTrashed()->where('uuid', $date)->first();
         $vialities = Viality::all();
         $settlement_types = SettlementType::all();
         $localities = Locality::all();
         $municipalities = Municipality::all();
         $states = State::all();
         $ssn_types = SsnType::all();
+
+        // dd($date->first()->patient->ssn->number);
 
         return view('dates.edit', compact(['date', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
     }
@@ -215,7 +219,7 @@ class DateController extends Controller
             $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
         }
         if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+            $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
         }
         if ($request->filled('state')) {
             $address->state()->associate(State::where('code', $request->input('state'))->first());
@@ -250,7 +254,7 @@ class DateController extends Controller
         $date->diagnosis = $request->input('diagnosis');
         $date->status()->associate(Status::where('name', 'pendiente')->first());
         if($date->save()) {
-            return redirect('dates.show', $date->uuid)->with('message-update', '¡Cita actualizada!');
+            return redirect()->route('dates.show', $date->uuid)->with('message-update', '¡Cita actualizada!');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -268,5 +272,34 @@ class DateController extends Controller
         $date->delete();
 
         return redirect()->route('dates.index')->with('message-destroy', 'Eliminado');
+    }
+
+    public function export()
+    {
+        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        return Excel::download(new DatesExport, "Citas_$now.xlsx");
+    }
+
+    public function fetch_zip_codes(Request $request)
+    {
+        $request->validate([
+            'zip_code' => 'required|exists:zip_codes,code'
+        ]);
+
+        $zip_code = ZipCode::where('code', $request->input('zip_code'))->first();
+        if ($zip_code) {
+            $municipality = Municipality::where('id', $zip_code->municipality_id)->first();
+            if ($municipality) {
+                $state = State::where('id', $municipality->state_id)->first();
+                if ($state) {
+                    return response()->json([
+                        "municipality" => $municipality,
+                        "state" => $state
+                    ]);
+                }
+            }
+        }
+
+        return response()->json();
     }
 }

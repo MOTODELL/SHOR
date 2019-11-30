@@ -237,6 +237,9 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
                             <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code"  placeholder="48290">
+                            <div class="invalid-feedback zip_code_invalid">
+                                No existe el código postal.
+                            </div>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
@@ -253,7 +256,7 @@
                             <div>
                                 <select class="select2 select2-lg" name="municipality">
                                     @foreach ($municipalities as $municipality)
-                                        <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                        <option value="{{ $municipality->id }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -302,6 +305,67 @@
                 $('input[name="id-exist"]').val('');
             }
         });
+        if($("input#zip_code").length > 0) {
+            var typingTimer;
+            var doneTypingInterval = 1000;
+            var $input = $("input#zip_code");
+            var $this = $(this);
+
+            $input.on('keyup', function (e) {
+                var keyCode = e.keyCode || e.which;
+                clearTimeout(typingTimer);
+                if (keyCode != 9) {
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                }
+            });
+            
+            $input.on('keydown', function (e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode == 9) { // key 9 = tab
+                    doneTyping();
+                }
+                clearTimeout(typingTimer);
+            });
+            
+            function doneTyping () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('fetch.zip_codes') }}",
+                    data: { zip_code: $input.val() },
+                    beforeSend: function() {
+                        $("label[for=zip_code]").append('<div class="spinner-border spinner-border-sm text-success ml-2" role="status"><span class="sr-only">Cargando...</span></div>');
+                    },
+                    complete: function() {
+                        $("label[for=zip_code] .spinner-border").remove();
+                    }
+                })
+                .done(function( data ) {
+                    let municipality = data.municipality;
+                    let state = data.state;
+                    console.log(municipality);
+                    console.log(state);
+                    let $municipality = $('select[name="municipality"]');
+                    let $state = $('select[name="state"]');
+                    $municipality.select2('trigger', 'select', {
+                        data: {id: municipality.id}
+                    });
+                    $state.select2('trigger', 'select', {
+                        data: {id: state.code}
+                    });
+                    $("input#zip_code").focus();
+                    $("input#zip_code").addClass('is-valid');
+                    $('.zip_code_invalid').hide();
+                }).fail(function () {
+                    $("input#zip_code").removeClass('is-valid');
+                    $('.zip_code_invalid').show();
+                });
+            }
+        }
     </script>
     <script src="{{ asset('lib/datatables/datatables.net/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js') }}" type="text/javascript"></script>

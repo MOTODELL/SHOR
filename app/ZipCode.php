@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ZipCode extends Model
 {
+    use SoftDeletes;
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

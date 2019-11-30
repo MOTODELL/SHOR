@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Dependency;
+use App\Exports\DependenciesExport;
 use App\Http\Requests\StoreDependencyRequest;
 use App\Http\Requests\UpdateDependencyRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 use function App\Http\getDescriptionName;
 
@@ -125,5 +128,11 @@ class DependencyController extends Controller
         $dependency->delete();
 
         return redirect()->route('dependencies.index')->with('message', 'Dependencia eliminada correctamente');
+    }
+
+    public function export()
+    {
+        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        return Excel::download(new DependenciesExport, "Servicios_$now.xlsx");
     }
 }

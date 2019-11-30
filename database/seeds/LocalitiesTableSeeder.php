@@ -16,14 +16,14 @@ class LocalitiesTableSeeder extends Seeder
         Locality::truncate();
         $locality = new Locality();
         $locality->code = '001';
-        $locality->description = 'La pereza';
-        $locality->municipality()->associate(Municipality::where('code', '001')->first());
+        $locality->description = 'Ixtapa';
+        $locality->municipality()->associate(Municipality::where('id', '603')->first());
         $locality->save();
 
         $locality = new Locality();
         $locality->code = '002';
-        $locality->description = 'El perezoso';
-        $locality->municipality()->associate(Municipality::where('code', '002')->first());
+        $locality->description = 'Coapinole';
+        $locality->municipality()->associate(Municipality::where('id', '603')->first());
         $locality->save();
 
     }

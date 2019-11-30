@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Cause;
+use App\Exports\CausesExport;
 use App\Http\Requests\StoreCauseRequest;
 use App\Http\Requests\UpdateCauseRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CauseController extends Controller
 {
@@ -123,5 +125,11 @@ class CauseController extends Controller
         $cause->delete();
 
         return redirect()->route('causes.index')->with('message-destroy', 'Eliminado');
+    }
+
+    public function export()
+    {
+        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        return Excel::download(new CausesExport, "Causes_$now.xlsx");
     }
 }

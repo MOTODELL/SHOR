@@ -34,6 +34,7 @@ $(document).ready(function() {
             });
         var e = $(".dataTable").DataTable({
             pageLength: 10,
+            order: [[ 0, "desc" ]],
             dom: "<'row be-datatable-body'<'col-sm-12'tr>><'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
             language: {
                 sProcessing: "Procesando...",

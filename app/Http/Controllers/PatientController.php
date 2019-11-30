@@ -6,6 +6,7 @@ use App\Ssn;
 use App\State;
 use App\SsnType;
 use App\Address;
+use App\Exports\PatientsExport;
 use App\Patient;
 use App\Viality;
 use App\Locality;
@@ -14,6 +15,7 @@ use App\Municipality;
 use App\SettlementType;
 use App\ZipCode;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PatientController extends Controller
 {
@@ -92,7 +94,7 @@ class PatientController extends Controller
             $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
         }
         if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+            $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
         }
         if ($request->filled('state')) {
             $address->state()->associate(State::where('code', $request->input('state'))->first());
@@ -169,13 +171,14 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $request->user()->authorizeRoles('admin');
-        $address = $patient->address();
+        $address = $patient->address;
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
         if ($request->filled('number_int')) {
             $address->number_int = $request->input('number_int');
         }
-        $address->colony = $request->input('colony');
+        $address->colony = ucfirst($request->input('colony'));
+        // $address->zip_code = $request->input('zip_code');
         if ($request->filled('zip_code')) {
             $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
         }
@@ -189,31 +192,33 @@ class PatientController extends Controller
             $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
         }
         if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('code', $request->input('municipality'))->first());
+            $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
         }
         if ($request->filled('state')) {
             $address->state()->associate(State::where('code', $request->input('state'))->first());
         }
         $address->save();
 
-        $ssn = $patient->ssn();
-        $ssn->ssn = $request->input('ssn');
-        $ssn->number = strtoupper($request->input('ssn'));
-        $ssn->kinship = $request->input('kinship');
-        $ssn->date_start = $request->input('date_start');
-        $ssn->date_end = $request->input('date_end');
+        $ssn = $patient->ssn;
+        $ssn->number = $request->input('number');
+        $ssn->ssn = strtoupper($request->input('ssn'));
         $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
         $ssn->save();
 
         $patient->name = ucfirst($request->input('name'));
         $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
         $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
-        $patient->curp = $request->input('curp');
-        $patient->birthdate = $request->input('birthdate');
-        $patient->sex = $request->input('sex');
         $patient->phone = $request->input('phone');
-        $patient->birthplace()->associate(State::where('code', $request->input('birthplace'))->first());
-        $patient->ssn()->associate($ssn);
+        if ($request->filled('curp')) {
+            $patient->curp = strtoupper($request->input('curp'));
+            $yy = substr($request->input('curp'), 4, -12);
+            $mm = substr($request->input('curp'), 6, -10);
+            $dd = substr($request->input('curp'), 8, -8);
+            $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
+            $patient->sex = substr($request->input('curp'), 10, -7);
+            $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
+            $patient->ssn()->associate($ssn);
+        }
         $patient->address()->associate($address);
         if($patient->save()) {
             return redirect()->route('patients.index')->with('message-update', 'Editado');
@@ -269,5 +274,11 @@ class PatientController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function export()
+    {
+        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        return Excel::download(new PatientsExport, "Pacientes_$now.xlsx");
     }
 }

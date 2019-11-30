@@ -7,11 +7,15 @@ use App\User;
 use App\State;
 use Carbon\Carbon;
 use App\Dependency;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
+
+use function App\Http\isValidUuid;
 
 class UserController extends Controller
 {
@@ -105,11 +109,18 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, User $user)
+    public function show(Request $request, $user)
     {
         $request->user()->authorizeRoles('admin');
 
-        return view('users.show', compact('user'));
+        if (isValidUuid($user)) {
+            $user = User::where('id', $user)->first();
+    
+            if ($user) {
+                return view('users.show', compact('user'));
+            }
+        }
+        abort('404');
     }
 
     /**
@@ -118,13 +129,20 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, $user)
     {
         $request->user()->authorizeRoles('admin');
 
-        $dependencies = Dependency::all();
-        $roles = Role::all();
-        return view('users.edit', compact(['user', 'dependencies', 'roles']));
+        if (isValidUuid($user)) {
+            $user = User::where('id', $user)->first();
+            $dependencies = Dependency::all();
+            $roles = Role::all();
+    
+            if ($user) {
+                return view('users.edit', compact(['user', 'dependencies', 'roles']));
+            }
+        }
+        abort('404');
     }
 
     /**
@@ -134,43 +152,50 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $user)
     {
         $request->user()->authorizeRoles('admin');
-        if ($request->has('password')) {
-            if ($request->input('password') == $request->input('password_confirmation')) {
-                $user->password = Hash::make($request->input('password'));
-            } else {
-                return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
+
+        if (isValidUuid($user)) {
+            $user = User::where('id', $user)->first();
+    
+            if ($user) {
+                if ($request->has('password')) {
+                    if ($request->input('password') == $request->input('password_confirmation')) {
+                        $user->password = Hash::make($request->input('password'));
+                    } else {
+                        return redirect()->back()->withInput()->withErrors(['error', 'Las contraseñas no coinciden.']);
+                    }
+                }
+                $user->name = ucfirst($request->input('name'));
+                $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+                $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+                $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
+                if ($request->filled('professional_id')) {
+                    $user->professional_id = $request->input('professional_id');
+                }
+                if ($request->filled('curp')) {
+                    $user->curp = strtoupper($request->input('curp'));
+                    $yy = substr($request->input('curp'), 4, -12);
+                    $mm = substr($request->input('curp'), 6, -10);
+                    $dd = substr($request->input('curp'), 8, -8);
+                    $user->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
+                    $user->sex = substr($request->input('curp'), 10, -7);
+                    $user->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
+                }
+                $user->phone = $request->input('phone');
+                $user->email = $request->input('email');
+                if ($request->input('role') != 'admin') {
+                    $dependency = Dependency::where('name', $request->input('dependency'))->first();
+                    $user->dependency()->associate($dependency);
+                } else {
+                    $user->dependency()->delete();
+                }
+                if ($user->save()) {
+                    $user->roles()->sync(Role::where('name', $request->input('role'))->first());
+                    return redirect()->route('users.index')->with('message-update', 'Editado');
+                }
             }
-        }
-        $user->name = ucfirst($request->input('name'));
-        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
-        $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
-        $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
-        if ($request->filled('professional_id')) {
-            $user->professional_id = $request->input('professional_id');
-        }
-        if ($request->filled('curp')) {
-            $user->curp = strtoupper($request->input('curp'));
-            $yy = substr($request->input('curp'), 4, -12);
-            $mm = substr($request->input('curp'), 6, -10);
-            $dd = substr($request->input('curp'), 8, -8);
-            $user->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
-            $user->sex = substr($request->input('curp'), 10, -7);
-            $user->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
-        }
-        $user->phone = $request->input('phone');
-        $user->email = $request->input('email');
-        if ($request->input('role') != 'admin') {
-            $dependency = Dependency::where('name', $request->input('dependency'))->first();
-            $user->dependency()->associate($dependency);
-        } else {
-            $user->dependency()->delete();
-        }
-        if ($user->save()) {
-            $user->roles()->sync(Role::where('name', $request->input('role'))->first());
-            return redirect()->route('users.index')->with('message-update', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -181,15 +206,22 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(Request $request, $user)
     {
         $request->user()->authorizeRoles('admin');
 
-        $user->delete();
-        return redirect()->route('users.index')->with('message-destroy', 'Eliminado');
+        if (isValidUuid($user)) {
+            $user = User::where('id', $user)->first();
+    
+            if ($user) {
+                $user->delete();
+                return redirect()->route('users.index')->with('message-destroy', 'Eliminado');
+            }
+        }
+        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
 
-    public function fetchUser(Request $request)
+    public function fetch(Request $request)
     {
         $user = User::where('id', $request->input('id'))->first();
         $data = [];
@@ -208,5 +240,11 @@ class UserController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function export()
+    {
+        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        return Excel::download(new UsersExport, "Usuarios_$now.xlsx");
     }
 }

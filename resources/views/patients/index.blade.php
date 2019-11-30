@@ -29,7 +29,7 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<button class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
+							<a href="{{ route('patients.export') }}" class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></a>
 						</div>
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
 							</td>
 							<td class="text-right">
-								<span class="btn btn-space btn-primary mb-0 mr-0 btn-view" data-id="{{ $patient->id }}" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
+								<span class="btn btn-space btn-primary cursor-pointer mb-0 mr-0 btn-view" data-id="{{ $patient->id }}" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
 								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
@@ -192,7 +192,7 @@
 								<div class="icon"><i class="icon fas fa-hashtag"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Número exterior</span>
-									<div class="user-timeline-title patient-number_ext></div>
+									<div class="user-timeline-title patient-number_ext"></div>
 								</div>
 							</div>
 						</div>
@@ -352,6 +352,8 @@
 					method:"POST",
 					data: {id : id},
 					success:function(patient){
+						console.log(patient);
+						
 						$('.patient-fullname').html(patient.fullname);
 						$('.patient-curp').html(patient.curp);
 						$('.patient-birthdate').html(patient.birthdate);
@@ -362,8 +364,8 @@
 						$('.patient-ssn_type').html(patient.ssn_type);
 						$('.patient-ssn').html(patient.ssn);
 						$('.patient-number').html(patient.number);
-						$('.patient-viality_type').html(patient.viality_type);
-						$('.patient-viality_name').html(patient.viality_name);
+						$('.patient-viality').html(patient.viality_type);
+						$('.patient-street').html(patient.viality_name);
 						$('.patient-number_ext').html(patient.number_ext);
 						$('.patient-number_int').html(patient.number_int);
 						$('.patient-settlement_type').html(patient.settlement_type);

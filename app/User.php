@@ -77,6 +77,22 @@ class User extends Authenticatable
         return false;
     }
 
+    public function hasADependency()
+    {
+        if ($this->dependency) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasASex()
+    {
+        if ($this->sex === null || empty($this->sex) || (($this->sex != "H") && ($this->sex != "M"))) {
+            return false;
+        }
+        return true;
+    }
+
     public function getFullnameAttribute()
     {
         return $this->name . " " . $this->paternal_lastname . " " . $this->maternal_lastname;
@@ -182,6 +198,13 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         if ($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
+    }
+    public function hasARole()
+    {
+        if ($this->roles()->first()) {
             return true;
         }
         return false;
