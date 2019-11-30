@@ -33,7 +33,9 @@
 					<div class="col-5">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+								<button class="btn btn-outline-secondary" type="button" disabled>
+									<i class="fas fa-search"></i>
+								</button>
 							</div>
 							<input type="text" class="form-control" id="search" placeholder="Buscar">
 						</div>
@@ -95,12 +97,12 @@
 		<div class="modal-dialog full-width">
 			<div class="modal-content">
 				<div class="modal-header modal-header-colored">
-					<h3 class="modal-title">Información del paciente</h3>
+					<h3 class="modal-title">Información del usuario</h3>
 					<button class="close md-close" type="button" data-dismiss="modal" aria-hidden="true"><span class="mdi mdi-close"></span></button>
 				</div>
 				<div class="modal-body">
 					<div class="form-row">
-						<legend class="mb-0 h4 mt-0 ml-2">Datos personales</legend>
+						<legend class="my-0 font-weight-light">Datos personales</legend>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
@@ -146,7 +148,7 @@
 								</div>
 							</div>
 						</div>
-						<legend class="mb-0 h4 mt-0 ml-2">Datos de contacto</legend>
+						<legend class="my-0 font-weight-light">Datos de contacto</legend>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon"><i class="zmdi zmdi-phone zmdi-hc-lg"></i></div>
@@ -185,7 +187,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: 'Usuario creado correctamente'
+				title: '¡Usuario creado correctamente!'
 			});
 		</script>
 	@endif
@@ -255,7 +257,7 @@
 				$.ajax({
 					url: '{{ route("fetch.user") }}',
 					method:"POST",
-					data: {id : id},
+					data: {"id" : id},
 					success:function(user){
 						$('.user-fullname').html(user.fullname);
 						$('.user-curp').html(user.curp);

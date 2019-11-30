@@ -25,7 +25,7 @@
                     <legend class="my-0 font-weight-light">Datos del área de servicio</legend>
                     <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
                     <hr class="w-100 mt-0 mb-5">
-                    <div class="form-group col-sm-8">
+                    <div class="form-group col-sm-12">
                         <label for="description"><span class="text-danger pr-1">*</span>Nombre</label>
                         <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" placeholder="Urgencias" name="description" value="{{ $dependency->description }}" required autocomplete="description" autofocus>
                         @error('description')

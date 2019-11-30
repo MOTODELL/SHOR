@@ -24,14 +24,19 @@
 					<div class="col-5">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+								<button class="btn btn-outline-secondary" type="button" disabled>
+									<i class="fas fa-search"></i>
+								</button>
 							</div>
 							<input type="text" class="form-control" id="search" placeholder="Buscar">
 						</div>
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<button class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></button>
+							<button class="btn btn-success btn-lg" title="Descargar">
+								<i class="fas fa-file-excel mr-1"></i>
+								<span class="h4">Descargar</span>
+							</button>
 						</div>
 					</div>
 				</div>

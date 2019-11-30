@@ -26,7 +26,7 @@ Route::get('/dates/export', 'DateController@export')->name('dates.export');
 Route::get('/causes/export', 'CauseController@export')->name('causes.export');
 
 Route::resources([
-    // 'home' => 'HomeController',
+    'home' => 'HomeController',
     'users' => 'UserController',
     'dates' => 'DateController',
     'causes' => 'CauseController',
@@ -41,13 +41,11 @@ Route::prefix('fetch')->group(function ()
     Route::post('user', 'UserController@fetch')->name('fetch.user');
     Route::post('patient', 'PatientController@fetch')->name('fetch.patient');
     Route::post('zip_codes', 'DateController@fetch_zip_codes')->name('fetch.zip_codes');
+    Route::post('date', 'DateController@fetch')->name('fetch.date');
 });
 
 // Route::post('/fetch/user', 'UserController@fetchUser')->name('fetch.user');
 
-Route::get('/home', function ()
-{
-    return redirect()->route('dates.index');
-})->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/pdf/{date}', 'PdfController@print')->name('pdf');

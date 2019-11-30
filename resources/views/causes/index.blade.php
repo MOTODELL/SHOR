@@ -22,7 +22,9 @@
 				<div class="col-5">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
-							<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+							<button class="btn btn-outline-secondary" type="button" disabled>
+								<i class="fas fa-search"></i>
+							</button>
 						</div>
 						<input type="text" class="form-control" id="search" placeholder="Buscar">
 					</div>

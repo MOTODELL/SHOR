@@ -22,7 +22,9 @@
 					<div class="col-5">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+								<button class="btn btn-outline-secondary" type="button" disabled>
+									<i class="fas fa-search"></i>
+								</button>
 							</div>
 							<input type="text" class="form-control" id="search" placeholder="Buscar">
 						</div>
@@ -36,26 +38,26 @@
 				<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 					<thead>
 						<tr>
-							<th style="width:20%;">Número de seguro social</th>
-							<th style="width:20%;">CURP</th>
 							<th style="width:35%;">Nombre completo</th>
+							<th style="width:20%;">CURP</th>
+							<th style="width:20%;">Número de seguro social</th>
 							<th style="width:15%;"></th>
 						</tr>
 					</thead>
 					<tbody>
 					@foreach ($patients as $patient)
 						<tr class="success done">
-							<td class="cell-detail">
-								<span>{{ $patient->ssn['ssn'] }}</span>
+							<td class="patient-avatar cell-detail patient-info">
+								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
 							</td>
 							<td class="cell-detail">
 								<span>{{ $patient->curp }}</span>
 							</td>
-							<td class="patient-avatar cell-detail patient-info">
-								<span>{{ $patient->name.' '.$patient->paternal_lastname.' '.$patient->maternal_lastname }}</span>
+							<td class="cell-detail">
+								<span>{{ $patient->ssn['ssn'] }}</span>
 							</td>
 							<td class="text-right">
-								<span class="btn btn-space btn-primary cursor-pointer mb-0 mr-0 btn-view" data-id="{{ $patient->id }}" data-toggle="modal" data-target="#show-patient" data-tooltip="tooltip" data-placement="left" title="Ver">
+								<span class="btn btn-primary btn-view cursor-pointer mb-0 mr-0" data-id="{{ $patient->id }}" data-toggle="tooltip" data-placement="left" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
 								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
@@ -76,7 +78,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade colored-header colored-header-primary" id="show-patient" tabindex="-1" role="dialog">
+	<div class="modal fade colored-header colored-header-primary" id="modal-show" tabindex="-1" role="dialog">
 		<div class="modal-dialog full-width">
 			<div class="modal-content">
 				<div class="modal-header modal-header-colored">
@@ -85,7 +87,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-row">
-						<legend class="mb-0 h4 mt-0">Datos personales</legend>
+						<legend class="my-0 font-weight-light">Datos personales</legend>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon"><i class="zmdi zmdi-pin-account zmdi-hc-lg"></i></div>
@@ -140,7 +142,7 @@
 								</div>
 							</div>
 						</div>
-						<legend class="mb-0 h4 mt-0">Número del seguro social</legend>
+						<legend class="my-0 font-weight-light">Número del seguro social</legend>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon">NSS</div>
@@ -163,18 +165,18 @@
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon"><i class="icon fas fa-list-ol"></i></div>
 								<div class="message">
-									<span class="user-timeline-date">Número de parentesco</span>
+									<span class="user-timeline-date">Número de integrante</span>
 									<div class="user-timeline-title patient-number"></div>
 								</div>
 							</div>
 						</div>
-						<legend class="mb-0 h4 mt-0">Domicilio</legend>
+						<legend class="my-0 font-weight-light">Domicilio</legend>
 						<div class="form-group col-sm-6 col-md-4">
 							<div class="alert alert-primary alert-simple border-0 shadow-none">
 								<div class="icon"><i class="icon fas fa-road"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Tipo de vialidad</span>
-									<div class="user-timeline-title patient-viality"></div>
+									<div class="user-timeline-title patient-viality_type"></div>
 								</div>
 							</div>
 						</div>
@@ -183,7 +185,7 @@
 								<div class="icon"><i class="icon fas fa-road"></i></div>
 								<div class="message">
 									<span class="user-timeline-date">Nombre de la vialidad</span>
-									<div class="user-timeline-title patient-street"></div>
+									<div class="user-timeline-title patient-viality_name"></div>
 								</div>
 							</div>
 						</div>
@@ -269,7 +271,6 @@
 	</div>
 @endsection
 @push('scripts')
-	<script>$('[data-tooltip="tooltip"]').tooltip();</script>
 	@if (session('message-store'))
 		<script>
 			const Toast = Swal.mixin({
@@ -280,7 +281,7 @@
 			});
 			Toast.fire({
 				type: 'success',
-				title: 'Paciente creado correctamente'
+				title: '¡Paciente creado correctamente!'
 			});
 		</script>
 	@endif
@@ -334,7 +335,7 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: 'paciente Editado'
+				title: '¡Paciente editado correctamente!'
 			});
 		</script>
 	@endif
@@ -350,14 +351,14 @@
 				$.ajax({
 					url: '{{ route("fetch.patient") }}',
 					method:"POST",
-					data: {id : id},
+					data: {"id" : id},
 					success:function(patient){
 						console.log(patient);
 						
 						$('.patient-fullname').html(patient.fullname);
 						$('.patient-curp').html(patient.curp);
 						$('.patient-birthdate').html(patient.birthdate);
-						$('.patient-sex-icon').html(patient.sex_icon);
+						$('.patient-sex_icon').html(patient.sex_icon);
 						$('.patient-sex').html(patient.sex);
 						$('.patient-birthplace').html(patient.birthplace);
 						$('.patient-phone').html(patient.phone);
