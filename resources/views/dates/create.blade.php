@@ -3,13 +3,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/datetimepicker/css/bootstrap-datetimepicker.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/select2/css/select2.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('lib/bootstrap-slider/css/bootstrap-slider.min.css') }}"/>
-    <style scoped>
-        #diagnosis{
-            resize: vertical; 
-            min-height: 70px;
-            max-height: 100px;
-        }
-    </style>
 @endpush
 @section('header')
 <div class="d-flex justify-content-between">
@@ -38,62 +31,77 @@
             </div>
         </div>
         <div class="card-body pt-0">
-            <form method="POST" action="{{ route('dates.store') }}">
-                @csrf
-                <div class="forms main-form">
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-9">
+            <div class="forms main-form">
+                <div class="form-row justify-content-between">
+                    <div class="form-group col-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
+                            </div>
                             <input id="search" type="text" class="form-control form-control-lg" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
                         </div>
-                        <div class="form-group col-3">
-                            <button type="button" class="btn btn-primary btn-navigate h-100 w-100 shadow-sm" data-show="patient-form" title="Nuevo paciente">
-                                <i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
-                                <span class="h2"><small>Nuevo paciente</small></span>
-                            </button>
-                        </div>
                     </div>
-                    <div class="form-row justify-content-center">
-                        <div class="col-12">
-                            <table class="table table-striped table-hover table-fw-widget dataTable">
-                                <thead>
-                                    <tr>
-                                        <th style="width:20%;">Núm. Afiliación</th>
-                                        <th style="width:30%;">Nombre completo</th>
-                                        <th style="width:30%;">CURP</th>
-                                        <th style="width:20%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($patients as $patient)
-                                    <tr class="success">
-                                        <td class="cell-detail">
-                                            <span>{{ $patient->ssn->ssn }}</span>
-                                        </td>
-                                        <td class="date-avatar cell-detail date-info">
-                                            <span>{{ $patient->getFullName() }}</span>
-                                        </td>
-                                        <td class="cell-detail">
-                                            <span>{{ $patient->curp}}</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <button type="button" class="btn btn-outline-success btn-navigate" data-id="{{ $patient->id }}" data-name="{{ $patient->getFullName() }}" data-show="diagnosis-form">
-                                                <i class="zmdi zmdi-check zmdi-hc-lg mr-2"></i>
-                                                <span class="h3"><small>Seleccionar</small></span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="form-group col-3">
+                        <button type="button" class="btn btn-primary btn-navigate h-100 w-100 shadow-sm" data-show="patient-form" title="Nuevo paciente">
+                            <i class="zmdi zmdi-account-add zmdi-hc-lg mr-1"></i>
+                            <span class="h2"><small>Nuevo paciente</small></span>
+                        </button>
                     </div>
                 </div>
-                <div class="forms diagnosis-form" style="display:none">
+                <div class="form-row justify-content-center">
+                    <div class="col-12">
+                        <table class="table table-striped table-hover table-fw-widget dataTable">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%;">Núm. Afiliación</th>
+                                    <th style="width:30%;">Nombre completo</th>
+                                    <th style="width:30%;">CURP</th>
+                                    <th style="width:20%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($patients as $patient)
+                                <tr class="success">
+                                    <td class="cell-detail">
+                                        <span>{{ $patient->ssn->ssn }}</span>
+                                    </td>
+                                    <td class="date-avatar cell-detail date-info">
+                                        <span>{{ $patient->getFullName() }}</span>
+                                    </td>
+                                    <td class="cell-detail">
+                                        <span>{{ $patient->curp}}</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" class="btn btn-outline-success btn-navigate" data-id="{{ $patient->id }}" data-name="{{ $patient->getFullName() }}" data-show="diagnosis-form">
+                                            <i class="zmdi zmdi-check zmdi-hc-lg mr-2"></i>
+                                            <span class="h3"><small>Seleccionar</small></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="forms diagnosis-form" style="display:none">
+                <form method="POST" action="{{ route('dates.store') }}">
+                    @csrf
                     <input type="hidden" name="id-exist">
                     <div class="form-row justify-content-center">
                         <div class="form-group col-10">
                             <span class="h3 text-muted"><strong>Para:</strong> <span class="patient-name"></span></span>
-                            <hr class="mt-0 mb-5">
+                            <hr class="mt-0 mb-3">
+                        </div>
+                        <div class="form-group col-10">
+                            <legend class="font-weight-light">Estadod de la cita</legend>
+                            <select name="status" class="select2 select2-lg">
+                                @foreach ($status as $stat)
+                                    <option value="{{ $stat->name }}">{{ $stat->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-10">
                             <legend class="font-weight-light">Diagnóstico inicial (opcional)</legend>
                             <textarea class="form-control" name="diagnosis" id="diagnosis" rows="5" style="resize:none"></textarea>
                         </div>
@@ -108,8 +116,11 @@
                             <span class="h4 my-0">Guardar</span>
                         </button>
                     </div>
-                </div>
-                <div class="forms patient-form" style="display:none">
+                </form>
+            </div>
+            <div class="forms patient-form" style="display:none">
+                <form method="POST" action="{{ route('dates.store') }}">
+                    @csrf
                     <div id="patientForm" class="form-row pl-1">
                         <legend class="my-0 font-weight-light">Datos del paciente</legend>
                         <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
@@ -271,9 +282,21 @@
                                 </select>
                             </div>
                         </div>
-                        <legend class="my-0 font-weight-light">Diagnóstico inicial (opcional)</legend>
-                        <hr class="w-100 mt-1 mb-5">
-                        <textarea class="form-control" placeholder="Diagnóstico inicial" name="diagnosis" id="diagnosis" cols="30" rows="10" style="resize:none"></textarea>
+                        <legend class="my-0 font-weight-light">Detalles de la cita</legend>
+                        <span class="card-subtitle"><span class="text-danger pr-1">*</span>Campos obligatorios</span>
+                        <hr class="w-100 mt-0 mb-5">
+                        <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                            <label><span class="text-danger pr-1">*</span>{{ __('Estado de la cita') }}</label>
+                            <select name="status" class="select2 select2-lg">
+                                @foreach ($status as $stat)
+                                    <option value="{{ $stat->name }}">{{ $stat->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6 col-lg-8">
+                            <label for="diagnosis">{{ __('Diagnostico inicial (opcional)') }}</label>
+                            <input id="diagnosis" type="text" class="form-control form-control-lg" name="diagnosis">
+                        </div>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
                         <button type="button" class="btn btn-secondary pt-1 mr-5 btn-navigate" data-show="main-form">
@@ -285,8 +308,8 @@
                             <span class="h4 my-0">Guardar</span>
                         </button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
@@ -310,6 +333,8 @@
             var doneTypingInterval = 1000;
             var $input = $("input#zip_code");
             var $this = $(this);
+            let $municipality = $('select[name="municipality"]');
+            let $state = $('select[name="state"]');
 
             $input.on('keyup', function (e) {
                 var keyCode = e.keyCode || e.which;
@@ -347,21 +372,15 @@
                 .done(function( data ) {
                     let municipality = data.municipality;
                     let state = data.state;
-                    console.log(municipality);
-                    console.log(state);
-                    let $municipality = $('select[name="municipality"]');
-                    let $state = $('select[name="state"]');
-                    $municipality.select2('trigger', 'select', {
-                        data: {id: municipality.id}
-                    });
                     $state.select2('trigger', 'select', {
                         data: {id: state.code}
                     });
+                    $municipality.select2('trigger', 'select', {
+                        data: {id: municipality.id}
+                    });
                     $("input#zip_code").focus();
-                    $("input#zip_code").addClass('is-valid');
                     $('.zip_code_invalid').hide();
                 }).fail(function () {
-                    $("input#zip_code").removeClass('is-valid');
                     $('.zip_code_invalid').show();
                 });
             }

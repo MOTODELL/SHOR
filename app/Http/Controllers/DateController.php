@@ -64,9 +64,10 @@ class DateController extends Controller
         $municipalities = Municipality::all();
         $states = State::all();
         $ssn_types = SsnType::all();
+        $status = Status::all();
         $today = Carbon::now()->format('d/m/Y');
 
-        return view('dates.create', compact(['patients', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types', 'today']));
+        return view('dates.create', compact(['patients', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types', 'today', 'status']));
     }
 
     /**
@@ -78,7 +79,6 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
-        // dd($user);
         if (!$patient) {
             $address = new Address();
             $address->street = ucfirst($request->input('street'));
@@ -137,10 +137,13 @@ class DateController extends Controller
         $date->uuid = (string) Str::uuid();
         $date->attention_date = Carbon::now();
         $date->diagnosis = $request->input('diagnosis');
-        $date->status()->associate(Status::where('name', 'pendiente')->first());
+        if($request->filled('status') && $request->has('status')) {
+            $date->status()->associate(Status::where('name', $request->input('status'))->first());
+        }
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
         if($date->save()) {
+            dd($date);
             return redirect()->route('dates.show', $date->uuid)->with('message-store', '¡Cita creada!');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
