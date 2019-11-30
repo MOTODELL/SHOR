@@ -12,13 +12,13 @@
     </style>
 @endpush
 @section('header')
-    <h2 class="page-head-title">Citas</h2>
+    <h2 class="page-head-title">Urgencias</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('dates.index') }}"><span class="text-primary">Citas</span></a>
+                <a href="{{ route('dates.index') }}"><span class="text-primary">Urgencias</span></a>
             </li>
-            <li class="breadcrumb-item active">Crear cita</li>
+            <li class="breadcrumb-item active">Editar cita</li>
         </ol>
     </nav>
 @endsection
@@ -26,7 +26,7 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend class="h2 my-0">Crear cita</legend>
+                <legend class="h2 my-0">Editar cita</legend>
             </div>
         </div>
         <div class="card-body pt-0">
@@ -89,7 +89,7 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="ssn_type"><span class="text-danger pr-1">*</span>{{ __('Tipo de seguro social') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="ssn_type" id="ssn_type">
+                                <select class="select2" name="ssn_type" id="ssn_type">
                                     @foreach ($ssn_types as $ssn_type)
                                         <option value="{{ $ssn_type->name }}">{{ $ssn_type->description }}</option>
                                     @endforeach
@@ -120,7 +120,7 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="viality">
+                                <select class="select2" name="viality">
                                     @foreach ($vialities as $viality)
                                         <option value="{{ $viality->name }}">{{ $viality->description }}</option>
                                     @endforeach
@@ -134,20 +134,20 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de vialidad') }}</label>
-                            <input id="street" type="text" class="form-control form-control-lg" name="street" value="{{ empty(old('street')) ? $date->patient->address->street : old('street') }}" placeholder="el venado">
+                            <input id="street" type="text" class="form-control" name="street" value="{{ empty(old('street')) ? $date->patient->address->street : old('street') }}" placeholder="el venado">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                            <input id="number_ext" type="text" class="form-control form-control-lg" name="number_ext" value="{{ empty(old('number_ext')) ? $date->patient->address->number_ext : old('number_ext') }}" placeholder="644">
+                            <input id="number_ext" type="text" class="form-control" name="number_ext" value="{{ empty(old('number_ext')) ? $date->patient->address->number_ext : old('number_ext') }}" placeholder="644">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_int">{{ __('Número interior') }}</label>
-                            <input id="number_int" type="text" class="form-control form-control-lg" name="number_int" value="{{ empty(old('number_int')) ? $date->patient->address->number_int : old('number_int') }}" placeholder="44">
+                            <input id="number_int" type="text" class="form-control" name="number_int" value="{{ empty(old('number_int')) ? $date->patient->address->number_int : old('number_int') }}" placeholder="44">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="settlement_type">
+                                <select class="select2" name="settlement_type">
                                     @foreach ($settlement_types as $settlementType)
                                         <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
                                     @endforeach
@@ -156,16 +156,16 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="colony"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
-                            <input id="colony" type="text" class="form-control form-control-lg" name="colony" value="{{ empty(old('colony')) ? $date->patient->address->colony : old('colony') }}" placeholder="Las americas">
+                            <input id="colony" type="text" class="form-control" name="colony" value="{{ empty(old('colony')) ? $date->patient->address->colony : old('colony') }}" placeholder="Las americas">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                            <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" value="{{ empty(old('zip_code')) ? $date->patient->address->zip_code->code : old('zip_code') }}" placeholder="48290">
+                            <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code" value="{{ empty(old('zip_code')) ? $date->patient->address->zip_code->code : old('zip_code') }}" placeholder="48290">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="locality">
+                                <select class="select2" name="locality">
                                     @foreach ($localities as $locality)
                                         <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
                                     @endforeach
@@ -175,7 +175,7 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="municipality">
+                                <select class="select2" name="municipality">
                                     @foreach ($municipalities as $municipality)
                                         <option value="{{ $municipality->code }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
                                     @endforeach
@@ -185,7 +185,7 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
                             <div>
-                                <select class="select2 select2-lg" name="state">
+                                <select class="select2" name="state">
                                     @foreach ($states as $state)
                                         <option value="{{ $state->code }}" {{ $state->code == $date->patient->address->state->code ? "selected" : "" }}>{{ $state->code }} - {{ $state->description }}</option>
                                     @endforeach

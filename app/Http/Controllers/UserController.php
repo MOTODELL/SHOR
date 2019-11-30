@@ -199,8 +199,8 @@ class UserController extends Controller
                 "fullname" => $user->fullname,
                 "curp" => $user->curp,
                 "birthdate" => $user->birthdate,
-                "sex_icon" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? "Hombre" : "Mujer" ),
                 "birthplace" => $user->getBirthplace(),
                 "phone" => $user->phone,
                 "email" => $user->email

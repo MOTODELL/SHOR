@@ -34,6 +34,7 @@ Route::prefix('fetch')->group(function ()
 {
     Route::post('user', 'UserController@fetchUser')->name('fetch.user');
     Route::post('patient', 'PatientController@fetch')->name('fetch.patient');
+    Route::post('date', 'DateController@fetch')->name('fetch.date');
 });
 
 // Route::post('/fetch/user', 'UserController@fetchUser')->name('fetch.user');

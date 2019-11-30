@@ -164,7 +164,7 @@
 									</div>
 									<div class="form-group col-sm-12 col-md-6 col-lg-4">
 										<label for="password-confirm">{{ __('Confirmación de contraseña') }}</label>
-										<input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="********">
+										<input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="********">
 									</div>
 									<div class="col-md-12 d-flex justify-content-center mt-2">
 										<button type="submit" class="btn btn-primary pt-1">

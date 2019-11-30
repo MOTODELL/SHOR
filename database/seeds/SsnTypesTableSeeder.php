@@ -17,6 +17,11 @@ class SsnTypesTableSeeder extends Seeder
         SsnType::truncate();
 
         $ssn_type = new SsnType();
+        $ssn_type->name = getDescriptionName('NINGUNA');
+        $ssn_type->description = 'NINGUNO';
+        $ssn_type->save();
+
+        $ssn_type = new SsnType();
         $ssn_type->name = getDescriptionName('ISSSTE');
         $ssn_type->description = 'ISSSTE';
         $ssn_type->save();
@@ -65,10 +70,6 @@ class SsnTypesTableSeeder extends Seeder
         $ssn_type->name = getDescriptionName('PROSPERA');
         $ssn_type->description = 'PROSPERA';
         $ssn_type->save();
-        
-        $ssn_type = new SsnType();
-        $ssn_type->name = getDescriptionName('NINGUNA');
-        $ssn_type->description = 'NINGUNA';
-        $ssn_type->save();
+    
     }
 }

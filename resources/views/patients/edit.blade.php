@@ -19,7 +19,7 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend>Editar paciente</legend>
+                <legend class="h2 my-0">Editar paciente</legend>
             </div>
         </div>
         <div class="card-body pt-0">
@@ -81,7 +81,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="ssn_type"><span class="text-danger pr-1">*</span>{{ __('Tipo de seguro social') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="ssn_type" id="ssn_type">
+                            <select class="select2" name="ssn_type" id="ssn_type">
                                 @foreach ($ssn_types as $ssn_type)
                                     @if ($ssn_type->name == $patient->ssn->name)
                                         <option value="{{ $ssn_type->name }}" selected>{{ $ssn_type->description }}</option>
@@ -92,18 +92,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+                    <div id="ssnHide" class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="ssn"><span class="text-danger pr-1">*</span>{{ __('Número del seguro social') }}</label>
-                        <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ $patient->ssn }}" required placeholder="07985671496">
+                        <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ $patient->ssn }}" placeholder="07985671496">
                         @error('ssn')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 col-lg-4">
-                        <label for="number"><span class="text-danger pr-1">*</span>{{ __('Número de paréntesco') }}</label>
-                        <input id="number" type="text" data-mask="number" class="form-control text-uppercase @error('number') is-invalid @enderror" name="number" value="{{ $patient->ssn->number }}" required placeholder="1">
+                    <div id="numberHide" class="form-group col-sm-12 col-md-6 col-lg-4">
+                        <label for="number"><span class="text-danger pr-1">*</span>{{ __('Número de integrante') }}</label>
+                        <input id="number" type="text" data-mask="number" class="form-control text-uppercase @error('number') is-invalid @enderror" name="number" value="{{ $patient->ssn->number }}" placeholder="1">
                         @error('number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -116,7 +116,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="viality"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="viality">
+                            <select class="select2" name="viality">
                                 @foreach ($vialities as $viality)
                                     @if ($viality->name == $patient->address->viality->name)
                                         <option value="{{ $viality->name }}" selected>{{ $viality->description }}</option>
@@ -129,20 +129,20 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Nombre de vialidad') }}</label>
-                    <input id="street" type="text" class="form-control form-control-lg" name="street" value="{{ $patient->address->street }}" required placeholder="el venado">
+                    <input id="street" type="text" class="form-control" name="street" value="{{ $patient->address->street }}" required placeholder="el venado">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                        <input id="number_ext" type="text" class="form-control form-control-lg" name="number_ext" value="{{ $patient->address->number_ext }}" required placeholder="644">
+                        <input id="number_ext" type="text" class="form-control" name="number_ext" value="{{ $patient->address->number_ext }}" required placeholder="644">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="number_int">{{ __('Número interior') }}</label>
-                        <input id="number_int" type="text" class="form-control form-control-lg" name="number_int" value="{{ $patient->address->number_int }}" placeholder="44">
+                        <input id="number_int" type="text" class="form-control" name="number_int" value="{{ $patient->address->number_int }}" placeholder="44">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="settlement_type">
+                            <select class="select2" name="settlement_type">
                                 @foreach ($settlement_types as $settlementType)
                                     @if ($settlementType->name == $patient->address->settlement_type->name)
                                             <option value="{{ $settlementType->name }}" selected>{{ $settlementType->description }}</option>
@@ -155,16 +155,16 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="colony"><span class="text-danger pr-1">*</span>{{ __('Nombre de asentamiento humano') }}</label>
-                        <input id="colony" type="text" class="form-control form-control-lg" name="colony" value="{{ $patient->address->colony }}"  required placeholder="Las americas">
+                        <input id="colony" type="text" class="form-control" name="colony" value="{{ $patient->address->colony }}"  required placeholder="Las americas">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                        <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" value="{{ $patient->address->zip_code }}"  required placeholder="48290">
+                        <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code" value="{{ $patient->address->zip_code }}"  required placeholder="48290">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="locality">
+                            <select class="select2" name="locality">
                                 @foreach ($localities as $locality)
                                     @if ($locality->code == $patient->address->locality->code)
                                         <option value="{{ $locality->code }}" selected>{{ $locality->code }} - {{ $locality->description }}</option>
@@ -178,7 +178,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="municipality">
+                            <select class="select2" name="municipality">
                                 @foreach ($municipalities as $municipality)
                                     @if ($municipality->code == $patient->address->municipality->code)
                                         <option value="{{ $municipality->code }}" selected>{{ $municipality->code }} - {{ $municipality->description }}</option>
@@ -192,7 +192,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
                         <div>
-                            <select class="select2 select2-lg" name="state">
+                            <select class="select2" name="state">
                                 @foreach ($states as $state)
                                     @if ($state->code == $patient->address->state->code)
                                         <option value="{{ $state->code }}" selected>{{ $state->code }} - {{ $state->description }}</option>
@@ -219,6 +219,21 @@
     </div>
 @endsection
 @push('scripts')
+    <script>
+        function ssnTypeChangeVal() {
+        if( $('#ssn_type').val() == 'seguro-popular' ) {
+            $('#ssnHide').show();
+            $('#numberHide').show();
+        } else {
+            $('#ssnHide').hide();
+            $('#numberHide').hide();
+        }
+    }
+    $('#ssn_type').change(function() {
+        ssnTypeChangeVal();
+    });
+    ssnTypeChangeVal();
+    </script>
     <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>

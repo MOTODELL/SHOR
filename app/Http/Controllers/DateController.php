@@ -76,7 +76,7 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
-        // dd($user);
+
         if (!$patient) {
             $address = new Address();
             $address->street = ucfirst($request->input('street'));
@@ -130,11 +130,15 @@ class DateController extends Controller
             $patient->address()->associate($address);
             $patient->save();
         }
-
         $date = new Date();
         $date->uuid = (string) Str::uuid();
         $date->attention_date = Carbon::now();
-        $date->diagnosis = $request->input('diagnosis');
+        if ($request->filled('id-exist')) {
+            $date->diagnosis = $request->input('diagnosis_exist');
+        } else {
+            $date->diagnosis = $request->input('diagnosis');
+        }
+        
         $date->status()->associate(Status::where('name', 'pendiente')->first());
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
@@ -268,5 +272,42 @@ class DateController extends Controller
         $date->delete();
 
         return redirect()->route('dates.index')->with('message-destroy', 'Eliminado');
+    }
+
+     public function fetch(Request $request)
+    {
+        $date = Date::where('id', $request->input('id'))->first();
+        $data = [];
+        // dd($patient);
+        if ($date) {
+            $data = [
+                "folio" => str_pad($date->id, 8, '0', STR_PAD_LEFT),
+                "status" => $date->getStatus(),
+                "diagnosis" => $date->diagnosis,
+                "attention_date" => $date->attention_date,
+                "fullname" => $date->getPatient(),
+                "curp" => $date->patient->curp,
+                "birthdate" => $date->patient->birthdate,
+                "sex_icon" => ($date->patient->sex === null || empty($date->patient->sex) || (($date->patient->sex != "H") && ($date->patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($date->patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($date->patient->sex === null || empty($date->patient->sex) || (($date->patient->sex != "H") && ($date->patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($date->patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "birthplace" => $date->patient->getBirthplace(),
+                "phone" => $date->patient->phone,
+                "ssn_type" => $date->patient->ssn->ssn_type->description,
+                "ssn" => $date->patient->ssn->ssn,
+                "number" => $date->patient->ssn->number,
+                "viality_type" => $date->patient->address->viality->description,
+                "viality_name" => $date->patient->address->street,
+                "number_ext" => $date->patient->address->number_ext,
+                "number_int" => $date->patient->address->number_int,
+                "settlement_type" => $date->patient->address->settlement_type->description,
+                "settlement_name" => $date->patient->address->colony,
+                // "zip_code" => $date->patient()->address->zip_code->id,
+                "locality" => $date->patient->address->locality->description,
+                "municipality" => $date->patient->address->municipality->description,
+                "state" => $date->patient->address->state->description
+            ];
+        }
+
+        return response()->json($data);
     }
 }

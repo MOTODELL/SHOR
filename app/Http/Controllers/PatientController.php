@@ -58,7 +58,15 @@ class PatientController extends Controller
         $states = State::all();
         $ssn_types = SsnType::all();
 
-        return view('patients.create', compact(['patients', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
+        return view('patients.create', compact([
+            'patients', 
+            'vialities', 
+            'settlement_types', 
+            'localities', 
+            'municipalities', 
+            'states', 
+            'ssn_types'
+        ]));
     }
 
     /**
@@ -67,7 +75,7 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePatientRequest $request)
     {
         $request->user()->authorizeRoles('admin');
         // dd($request);
@@ -156,7 +164,15 @@ class PatientController extends Controller
         $states = State::all();
         $ssn_types = SsnType::all();
 
-        return view('patients.edit', compact(['patient', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
+        return view('patients.edit', compact([
+            'patient', 
+            'vialities', 
+            'settlement_types', 
+            'localities', 
+            'municipalities', 
+            'states', 
+            'ssn_types'
+        ]));
     }
 
     /**
@@ -166,7 +182,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(UpdatePatientRequest $request, Patient $patient)
     {
         $request->user()->authorizeRoles('admin');
         $address = $patient->address();
@@ -240,7 +256,7 @@ class PatientController extends Controller
 
     public function fetch(Request $request)
     {
-        $patient = patient::where('id', $request->input('id'))->first();
+        $patient = Patient::where('id', $request->input('id'))->first();
         $data = [];
         // dd($patient);
         if ($patient) {
@@ -248,8 +264,8 @@ class PatientController extends Controller
                 "fullname" => $patient->fullname,
                 "curp" => $patient->curp,
                 "birthdate" => $patient->birthdate,
-                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex != "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
                 "birthplace" => $patient->getBirthplace(),
                 "phone" => $patient->phone,
                 "ssn_type" => $patient->ssn->ssn_type->description,
@@ -261,7 +277,7 @@ class PatientController extends Controller
                 "number_int" => $patient->address->number_int,
                 "settlement_type" => $patient->address->settlement_type->description,
                 "settlement_name" => $patient->address->colony,
-                "zip_code" => $patient->address->zip_code->id,
+                // "zip_code" => $patient->address->zip_code->id,
                 "locality" => $patient->address->locality->description,
                 "municipality" => $patient->address->municipality->description,
                 "state" => $patient->address->state->description

@@ -41,10 +41,11 @@
                             </li>
                         @endcan
                         <li class="divider">Divididor</li> --}}
-                        <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
-                            <a href="{{ route('dates.index') }}">
-                                <i class="icon zmdi zmdi-calendar-alt"></i>
-                                <span>Citas</span>
+                         <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
+                            <a href="{{ route('dependencies.index') }}">
+                                {{-- <i class="icon fas fa-briefcase-medical"></i> --}}
+                                <i class="icon fas fa-hospital-alt"></i>
+                                <span>Áreas</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
@@ -65,10 +66,10 @@
                                 <span>Pacientes</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
-                            <a href="{{ route('dependencies.index') }}">
-                                <i class="icon fas fa-briefcase-medical"></i>
-                                <span>Servicios</span>
+                        <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
+                            <a href="{{ route('dates.index') }}">
+                                <i class="icon fas fa-ambulance"></i>
+                                <span>Urgencias</span>
                             </a>
                         </li>
                         <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
