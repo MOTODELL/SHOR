@@ -29,10 +29,6 @@ class CreateRelationships extends Migration
             $table->foreign('municipality_id')->references('id')->on('municipalities');
         });
 
-        Schema::table('doctors', function (Blueprint $table) {
-            $table->foreign('address_id')->references('id')->on('addresses');
-        });
-
         Schema::table('ssns', function (Blueprint $table) {
             $table->foreign('ssn_type_id')->references('id')->on('ssn_types');
         });
@@ -70,7 +66,6 @@ class CreateRelationships extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('cause_id')->references('id')->on('causes');
             $table->foreign('status_id')->references('id')->on('status');
-            $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->foreign('patient_id')->references('id')->on('patients');
             $table->foreign('service_id')->references('id')->on('services');
         });
@@ -97,10 +92,6 @@ class CreateRelationships extends Migration
 
         Schema::table('localities', function (Blueprint $table) {
             $table->dropForeign(['municipality_id']);
-        });
-
-        Schema::table('doctors', function (Blueprint $table) {
-            $table->dropForeign(['address_id']);
         });
 
         Schema::table('ssns', function (Blueprint $table) {
@@ -140,7 +131,6 @@ class CreateRelationships extends Migration
             $table->dropForeign(['user_id']);
             $table->dropForeign(['cause_id']);
             $table->dropForeign(['status_id']);
-            $table->dropForeign(['doctor_id']);
             $table->dropForeign(['patient_id']);
             $table->dropForeign(['service_id']);
         });
