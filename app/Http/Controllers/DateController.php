@@ -142,7 +142,6 @@ class DateController extends Controller
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
         if($date->save()) {
-            dd($date);
             return redirect()->route('dates.show', $date->uuid)->with('message-store', '¡Cita creada!');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);

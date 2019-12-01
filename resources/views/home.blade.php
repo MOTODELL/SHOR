@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('header')
-    <div class="main-content container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-12 col-lg-6 col-xl-3">
                 <div class="widget widget-tile">
@@ -50,5 +50,19 @@
     </div>
 @endsection
 @section('content')
-    <h3 class="text-center">Content goes here!</h3>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    {!! $dateChart->container() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
+    @if($dateChart)
+        {!! $dateChart->script() !!}
+    @endif
+@endpush

@@ -39,10 +39,10 @@
                     </a>
                 </li> --}}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{-- <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
                         <span class="icon zmdi zmdi-notifications"></span>
                         <span class="indicator"></span>
-                    </a>
+                    </a> --}}
                     <ul class="dropdown-menu be-notifications">
                         <li>
                             <div class="title">Notificaciones<span class="badge badge-pill">3</span></div>

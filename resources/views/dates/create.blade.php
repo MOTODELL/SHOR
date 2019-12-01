@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-group col-10">
                             <legend class="font-weight-light">Diagnóstico inicial (opcional)</legend>
-                            <textarea class="form-control" name="diagnosis_exist" rows="5" style="resize:none"></textarea>
+                            <textarea class="form-control" name="diagnosis" rows="5" style="resize:none"></textarea>
                         </div>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
