@@ -16,8 +16,8 @@ class CreateSsnsTable extends Migration
         Schema::create('ssns', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedInteger('ssn_type_id');
-            $table->string('ssn');
-            $table->char('number', 1);
+            $table->string('ssn')->nullable();
+            $table->char('number', 1)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

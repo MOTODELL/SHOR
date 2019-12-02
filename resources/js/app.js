@@ -11,7 +11,6 @@ $(document).ready(function() {
     var protocol = location.protocol;
     var slashes = protocol.concat("//");
     var host = slashes.concat(window.location.host);
-
     //-Runs prettify
     if ($('script[src="' + host + '/lib/prettify/prettify.js"]').length > 0) {
         prettyPrint();
@@ -23,15 +22,15 @@ $(document).ready(function() {
                 a = $("#check-admin").is(":checked"),
                 m = $(e.aoData[i].nTr).attr("class").split(" ");
     
-                return (
-                    (
-                        (0 == u && 0 == d && 0 == a) ||
-                        (1 == u && "Usuario" == m[1]) ||
-                        (1 == d && "Doctor" == m[1]) ||
-                        (1 == a && "Administrador" == m[1])
-                    )
-                );
-            });
+            return (
+                (
+                    (0 == u && 0 == d && 0 == a) ||
+                    (1 == u && "Usuario" == m[1]) ||
+                    (1 == d && "Doctor" == m[1]) ||
+                    (1 == a && "Administrador" == m[1])
+                )
+            );
+        });
         var e = $(".dataTable").DataTable({
             pageLength: 10,
             order: [[ 0, "desc" ]],
@@ -122,6 +121,11 @@ $(document).ready(function() {
     if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
+    $(".select2-tags").select2({
+        width: "100%",
+        placeholder: "Crea o selecciona una localidad",
+        tags: true
+    });
 });
 
 // window.Vue = require("vue");

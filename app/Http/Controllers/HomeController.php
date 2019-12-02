@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\DateChart;
+use App\User;
 use App\Date;
-use App\Municipality;
+use App\Patient;
 use Carbon\Carbon;
+use App\Municipality;
+use App\Charts\DateChart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // $users = User::all()->count();
         $today = Carbon::now();
         $lastWeek = Carbon::today();
         $lastWeek = $lastWeek->subWeek('1');
@@ -41,7 +44,10 @@ class HomeController extends Controller
         $dateChart->labels($dates->keys()->toArray());
         $dateChart->dataset('Citas', 'line', $dates->values()->toArray());
         $dateChart->label('Cantidad');
-        return view('home', compact('dateChart'));
+        $users = User::all()->count();
+        $dates = Date::all()->count();
+        $patients = Patient::all()->count();
+        return view('home', compact(['users', 'dates', 'patients', 'dateChart']));
     }
 
     public function test()

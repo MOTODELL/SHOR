@@ -31,7 +31,10 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<a href="{{ route('dates.export') }}" class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i><span class="h4">Descargar</span></a>
+							<a href="{{ route('dates.export') }}" class="btn btn-success btn-lg" title="Descargar">
+								<i class="fas fa-file-excel mr-1"></i>
+								<span class="h4">Descargar</span>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -65,7 +68,10 @@
 								<span>{{ $date->getStatus() }}</span>
 							</td>
 							<td class="text-right">
-								<span class="btn btn-primary btn-view cursor-pointer mb-0 mr-0" data-id="{{ $date->id }}" data-toggle="tooltip" data-placement="left" title="Ver">
+								<a href="{{ route('pdf', $date->uuid) }}" target="_blank" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Imprimir">
+									<i class="zmdi zmdi-print zmdi-hc-lg"></i>
+								</a>
+								<span class="btn btn-primary btn-view cursor-pointer mb-0 mr-0" data-id="{{ $date->id }}" data-toggle="tooltip" data-placement="bottom" title="Ver">
 									<i class="zmdi zmdi-eye zmdi-hc-lg"></i>
 								</span>
 								<a href="{{ route('dates.edit', $date->uuid) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">

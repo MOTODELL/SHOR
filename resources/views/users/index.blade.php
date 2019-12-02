@@ -42,7 +42,9 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<a href="{{ route('users.export') }}" class="btn btn-sm btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></a>
+							<a href="{{ route('users.export') }}" class="btn btn-sm btn-success btn-lg" title="Descargar">
+								<i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -59,13 +61,13 @@
 					@foreach ($users as $user)
 						@if (auth()->user()->id == $user->id)
 						@else
-							<tr class="success {{ $user->getRole() }}">
+							<tr class="success {{ $user->getRoleDescription() }}">
 								<td class="user-avatar cell-detail user-info">
 									<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
 									<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
 								</td>
 								<td class="cell-detail">
-									<span>{{ $user->getRole() }}</span>
+									<span>{{ $user->getRoleDescription() }}</span>
 								</td>
 								<td class="cell-detail">
 									<span>{!! !empty($user->getDependency()) > 0 ? $user->getDependency() : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
@@ -241,7 +243,7 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: 'Usuario Editado'
+				title: '¡Usuario editado correctamente!'
 			});
 		</script>
 	@endif

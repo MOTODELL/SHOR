@@ -21,15 +21,17 @@ class SsnTypesTableSeeder extends Seeder
         $ssn_type->description = 'NINGUNO';
         $ssn_type->save();
 
-        $ssn_type = new SsnType();
-        $ssn_type->name = getDescriptionName('ISSSTE');
-        $ssn_type->description = 'ISSSTE';
-        $ssn_type->save();
         
         $ssn_type = new SsnType();
         $ssn_type->name = getDescriptionName('IMSS');
         $ssn_type->description = 'IMSS';
         $ssn_type->save();
+
+        $ssn_type = new SsnType();
+        $ssn_type->name = getDescriptionName('ISSSTE');
+        $ssn_type->description = 'ISSSTE';
+        $ssn_type->save();
+        
         
         $ssn_type = new SsnType();
         $ssn_type->name = getDescriptionName('PEMEX');

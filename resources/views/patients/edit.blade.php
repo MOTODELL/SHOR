@@ -83,7 +83,7 @@
                         <div>
                             <select class="select2" name="ssn_type" id="ssn_type">
                                 @foreach ($ssn_types as $ssn_type)
-                                    @if ($ssn_type->name == $patient->ssn->name)
+                                    @if ($ssn_type->name ==  $patient->ssn->ssn_type->name)
                                         <option value="{{ $ssn_type->name }}" selected>{{ $ssn_type->description }}</option>
                                         @else
                                         <option value="{{ $ssn_type->name }}">{{ $ssn_type->description }}</option>
@@ -94,7 +94,7 @@
                     </div>
                     <div id="ssnHide" class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="ssn"><span class="text-danger pr-1">*</span>{{ __('Número del seguro social') }}</label>
-                        <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ $patient->ssn }}" placeholder="07985671496">
+                        <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" value="{{ $patient->ssn->ssn }}" placeholder="07985671496">
                         @error('ssn')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -142,7 +142,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
                         <div>
-                            <select class="select2" name="settlement_type">
+                            <select class="select2-tags" name="settlement_type">
                                 @foreach ($settlement_types as $settlementType)
                                     @if ($settlementType->name == $patient->address->settlement_type->name)
                                             <option value="{{ $settlementType->name }}" selected>{{ $settlementType->description }}</option>
@@ -167,7 +167,7 @@
                             <select class="select2" name="locality">
                                 @foreach ($localities as $locality)
                                     @if ($locality->code == $patient->address->locality->code)
-                                        <option value="{{ $locality->code }}" selected>{{ $locality->code }} - {{ $locality->description }}</option>
+                                        <option value="{{ $locality->code }}" selected>{{ $locality->description }}</option>
                                         @else
                                         <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
                                     @endif
@@ -270,29 +270,31 @@
                         data: {id: state.code}
                     });
                     $("input#zip_code").focus();
-                    // $("input#zip_code").addClass('is-valid');
+                    $("input#zip_code").addClass('is-valid');
                     // $('.zip_code_invalid').hide();
                 }).fail(function () {
                     // $("input#zip_code").removeClass('is-valid');
-                    // $('.zip_code_invalid').show();
+                    $('.zip_code_invalid').show();
                 });
             }
         }
         function ssnTypeChangeVal() {
-        if( $('#ssn_type').val() == 'seguro-popular' ) {
-            $('#ssnHide').show();
-            $('#numberHide').show();
-        } else {
-            $('#ssnHide').hide();
-            $('#numberHide').hide();
+            if( $('#ssn_type').val() == 'seguro-popular' ) {
+                $('#ssnHide').show();
+                $('#numberHide').show();
+            } else if( $('#ssn_type').val() == 'ninguna' ) {
+                $('#ssnHide').hide();
+                $('#numberHide').hide();
+            } else {
+                $('#ssnHide').show();
+                $('#numberHide').hide();
+            }
         }
-    }
-    $('#ssn_type').change(function() {
+        $('#ssn_type').change(function() {
+            ssnTypeChangeVal();
+        });
         ssnTypeChangeVal();
-    });
-    ssnTypeChangeVal();
     </script>
-    <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/jquery.maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>

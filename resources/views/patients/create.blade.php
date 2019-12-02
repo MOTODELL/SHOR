@@ -80,7 +80,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="ssn_type"><span class="text-danger pr-1">*</span>{{ __('Tipo de seguro social') }}</label>
                         <div>
-                            <select class="select2" name="ssn_type" id="ssn_type">
+                            <select class="select2" name="ssn_type" id="ssn_type" required>
                                 @foreach ($ssn_types as $ssn_type)
                                     <option value="{{ $ssn_type->name }}">{{ $ssn_type->description }}</option>
                                 @endforeach
@@ -111,7 +111,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="street"><span class="text-danger pr-1">*</span>{{ __('Tipo de vialidad') }}</label>
                         <div>
-                            <select class="select2" name="viality">
+                            <select class="select2" name="viality" required>
                                 @foreach ($vialities as $viality)
                                     <option value="{{ $viality->name }}">{{ $viality->description }}</option>
                                 @endforeach
@@ -152,13 +152,16 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
                         <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code" required placeholder="48290">
+                        <div class="invalid-feedback zip_code_invalid">
+                            No existe el código postal.
+                        </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                         <div>
-                            <select class="select2" name="locality">
+                            <select class="select2-tags" name="locality" required>
                                 @foreach ($localities as $locality)
-                                    <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                    <option value="{{ $locality->code }}">{{ $locality->description }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -166,7 +169,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="municipality"><span class="text-danger pr-1">*</span>{{ __('Municipio o delegación') }}</label>
                         <div>
-                            <select class="select2" name="municipality">
+                            <select class="select2" name="municipality" required>
                                 @foreach ($municipalities as $municipality)
                                     <option value="{{ $municipality->id }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
                                 @endforeach
@@ -176,7 +179,7 @@
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="state"><span class="text-danger pr-1">*</span>{{ __('Entidad federetavia/País') }}</label>
                         <div>
-                            <select class="select2" name="state">
+                            <select class="select2" name="state" required>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
                                 @endforeach
@@ -200,20 +203,7 @@
 @endsection
 @push('scripts')
     <script>
-        function ssnTypeChangeVal() {
-        if( $('#ssn_type').val() == 'seguro-popular' ) {
-            $('#ssnHide').show();
-            $('#numberHide').show();
-        } else {
-            $('#ssnHide').hide();
-            $('#numberHide').hide();
-        }
-    }
-    $('#ssn_type').change(function() {
-        ssnTypeChangeVal();
-    });
-    ssnTypeChangeVal();
-    if($("input#zip_code").length > 0) {
+        if($("input#zip_code").length > 0) {
             var typingTimer;
             var doneTypingInterval = 1700;
             var $input = $("input#zip_code");
@@ -264,15 +254,30 @@
                     });
                     $("input#zip_code").focus();
                     // $("input#zip_code").addClass('is-valid');
-                    // $('.zip_code_invalid').hide();
+                    $('.zip_code_invalid').hide();
                 }).fail(function () {
                     // $("input#zip_code").removeClass('is-valid');
-                    // $('.zip_code_invalid').show();
+                    $('.zip_code_invalid').show();
                 });
             }
         }
+        function ssnTypeChangeVal() {
+            if( $('#ssn_type').val() == 'seguro-popular' ) {
+                $('#ssnHide').show();
+                $('#numberHide').show();
+            } else if( $('#ssn_type').val() == 'ninguna' ) {
+                $('#ssnHide').hide();
+                $('#numberHide').hide();
+            } else {
+                $('#ssnHide').show();
+                $('#numberHide').hide();
+            }
+        }
+        $('#ssn_type').change(function() {
+            ssnTypeChangeVal();
+        });
+        ssnTypeChangeVal();
     </script>
-    <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/jquery.maskedinput/jquery.maskedinput.js') }}" type="text/javascript"></script>

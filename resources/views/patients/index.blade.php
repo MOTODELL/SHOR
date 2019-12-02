@@ -31,7 +31,10 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<a href="{{ route('patients.export') }}" class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></a>
+							<a href="{{ route('patients.export') }}" class="btn btn-success btn-lg" title="Descargar">
+								<i class="fas fa-file-excel mr-1"></i>
+								<span class="h4">Descargar</span>
+							</a>
 						</div>
 					</div>
 				</div>
