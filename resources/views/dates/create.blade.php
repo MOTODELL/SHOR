@@ -207,6 +207,7 @@
                             <label for="street">{{ __('Tipo de vialidad') }}</label>
                             <div>
                                 <select class="select2" name="viality">
+                                    <option value="none">Seleccione el tipo de vialidad</option>
                                     @foreach ($vialities as $viality)
                                         <option value="{{ $viality->name }}">{{ $viality->description }}</option>
                                     @endforeach
@@ -234,6 +235,7 @@
                             <label for="settlementType">{{ __('Tipo de asentamiento humano') }}</label>
                             <div>
                                 <select class="select2" name="settlement_type">
+                                    <option value="none">Seleccione el tipo de vialidad</option>
                                     @foreach ($settlement_types as $settlementType)
                                         <option value="{{ $settlementType->name }}">{{ $settlementType->description }}</option>
                                     @endforeach
@@ -254,7 +256,8 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="locality">{{ __('Localidad') }}</label>
                             <div>
-                                <select class="select2" name="locality">
+                                <select class="select2-tags" name="locality">
+                                    <option value="none">Seleccione la localidad</option>
                                     @foreach ($localities as $locality)
                                         <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
                                     @endforeach
@@ -265,6 +268,7 @@
                             <label for="municipality">{{ __('Municipio o delegación') }}</label>
                             <div>
                                 <select class="select2" name="municipality">
+                                    <option value="none">Seleccione el municipio</option>
                                     @foreach ($municipalities as $municipality)
                                         <option value="{{ $municipality->id }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
                                     @endforeach
@@ -275,6 +279,7 @@
                             <label for="state">{{ __('Entidad federetavia/País') }}</label>
                             <div>
                                 <select class="select2" name="state">
+                                    <option value="none">Seleccione el estado</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->code }}">{{ $state->code }} - {{ $state->description }}</option>
                                     @endforeach

@@ -85,7 +85,7 @@ class PdfController extends Controller
             case 'prospera':
                 $prospera = 'X';
                 break;
-            case 'ninguna':
+            default:
                 $ninguna = 'X';
                 break;
         }
@@ -97,22 +97,40 @@ class PdfController extends Controller
         $gratuidad_no = '';
 
         $addess = $patient->address;
-        $tipo_vialidad = strtoupper($addess->viality->description);
+        $tipo_vialidad = "";
+        if ($addess->viality) {
+            $tipo_vialidad = strtoupper($addess->viality->description);
+        }
         $nombre_vialidad = strtoupper($addess->street);
         $num_ext = $addess->number_ext;
         $num_int = $addess->number_int;
 
-        $tipo_asentamiento = strtoupper($addess->settlement_type->description);
+        $tipo_asentamiento = "";
+        if ($addess->settlement_type) {
+            $tipo_asentamiento = strtoupper($addess->settlement_type->description);
+        }
         $nombre_asentamiento = strtoupper($addess->colony);
 
         $codigo_postal = $addess->zip_code;
-        $localidad = strtoupper($addess->locality->description);
-        $localidad_codigo = str_pad($addess->locality->code, 4, '0', STR_PAD_LEFT);
-        $municipio = strtoupper($addess->municipality->description);
-        $municipio_codigo = $addess->municipality->code;
+        $localidad = "";
+        $localidad_codigo = "";
+        if ($addess->locality) {
+            $localidad = strtoupper($addess->locality->description);
+            $localidad_codigo = str_pad($addess->locality->code, 4, '0', STR_PAD_LEFT);
+        }
+        $municipio = "";
+        $municipio_codigo = "";
+        if ($addess->municipality) {
+            $municipio = strtoupper($addess->municipality->description);
+            $municipio_codigo = $addess->municipality->code;
+        }
 
-        $entidad_federativa = strtoupper($addess->state->description);
-        $entidad_federativa_codigo = $addess->state->code;;
+        $entidad_federativa = "";
+        $entidad_federativa_codigo = "";
+        if ($addess->state) {
+            $entidad_federativa = strtoupper($addess->state->description);
+            $entidad_federativa_codigo = $addess->state->code;
+        }
         $telefono = $patient->phone;
 
         $pdf = new PDF();
@@ -145,19 +163,19 @@ class PdfController extends Controller
         $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
         $pdf->Cell($char_width, $char_height, '', 0, 0, 'C');
         // INSTITUCION
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, 'S', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, 'S', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, 'A', 0, 0, 'C');
         $pdf->Cell(3.4, $char_height, '', 0, 0, 'C');
         // CONSECUTIVO
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
-        $pdf->Cell($char_width, $char_height, 'C', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, '0', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, '0', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, '4', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, '2', 0, 0, 'C');
+        $pdf->Cell($char_width, $char_height, '3', 0, 0, 'C');
         $pdf->Cell(2.8, $char_height, '', 0, 0, 'C');
         // VER
-        $pdf->Cell($char_width, 2.6, 'C', 0, 0, 'C');
+        $pdf->Cell($char_width, 2.6, '0', 0, 0, 'C');
         $pdf->Cell(97.3, $char_height, '', 0, 0, 'C');
         // FOLIO
         $char_height_folio = 2.9;

@@ -160,7 +160,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                            <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" value="{{ empty(old('zip_code')) ? $date->patient->address->zip_code->code : old('zip_code') }}" placeholder="48290">
+                            <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code" value="{{ empty(old('zip_code')) ? (($date->patient->address->zip_code) ? $date->patient->address->zip_code->code : '') : old('zip_code') }}" placeholder="48290">
                             <div class="invalid-feedback zip_code_invalid">
                                 No existe el código postal.
                             </div>
@@ -180,7 +180,7 @@
                             <div>
                                 <select class="select2" name="municipality">
                                     @foreach ($municipalities as $municipality)
-                                        <option value="{{ $municipality->id }}" {{ $municipality->id == $date->patient->address->municipality->id ? "selected" : "" }}>{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                        <option value="{{ $municipality->id }}" {{ ($date->patient->address->municipality && $municipality->id == $date->patient->address->municipality->id) ? "selected" : "" }}>{{ $municipality->code }} - {{ $municipality->description }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -190,7 +190,7 @@
                             <div>
                                 <select class="select2" name="state">
                                     @foreach ($states as $state)
-                                        <option value="{{ $state->code }}" {{ $state->code == $date->patient->address->state->code ? "selected" : "" }}>{{ $state->code }} - {{ $state->description }}</option>
+                                        <option value="{{ $state->code }}" {{ $date->patient->address->state && $state->code == $date->patient->address->state->code ? "selected" : "" }}>{{ $state->code }} - {{ $state->description }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -274,6 +274,22 @@
                 });
             }
         }
+        function ssnTypeChangeVal() {
+            if( $('#ssn_type').val() == 'seguro-popular' ) {
+                $('#ssnHide').show();
+                $('#numberHide').show();
+            } else if( $('#ssn_type').val() == 'ninguna' ) {
+                $('#ssnHide').hide();
+                $('#numberHide').hide();
+            } else {
+                $('#ssnHide').show();
+                $('#numberHide').hide();
+            }
+        }
+        $('#ssn_type').change(function() {
+            ssnTypeChangeVal();
+        });
+        ssnTypeChangeVal();
     </script>
     <script src="{{ asset('lib/moment.js/min/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/select2/js/select2.min.js') }}" type="text/javascript"></script>

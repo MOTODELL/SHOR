@@ -132,7 +132,7 @@ class DependencyController extends Controller
 
     public function export()
     {
-        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        $now = Carbon::now()->format('d-m-Y_g.i_A');
         return Excel::download(new DependenciesExport, "Servicios_$now.xlsx");
     }
 }

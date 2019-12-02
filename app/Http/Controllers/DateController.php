@@ -77,6 +77,7 @@ class DateController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->user()->authorizeRoles(['admin', 'user']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
         if (!$patient) {
@@ -87,22 +88,22 @@ class DateController extends Controller
                 $address->number_int = $request->input('number_int');
             }
             $address->colony = ucfirst($request->input('colony'));
-            if ($request->filled('zip_code')) {
+            if ($request->filled('zip_code') && ZipCode::where('code', $request->input('zip_code'))->first()) {
                 $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
             }
-            if ($request->filled('viality')) {
+            if ($request->filled('viality') && $request->input('viality') != 'none') {
                 $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
             }
-            if ($request->filled('settlement_type')) {
+            if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
                 $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
             }
-            if ($request->filled('locality')) {
+            if ($request->filled('locality') && $request->input('locality') != 'none') {
                 $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
             }
-            if ($request->filled('municipality')) {
+            if ($request->filled('municipality') && $request->input('municipality') != 'none') {
                 $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
             }
-            if ($request->filled('state')) {
+            if ($request->filled('state') && $request->input('state') != 'none') {
                 $address->state()->associate(State::where('code', $request->input('state'))->first());
             }
             $address->save();
@@ -110,7 +111,11 @@ class DateController extends Controller
             $ssn = new Ssn();
             $ssn->number = $request->input('number');
             $ssn->ssn = strtoupper($request->input('ssn'));
-            $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
+            if (SsnType::where('name', $request->input('ssn_type'))->first()) {
+                $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
+            } else {
+                $ssn->ssn_type()->associate(SsnType::where('name', 'ninguna')->first());
+            }
             $ssn->save();
     
             $patient = new Patient();
@@ -138,6 +143,8 @@ class DateController extends Controller
         $date->diagnosis = $request->input('diagnosis');
         if($request->filled('status') && $request->has('status')) {
             $date->status()->associate(Status::where('name', $request->input('status'))->first());
+        } else {
+            $date->status()->associate(Status::where('name', 'pendiente')->first());
         }
         $date->user()->associate(auth()->user());
         $date->patient()->associate($patient);
@@ -277,7 +284,7 @@ class DateController extends Controller
 
     public function export()
     {
-        $now = Carbon::now()->format('d-M-Y_g.i_A');
+        $now = Carbon::now()->format('d-m-Y_g.i_A');
         return Excel::download(new DatesExport, "Citas_$now.xlsx");
     }
 
@@ -307,13 +314,14 @@ class DateController extends Controller
     {
         $date = Date::where('id', $request->input('id'))->first();
         $data = [];
+        Carbon::setLocale('es');
         // dd($patient);
         if ($date) {
             $data = [
                 "folio" => str_pad($date->id, 8, '0', STR_PAD_LEFT),
                 "status" => $date->getStatus(),
-                "diagnosis" => $date->diagnosis,
-                "attention_date" => $date->attention_date,
+                "diagnosis" => ($date->diagnosis != "") ? $date->diagnosis : "<span class='text-muted'><i>N/A</i></span>",
+                "attention_date" => Carbon::parse($date->attention_date)->format('d/m/Y g:i A'),
                 "fullname" => $date->getPatient(),
                 "curp" => $date->patient->curp,
                 "birthdate" => $date->patient->birthdate,
@@ -321,19 +329,19 @@ class DateController extends Controller
                 "sex" => ($date->patient->sex === null || empty($date->patient->sex) || (($date->patient->sex != "H") && ($date->patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($date->patient->sex === "H") ? "Hombre" : "Mujer" ),
                 "birthplace" => $date->patient->getBirthplace(),
                 "phone" => $date->patient->phone,
-                "ssn_type" => $date->patient->ssn->ssn_type->description,
-                "ssn" => $date->patient->ssn->ssn,
-                "number" => $date->patient->ssn->number,
-                "viality_type" => $date->patient->address->viality->description,
-                "viality_name" => $date->patient->address->street,
-                "number_ext" => $date->patient->address->number_ext,
-                "number_int" => $date->patient->address->number_int,
-                "settlement_type" => $date->patient->address->settlement_type->description,
-                "settlement_name" => $date->patient->address->colony,
-                "zip_code" => $date->patient->address->zip_code->code,
-                "locality" => $date->patient->address->locality->description,
-                "municipality" => $date->patient->address->municipality->description,
-                "state" => $date->patient->address->state->description
+                "ssn_type" => ($date->patient->ssn->ssn_type) ? $date->patient->ssn->ssn_type->description : "<span class='text-muted'><i>N/A</i></span>",
+                "ssn" => ($date->patient->ssn->ssn != "") ? $date->patient->ssn->ssn : "<span class='text-muted'><i>N/A</i></span>",
+                "number" => ($date->patient->ssn->number != "") ? $date->patient->ssn->number : "<span class='text-muted'><i>N/A</i></span>",
+                "viality_type" => ($date->patient->address->viality) ? $date->patient->address->viality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "viality_name" => ($date->patient->address->street != "") ? $date->patient->address->street : "<span class='text-muted'><i>N/A</i></span>",
+                "number_ext" => ($date->patient->address->number_ext != "") ? $date->patient->address->number_ext : "<span class='text-muted'><i>N/A</i></span>",
+                "number_int" => ($date->patient->address->number_int != "") ? $date->patient->address->number_int : "<span class='text-muted'><i>N/A</i></span>",
+                "settlement_type" => ($date->patient->address->settlement_type) ? $date->patient->address->settlement_type->description : "<span class='text-muted'><i>N/A</i></span>",
+                "settlement_name" => ($date->patient->address->colony != "") ? $date->patient->address->colony : "<span class='text-muted'><i>N/A</i></span>",
+                "zip_code" => ($date->patient->address->zip_code) ? $date->patient->address->zip_code->code : "<span class='text-muted'><i>N/A</i></span>",
+                "locality" => ($date->patient->address->locality) ? $date->patient->address->locality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "municipality" => ($date->patient->address->municipality) ? $date->patient->address->municipality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "state" => ($date->patient->address->state) ? $date->patient->address->state->description : "<span class='text-muted'><i>N/A</i></span>"
             ];
         }
 
