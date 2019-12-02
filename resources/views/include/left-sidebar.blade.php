@@ -6,14 +6,19 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menú</li>
-                        @canany(['home'], auth()->user())
-                        <li class="{{ (request()->is('home')) ? 'active' : '' }}">
+                        {{-- @canany(['home'], auth()->user()) --}}
+                        @if (auth()->user()->hasRole('analist') || auth()->user()->hasRole('admin'))
+                            <li class="{{ (request()->is('home')) ? 'active' : '' }}">
                             <a href="{{ route('home.index') }}">
                                 <i class="icon zmdi zmdi-home"></i>
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        @endcanany
+                        @else
+                            
+                        @endif
+                        
+                        {{-- @endcanany --}}
                         {{-- <li class="parent">
                             <a href="#">
                                 <i class="icon zmdi zmdi-face"></i>

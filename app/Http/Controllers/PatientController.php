@@ -40,7 +40,7 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         $patients = Patient::all();
 
@@ -54,7 +54,7 @@ class PatientController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -83,7 +83,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
         // dd(SsnType::where('name', $request->input('ssn_type'))->first());
         $address = new Address();
         $address->street = ucfirst($request->input('street'));
@@ -158,7 +158,7 @@ class PatientController extends Controller
      */
     public function show(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         return view('patients.show', compact('patient'));
     }
@@ -171,7 +171,7 @@ class PatientController extends Controller
      */
     public function edit(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
         $vialities = Viality::all();
         $settlement_types = SettlementType::all();
         $localities = Locality::all();
@@ -199,7 +199,7 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
         $address = $patient->address;
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
@@ -292,8 +292,8 @@ class PatientController extends Controller
                 "fullname" => $patient->fullname,
                 "curp" => $patient->curp,
                 "birthdate" => $patient->birthdate,
-                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ,
+                "sex" => ($patient->sex === "H") ? "Hombre" : "Mujer",
                 "birthplace" => $patient->getBirthplace(),
                 "phone" => $patient->phone,
                 "ssn_type" => ($patient->ssn->ssn_type) ? $patient->ssn->ssn_type->description : "<span class='text-muted'><i>N/A</i></span>",

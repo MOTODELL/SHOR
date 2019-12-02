@@ -35,7 +35,7 @@ class UpdateDateRequest extends FormRequest
             ],
             'curp' => [
                 'required',
-                "unique:users,curp,$id",
+                "unique:patients,curp,$id",
                 'size:18'
             ],
             'phone' => [

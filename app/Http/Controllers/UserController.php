@@ -96,7 +96,7 @@ class UserController extends Controller
         }
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
-        if ($request->input('role') == 'user') {
+        if ($request->input('role') == 'user' || $request->input('role') == 'analist') {
             $dependency = Dependency::where('name', $request->input('dependency'))->first();
             $user->dependency()->associate($dependency);
         }
@@ -159,13 +159,13 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $user)
     {
-        $this->authorize('update', $user);
         // $request->user()->authorizeRoles('admin');
         // dd($request);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     
             if ($user) {
+                $this->authorize('update', $user);
                 if ($request->has('password')) {
                     if ($request->input('password') == $request->input('password_confirmation')) {
                         $user->password = Hash::make($request->input('password'));
@@ -217,11 +217,11 @@ class UserController extends Controller
     public function destroy(Request $request, $user)
     {
         // $request->user()->authorizeRoles('admin');
-        $this->authorize('delete', $user);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     
             if ($user) {
+                $this->authorize('delete', $user);
                 $user->delete();
                 return redirect()->route('users.index')->with('message-destroy', 'Eliminado');
             }

@@ -42,7 +42,7 @@ class DateController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         $dates = Date::all();
         $status = Status::all();
@@ -58,7 +58,7 @@ class DateController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -81,17 +81,23 @@ class DateController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
         if (!$patient) {
             $address = new Address();
-            $address->street = ucfirst($request->input('street'));
-            $address->number_ext = $request->input('number_ext');
+            if ($request->filled('street')) {
+                $address->street = ucfirst($request->input('street'));
+            }
+            if ($request->filled('number_ext')) {
+                $address->number_ext = $request->input('number_ext');
+            }
             if ($request->filled('number_int')) {
                 $address->number_int = $request->input('number_int');
             }
-            $address->colony = ucfirst($request->input('colony'));
-            dd($request->input('zip_code'));
+            if ($request->filled('colony')) {
+                $address->colony = ucfirst($request->input('colony'));
+            }
+            // dd($request->input('zip_code'));
             if ($request->filled('zip_code') && ZipCode::where('code', $request->input('zip_code'))->first()) {
                 $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
             } else {
@@ -117,8 +123,12 @@ class DateController extends Controller
             $address->save();
     
             $ssn = new Ssn();
-            $ssn->number = $request->input('number');
-            $ssn->ssn = strtoupper($request->input('ssn'));
+            if ($request->filled('number')) {
+                $ssn->number = $request->input('number');
+            }
+            if ($request->filled('ssn')) {
+                $ssn->ssn = strtoupper($request->input('ssn'));
+            }
             if (SsnType::where('name', $request->input('ssn_type'))->first()) {
                 $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
             } else {
@@ -170,7 +180,7 @@ class DateController extends Controller
      */
     public function show(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         $date = Date::where('uuid', $date)->first();
 
@@ -186,7 +196,7 @@ class DateController extends Controller
      */
     public function edit(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
         
         $date = Date::withTrashed()->where('uuid', $date)->first();
         $vialities = Viality::all();
@@ -212,14 +222,18 @@ class DateController extends Controller
      */
     public function update(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
 
         if (isValidUuid($date)) {
             $date = Date::where('uuid', $date)->first();
             if ($date) {
                 $address = $date->patient->address;
-                $address->street = ucfirst($request->input('street'));
-                $address->number_ext = $request->input('number_ext');
+                if ($request->filled('street')) {
+                    $address->street = ucfirst($request->input('street'));
+                }
+                if ($request->filled('number_ext')) {
+                    $address->number_ext = $request->input('number_ext');
+                }
                 if ($request->filled('number_int')) {
                     $address->number_int = $request->input('number_int');
                 }
@@ -249,8 +263,12 @@ class DateController extends Controller
                 $address->save();
 
                 $ssn = $date->patient->ssn;
-                $ssn->number = $request->input('number');
-                $ssn->ssn = strtoupper($request->input('ssn'));
+                if ($request->filled('number')) {
+                    $ssn->number = $request->input('number');
+                }
+                if ($request->filled('ssn')) {
+                    $ssn->ssn = strtoupper($request->input('ssn'));
+                }
                 if (SsnType::where('name', $request->input('ssn_type'))->first()) {
                     $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
                 } else {
@@ -352,8 +370,8 @@ class DateController extends Controller
                 "fullname" => $date->getPatient(),
                 "curp" => $date->patient->curp,
                 "birthdate" => $date->patient->birthdate,
-                "sex_icon" => ($date->patient->sex === null || empty($date->patient->sex) || (($date->patient->sex != "H") && ($date->patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($date->patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($date->patient->sex === null || empty($date->patient->sex) || (($date->patient->sex != "H") && ($date->patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($date->patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($date->patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>',
+                "sex" => ($date->patient->sex === "H") ? "Hombre" : "Mujer" ,
                 "birthplace" => $date->patient->getBirthplace(),
                 "phone" => $date->patient->phone,
                 "ssn_type" => ($date->patient->ssn->ssn_type) ? $date->patient->ssn->ssn_type->description : "<span class='text-muted'><i>N/A</i></span>",

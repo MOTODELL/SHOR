@@ -45,6 +45,11 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
+        // Gate::define('home', function ($user)
+        // {
+        //     return true;
+        // });
+
         Gate::resource('user', 'UserPolicy');
         Gate::resource('date', 'DatePolicy');
         Gate::resource('cause', 'CausePolicy');

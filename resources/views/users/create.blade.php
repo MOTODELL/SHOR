@@ -117,7 +117,7 @@
                     <hr class="w-100 mt-0 mb-5">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="username"><span class="text-danger pr-1">*</span>{{ __('Nombre de usuario') }}</label>
-                        <input id="username" type="text" class="form-control text-lowercase @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
+                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="example123">
                         <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                         @error('username')
                             <span class="invalid-feedback" role="alert">
@@ -163,7 +163,7 @@
                     $('#selectDependency').hide();
                     $('#professionalId').hide();
                     break;
-                case 'user':
+                case 'user': case 'analist':
                     $('#selectDependency').show();
                     $('#professionalId').hide();
                     break;
