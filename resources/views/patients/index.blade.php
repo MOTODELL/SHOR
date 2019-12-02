@@ -31,7 +31,10 @@
 					</div>
 					<div class="col-2 d-flex justify-content-end">
 						<div class="mt-1">
-							<a href="{{ route('patients.export') }}" class="btn btn-success btn-lg"><i class="fas fa-file-excel mr-1"></i> <span class="h4">Descargar</span></a>
+							<a href="{{ route('patients.export') }}" class="btn btn-success btn-lg" title="Descargar">
+								<i class="fas fa-file-excel mr-1"></i>
+								<span class="h4">Descargar</span>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -365,8 +368,8 @@
 						$('.patient-ssn_type').html(patient.ssn_type);
 						$('.patient-ssn').html(patient.ssn);
 						$('.patient-number').html(patient.number);
-						$('.patient-viality').html(patient.viality_type);
-						$('.patient-street').html(patient.viality_name);
+						$('.patient-viality_type').html(patient.viality_type);
+						$('.patient-viality_name').html(patient.viality_name);
 						$('.patient-number_ext').html(patient.number_ext);
 						$('.patient-number_int').html(patient.number_int);
 						$('.patient-settlement_type').html(patient.settlement_type);

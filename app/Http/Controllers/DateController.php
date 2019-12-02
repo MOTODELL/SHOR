@@ -331,7 +331,7 @@ class DateController extends Controller
                 "number_int" => $date->patient->address->number_int,
                 "settlement_type" => $date->patient->address->settlement_type->description,
                 "settlement_name" => $date->patient->address->colony,
-                // "zip_code" => $date->patient()->address->zip_code->id,
+                "zip_code" => $date->patient->address->zip_code->code,
                 "locality" => $date->patient->address->locality->description,
                 "municipality" => $date->patient->address->municipality->description,
                 "state" => $date->patient->address->state->description

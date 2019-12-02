@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Ssn;
 use App\State;
+use App\ZipCode;
 use App\SsnType;
 use App\Address;
-use App\Exports\PatientsExport;
 use App\Patient;
 use App\Viality;
 use App\Locality;
 use Carbon\Carbon;
 use App\Municipality;
 use App\SettlementType;
-use App\ZipCode;
 use Illuminate\Http\Request;
+use App\Exports\PatientsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
+
+use function App\Http\getDescriptionName;
 
 class PatientController extends Controller
 {
@@ -88,7 +92,6 @@ class PatientController extends Controller
             $address->number_int = $request->input('number_int');
         }
         $address->colony = ucfirst($request->input('colony'));
-        // $address->zip_code = $request->input('zip_code');
         if ($request->filled('zip_code')) {
             $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
         }
@@ -99,7 +102,16 @@ class PatientController extends Controller
             $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
         }
         if ($request->filled('locality')) {
-            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+            $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
+            if ($locality) {
+                $address->locality()->associate($locality);
+            }
+            $locality = new Locality();
+            $locality->code = getDescriptionName($request->input('locality'));
+            $locality->description = $request->input('locality');
+            if ($locality->save) {
+                $address->locality()->associate($locality);
+            }
         }
         if ($request->filled('municipality')) {
             $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
@@ -132,7 +144,7 @@ class PatientController extends Controller
         }
         $patient->address()->associate($address);
         if($patient->save()) {
-            return redirect()->route('patients.index')->with('message-create', 'Creado');
+            return redirect()->route('patients.index')->with('message-store', 'Creado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }
@@ -194,7 +206,6 @@ class PatientController extends Controller
             $address->number_int = $request->input('number_int');
         }
         $address->colony = ucfirst($request->input('colony'));
-        // $address->zip_code = $request->input('zip_code');
         if ($request->filled('zip_code')) {
             $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
         }
@@ -275,14 +286,14 @@ class PatientController extends Controller
                 "phone" => $patient->phone,
                 "ssn_type" => $patient->ssn->ssn_type->description,
                 "ssn" => $patient->ssn->ssn,
-                "number" => $patient->ssn->number,
+                "number" => ($patient->ssn->number === null || empty($patient->ssn->number)) ? "<span class='text-muted'><i>N/A</i></span>" : $patient->ssn->number,
                 "viality_type" => $patient->address->viality->description,
                 "viality_name" => $patient->address->street,
                 "number_ext" => $patient->address->number_ext,
-                "number_int" => $patient->address->number_int,
+                "number_int" => ($patient->address->number_int === null || empty($patient->address->number_int)) ? "<span class='text-muted'><i>N/A</i></span>" : $patient->address->number_int,
                 "settlement_type" => $patient->address->settlement_type->description,
                 "settlement_name" => $patient->address->colony,
-                // "zip_code" => $patient->address->zip_code->id,
+                "zip_code" => $patient->address->zip_code->code,
                 "locality" => $patient->address->locality->description,
                 "municipality" => $patient->address->municipality->description,
                 "state" => $patient->address->state->description

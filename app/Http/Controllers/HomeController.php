@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Date;
+use App\Patient;
 use App\Municipality;
 use Illuminate\Http\Request;
 
@@ -24,7 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = User::all()->count();
+        $dates = Date::all()->count();
+        $patients = Patient::all()->count();
+        // $users = User::all()->count();
+        return view('home', compact(['users', 'dates', 'patients']));
     }
 
     public function test()

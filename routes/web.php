@@ -30,7 +30,6 @@ Route::resources([
     'users' => 'UserController',
     'dates' => 'DateController',
     'causes' => 'CauseController',
-    'doctors' => 'DoctorController',
     'patients' => 'PatientController',
     'dependencies' => 'DependencyController'
 ]);
@@ -43,9 +42,5 @@ Route::prefix('fetch')->group(function ()
     Route::post('zip_codes', 'DateController@fetch_zip_codes')->name('fetch.zip_codes');
     Route::post('date', 'DateController@fetch')->name('fetch.date');
 });
-
-// Route::post('/fetch/user', 'UserController@fetchUser')->name('fetch.user');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/pdf/{date}', 'PdfController@print')->name('pdf');

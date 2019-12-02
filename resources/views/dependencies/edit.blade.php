@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('header')
-    <h2 class="page-head-title">Servicios</h2>
+    <h2 class="page-head-title">Áreas de servicio</h2>
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb page-head-nav">
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}"><span class="text-primary">Servicios</span></a>
+                <a href="{{ route('dependencies.index') }}"><span class="text-primary">Áreas de servicio</span></a>
             </li>
-            <li class="breadcrumb-item active">Editar servicio</li>
+            <li class="breadcrumb-item active">Editar área</li>
         </ol>
     </nav>
 @endsection
@@ -14,7 +14,7 @@
     <div class="card card-border-color card-border-color-primary">
         <div class="card-header">
             <div class="text-center">
-                <legend class="h2 my-0">Editar servicio</legend>
+                <legend class="h2 my-0">Editar área</legend>
             </div>
         </div>
         <div class="card-body">

@@ -26,7 +26,6 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-<<<<<<< HEAD
         if (isValidUuid($this->route('user'))) {
             $user = User::where('id', $this->route('user'))->first();
     
@@ -59,34 +58,5 @@ class UpdateUserRequest extends FormRequest
                 ];
             }
         }
-        return [];
-=======
-        $id = $this->route('user')->id;
-        return [
-            'name'  => [
-                'required'
-            ],
-            'paternal_lastname'  => [
-                'required'
-            ],
-            'maternal_lastname'  => [
-                'required'
-            ],
-            'email' => [
-                'required',
-                'email',
-                "unique:users,email,$id"
-            ],
-            'curp' => [
-                'required',
-                "unique:users,curp,$id",
-                'size:18'
-            ],
-            'phone' => [
-                'required',
-                'size:14'
-            ]
-        ];
->>>>>>> f56e6e933e60899dda79146b562ecdde2164369d
     }
 }

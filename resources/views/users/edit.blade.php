@@ -66,12 +66,12 @@
                             </span>
                         @enderror
                     </div>
-                     @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasRole('admin'))
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="role"><span class="text-danger pr-1">*</span>{{ __('Tipo de usuario') }}</label>
                         <select name="role" id="role" class="form-control custom-select select2" style="width: 100%">
                             @foreach ($roles as $role)
-                                @if ($user->roles()->first()->name == $role->name)
+                                @if ($user->getRole() == $role->name)
                                     <option value="{{ $role->name }}" selected>{{ $role->description }}</option>
                                 @else
                                     <option value="{{ $role->name }}">{{ $role->description }}</option>

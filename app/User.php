@@ -217,11 +217,20 @@ class User extends Authenticatable
         }
         return "";
     }
-    public function getRole()
+    public function getRoleDescription()
     {
         $role = $this->roles()->first();
         if ($role) {
             return $role->description;
+        }
+        return "";
+    }
+
+    public function getRole()
+    {
+        $role = $this->roles()->first();
+        if ($role) {
+            return $role->name;
         }
         return "";
     }

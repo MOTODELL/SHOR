@@ -7,7 +7,7 @@
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menú</li>
                         <li class="{{ (request()->is('home')) ? 'active' : '' }}">
-                            <a href="{{ route('home') }}">
+                            <a href="{{ route('home.index') }}">
                                 <i class="icon zmdi zmdi-home"></i>
                                 <span>Inicio</span>
                             </a>
@@ -41,25 +41,20 @@
                             </li>
                         @endcan
                         <li class="divider">Divididor</li> --}}
-                         <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
+                        
+                        <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
                             <a href="{{ route('dependencies.index') }}">
-                                {{-- <i class="icon fas fa-briefcase-medical"></i> --}}
                                 <i class="icon fas fa-hospital-alt"></i>
                                 <span>Áreas</span>
                             </a>
                         </li>
+                        
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon fas fa-book-medical"></i>
                                 <span>Causes</span>
                             </a>
                         </li>
-                        {{-- <li class="{{ (request()->is('doctors*')) ? 'active' : '' }}">
-                            <a href="{{ route('doctors.index') }}">
-                                <i class="icon fas fa-stethoscope"></i>
-                                <span>Diagnósticos</span>
-                            </a>
-                        </li> --}}
                         <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
                             <a href="{{ route('patients.index') }}">
                                 <i class="icon zmdi zmdi-male-female"></i>
@@ -72,12 +67,19 @@
                                 <span>Urgencias</span>
                             </a>
                         </li>
-                        <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
+                        @canany(['update', 'view', 'delete'], $user)
+                            <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
                                 <i class="icon zmdi zmdi-account-circle"></i>
                                 <span>Usuarios</span>
                             </a>
                         </li>
+                        {{-- @elsecanany(['create'], App\Post::class)
+                            // The current user can create a post --}}
+                        @endcanany
+                        {{-- @can('users')
+                        
+                        @endcan --}}
                     </ul>
                 </div>
             </div>

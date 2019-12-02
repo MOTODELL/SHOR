@@ -10,6 +10,7 @@ use App\Dependency;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Redirect;
@@ -27,6 +28,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // $this->authorizeResource(User::class, 'users');
     }
     
     /**
@@ -36,7 +38,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles('admin');
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('view', User::class);
 
         $users = User::all();
         $dependencies = Dependency::all();
@@ -51,8 +54,8 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles('admin');
-
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('create', User::class);
         $dependencies = Dependency::all();
         $roles = Role::all();
         return view('users.create', compact(['dependencies', 'roles']));
@@ -66,7 +69,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $request->user()->authorizeRoles('admin');
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('create', User::class);
         $user = new User();
         if ($request->input('password') == $request->input('password_confirmation')) {
             $user->password = Hash::make($request->input('password'));
@@ -111,8 +115,8 @@ class UserController extends Controller
      */
     public function show(Request $request, $user)
     {
-        $request->user()->authorizeRoles('admin');
-
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('viewAny', $user);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     
@@ -131,8 +135,8 @@ class UserController extends Controller
      */
     public function edit(Request $request, $user)
     {
-        $request->user()->authorizeRoles('admin');
-
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('update', $user);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
             $dependencies = Dependency::all();
@@ -154,8 +158,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $user)
     {
-        $request->user()->authorizeRoles('admin');
-
+        $this->authorize('update', $user);
+        // $request->user()->authorizeRoles('admin');
+        // dd($request);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     
@@ -185,11 +190,13 @@ class UserController extends Controller
                 }
                 $user->phone = $request->input('phone');
                 $user->email = $request->input('email');
-                if ($request->input('role') != 'admin') {
+                if ($request->filled('role')) {
+                    if ($request->input('role') != 'admin') {
                     $dependency = Dependency::where('name', $request->input('dependency'))->first();
                     $user->dependency()->associate($dependency);
-                } else {
-                    $user->dependency()->delete();
+                    } else {
+                        $user->dependency()->delete();
+                    }
                 }
                 if ($user->save()) {
                     $user->roles()->sync(Role::where('name', $request->input('role'))->first());
@@ -208,8 +215,8 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $user)
     {
-        $request->user()->authorizeRoles('admin');
-
+        // $request->user()->authorizeRoles('admin');
+        $this->authorize('delete', $user);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     

@@ -105,7 +105,7 @@ class PdfController extends Controller
         $tipo_asentamiento = strtoupper($addess->settlement_type->description);
         $nombre_asentamiento = strtoupper($addess->colony);
 
-        $codigo_postal = $addess->zip_code->code;
+        $codigo_postal = $addess->zip_code;
         $localidad = strtoupper($addess->locality->description);
         $localidad_codigo = str_pad($addess->locality->code, 4, '0', STR_PAD_LEFT);
         $municipio = strtoupper($addess->municipality->description);
