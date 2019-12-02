@@ -67,7 +67,7 @@
                                 <span>Urgencias</span>
                             </a>
                         </li>
-                        @canany(['update', 'view', 'delete'], $user)
+                        @canany(['update', 'view', 'delete'], auth()->user())
                             <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
                                 <i class="icon zmdi zmdi-account-circle"></i>

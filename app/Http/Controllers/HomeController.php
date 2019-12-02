@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::all()->count();
-        $dates = Date::all()->count();
+        $totalDates = Date::all()->count();
         $patients = Patient::all()->count();
         // $users = User::all()->count();
         $today = Carbon::now();
@@ -46,7 +46,7 @@ class HomeController extends Controller
         $dateChart = new DateChart;
         $dateChart->labels($dates->keys()->toArray());
         $dateChart->dataset('Citas', 'line', $dates->values()->toArray());
-        return view('home', compact(['users', 'dates', 'patients', 'dateChart']));
+        return view('home', compact(['users', 'totalDates', 'patients', 'dateChart']));
     }
 
     public function test()

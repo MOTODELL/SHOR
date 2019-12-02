@@ -3,21 +3,21 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-6 col-xl-3">
-                <div class="widget widget-tile">
+                <div class="widget widget-tile card card-border-color card-border-color-danger">
                     <div class="chart sparkline pl-5">
-                        <i class="zmdi zmdi-accounts zmdi-hc-5x"></i>
+                        <i class="icon fas fa-ambulance zmdi-hc-5x"></i>
                     </div>
                     <div class="data-info pr-5 pt-3">
-                        <div class="desc">Usuarios</div>
+                        <div class="desc">Urgencias</div>
                         <div class="value">
-                            <span class="indicator indicator-equal mdi mdi-chevron-right"></span>
-                            <span class="number" data-toggle="counter" data-end="113">{{ $users }}</span>
+                            <span class="indicator indicator-negative mdi mdi-chevron-right"></span>
+                            <span class="number" data-toggle="counter" data-end="113">{{ $totalDates }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
-                <div class="widget widget-tile">
+                <div class="widget widget-tile card card-border-color card-border-color-primary">
                     <div class="chart sparkline pl-5">
                         <i class="zmdi zmdi-male-female zmdi-hc-5x"></i>
                     </div>
@@ -31,29 +31,29 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
-                <div class="widget widget-tile">
+                <div class="widget widget-tile card card-border-color card-border-color-warning">
                     <div class="chart sparkline pl-5">
-                        <i class="icon fas fa-ambulance zmdi-hc-4x"></i>
+                        <i class="zmdi zmdi-calendar-check zmdi-hc-5x"></i>
                     </div>
                     <div class="data-info pr-5 pt-3">
-                        <div class="desc">Citas en Urgencias</div>
+                        <div class="desc">Citas por semana</div>
                         <div class="value">
-                            <span class="indicator indicator-positive mdi mdi-chevron-up"></span>
-                            <span class="number" data-toggle="counter" data-end="113">{{ $dates }}</span>
+                            <span class="indicator text-warning mdi mdi-chevron-right"></span>
+                            <span class="number" data-toggle="counter" data-end="113">{{ $totalDates }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
-                <div class="widget widget-tile">
+                <div class="widget widget-tile card card-border-color card-border-color-success">
                     <div class="chart sparkline pl-5">
-                        <i class="zmdi zmdi-calendar-check zmdi-hc-4x"></i>
+                        <i class="zmdi zmdi-accounts zmdi-hc-5x"></i>
                     </div>
                     <div class="data-info pr-5 pt-3">
-                        <div class="desc">Urgencias en la última semana</div>
+                        <div class="desc">Usuarios</div>
                         <div class="value">
-                            <span class="indicator indicator-positive mdi mdi-chevron-up"></span>
-                            <span class="number" data-toggle="counter" data-end="113">{{ $dates }}</span>
+                            <span class="indicator text-success mdi mdi-chevron-right"></span>
+                            <span class="number" data-toggle="counter" data-end="113">{{ $users }}</span>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card card-border-color card-border-color-info">
             <div class="card-body">
                 <div class="container">
                     {!! $dateChart->container() !!}
