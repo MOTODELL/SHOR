@@ -194,9 +194,14 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
-        $date = Date::where('uuid', $date)->first();
+        if (isValidUuid($date)) {
+            $date = Date::where('uuid', $date)->first();
+            if ($date) {
+                return view('dates.show', compact('date'));
+            }
+        }
+        return abort('404');
 
-        return view('dates.show', compact('date'));
     }
 
     /**
@@ -210,18 +215,23 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         
-        $date = Date::withTrashed()->where('uuid', $date)->first();
-        $vialities = Viality::all();
-        $settlement_types = SettlementType::all();
-        $localities = Locality::all();
-        $municipalities = Municipality::all();
-        $states = State::all();
-        $ssn_types = SsnType::all();
-        $status = Status::all();
-
-        // dd($date->first()->patient->ssn->number);
-
-        return view('dates.edit', compact(['date', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types', 'status']));
+        if (isValidUuid($date)) {
+            $date = Date::withTrashed()->where('uuid', $date)->first();
+            if ($date) {
+                $vialities = Viality::all();
+                $settlement_types = SettlementType::all();
+                $localities = Locality::all();
+                $municipalities = Municipality::all();
+                $states = State::all();
+                $ssn_types = SsnType::all();
+                $status = Status::all();
+        
+                // dd($date->first()->patient->ssn->number);
+        
+                return view('dates.edit', compact(['date', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types', 'status']));
+            }
+        }
+        return abort('404');
     }
 
     /**
@@ -341,11 +351,16 @@ class DateController extends Controller
      * @param  \App\Date  $date
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Date $date)
+    public function destroy(Request $request, String $date)
     {
         $request->user()->authorizeRoles(['admin']);
 
-        $date->delete();
+        if (isValidUuid($date)) {
+            $date = Date::where('uuid', $date)->first();
+            if ($date) {
+                $date->delete();
+            }
+        }
 
         return redirect()->route('dates.index')->with('message-destroy', 'Eliminado');
     }

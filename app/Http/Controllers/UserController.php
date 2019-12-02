@@ -201,7 +201,7 @@ class UserController extends Controller
                 }
                 if ($user->save()) {
                     $user->roles()->sync(Role::where('name', $request->input('role'))->first());
-                    return redirect()->route('users.index')->with('message-update', 'Editado');
+                    return redirect()->back()->with('message-update', 'Editado');
                 }
             }
         }

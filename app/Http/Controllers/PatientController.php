@@ -20,6 +20,7 @@ use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 
 use function App\Http\getDescriptionName;
+use function App\Http\isValidUuid;
 
 class PatientController extends Controller
 {
@@ -170,9 +171,12 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Patient $patient)
+    public function edit(Request $request, String $patient)
     {
         $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
+        if (isValidUuid($patient)) {
+        }
+        return abort('404');
         $vialities = Viality::all();
         $settlement_types = SettlementType::all();
         $localities = Locality::all();

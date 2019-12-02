@@ -31,7 +31,9 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'analist']);
+        if (!($request->user()->hasRole('admin') || $request->user()->hasRole('analist'))) {
+            return redirect()->route('dates.index');
+        }
         // $users = User::all()->count();
         $today = Carbon::now();
         $lastWeek = Carbon::today();

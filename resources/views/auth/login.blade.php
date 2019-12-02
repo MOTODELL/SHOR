@@ -61,3 +61,20 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+@if (session('status'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    Toast.fire({
+        type: 'success',
+        title: 'Un enlace ha sido enviado a tu correo'
+    });
+</script>
+@endif
+@endpush

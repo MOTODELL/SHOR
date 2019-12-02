@@ -20,7 +20,7 @@
                         {{-- <legend class="font-weight-light">Restablecer contraseña</legend> --}}
                         <div class="form-group">
                             <label for="email">{{ __('Correo eletrónico') }}</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" placeholder="Correo eletrónico" autofocus>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" placeholder="Correo eletrónico" readonly>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">{{ __('Nueva contraseña') }}</label>
-                            <input class="form-control" type="password" name="password" required placeholder="Nueva contraseña" autocomplete="off">
+                            <input class="form-control" type="password" name="password" required placeholder="Nueva contraseña" autocomplete="off" autofocus>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

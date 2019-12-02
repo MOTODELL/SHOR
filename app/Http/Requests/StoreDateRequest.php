@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Patient;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 class StoreDateRequest extends FormRequest
 {
@@ -21,8 +23,17 @@ class StoreDateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
+        $patient = Patient::where('id', $request->input('id-exist'))->first();
+        if ($patient) {
+            return [
+                'id-exist' => [
+                    'required'
+                ]
+            ];
+        }
+        
         return [
             'name' => [
                 'required'
