@@ -30,6 +30,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
+=======
+        $users = User::all()->count();
+        $totalDates = Date::all()->count();
+        $patients = Patient::all()->count();
+>>>>>>> 2eb5085af9e050af96e3dc74bc17a2e21d3b13cf
         // $users = User::all()->count();
         $today = Carbon::now();
         $lastWeek = Carbon::today();
@@ -43,11 +49,15 @@ class HomeController extends Controller
         $dateChart = new DateChart;
         $dateChart->labels($dates->keys()->toArray());
         $dateChart->dataset('Citas', 'line', $dates->values()->toArray());
+<<<<<<< HEAD
         $dateChart->label('Cantidad');
         $users = User::all()->count();
         $dates = Date::all()->count();
         $patients = Patient::all()->count();
         return view('home', compact(['users', 'dates', 'patients', 'dateChart']));
+=======
+        return view('home', compact(['users', 'totalDates', 'patients', 'dateChart']));
+>>>>>>> 2eb5085af9e050af96e3dc74bc17a2e21d3b13cf
     }
 
     public function test()
