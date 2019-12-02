@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Date;
 use App\Patient;
+use Carbon\Carbon;
 use App\Municipality;
+use App\Charts\DateChart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -31,7 +34,19 @@ class HomeController extends Controller
         $dates = Date::all()->count();
         $patients = Patient::all()->count();
         // $users = User::all()->count();
-        return view('home', compact(['users', 'dates', 'patients']));
+        $today = Carbon::now();
+        $lastWeek = Carbon::today();
+        $lastWeek = $lastWeek->subWeek('1');
+        $dates = Date::select(DB::raw('DATE(attention_date) as date'))->whereBetween('attention_date', [$lastWeek, $today])->get()->groupBy('date');
+        $dates = $dates->mapWithKeys(function ($value, $key){
+            $key = Carbon::parse($key)->format('d/m/Y') . " (" . ucfirst(Carbon::parse($key)->dayName) . ")";
+            return [$key => $value->count()];
+        });
+        // dd($dates->values()->toArray());
+        $dateChart = new DateChart;
+        $dateChart->labels($dates->keys()->toArray());
+        $dateChart->dataset('Citas', 'line', $dates->values()->toArray());
+        return view('home', compact(['users', 'dates', 'patients', 'dateChart']));
     }
 
     public function test()

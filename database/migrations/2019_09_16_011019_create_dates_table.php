@@ -26,7 +26,6 @@ class CreateDatesTable extends Migration
             $table->float('amount')->nullable();
             $table->unsignedInteger('status_id');
             $table->uuid('user_id');
-            $table->uuid('doctor_id')->nullable();
             $table->uuid('patient_id');
             $table->timestamps();
             $table->softDeletes();
