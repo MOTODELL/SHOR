@@ -6,7 +6,7 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menú</li>
-                        @canany(['view', 'create', 'update',  'delete'], auth()->user())
+                        @canany(['home'], auth()->user())
                         <li class="{{ (request()->is('home')) ? 'active' : '' }}">
                             <a href="{{ route('home.index') }}">
                                 <i class="icon zmdi zmdi-home"></i>

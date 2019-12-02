@@ -43,7 +43,7 @@
 						<tr>
 							<th style="width:35%;">Nombre completo</th>
 							<th style="width:20%;">CURP</th>
-							<th style="width:20%;">Número de seguro social</th>
+							<th style="width:20%;">Núm. Afiliación</th>
 							<th style="width:15%;"></th>
 						</tr>
 					</thead>
@@ -57,7 +57,7 @@
 								<span>{{ $patient->curp }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{{ $patient->ssn['ssn'] }}</span>
+								<span>{!! !empty($patient->ssn->ssn) > 0 ? $patient->ssn->ssn : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
 							</td>
 							<td class="text-right">
 								<span class="btn btn-primary btn-view cursor-pointer mb-0 mr-0" data-id="{{ $patient->id }}" data-toggle="tooltip" data-placement="left" title="Ver">
@@ -66,13 +66,15 @@
 								<a href="{{ route('patients.edit', $patient) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
-								<form action="{{ route('patients.destroy', $patient) }}" method="post" class="d-inline">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
-									</button>
-								</form>
+								@canany(['view', 'create', 'update',  'delete'], auth()->user())
+									<form action="{{ route('patients.destroy', $patient) }}" method="post" class="d-inline">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+											<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+										</button>
+									</form>
+								@endcanany
 							</td>
 						</tr>
 						@endforeach

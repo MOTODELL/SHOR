@@ -38,7 +38,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button" id="button-addon1" disabled><i class="fas fa-search"></i></button>
                             </div>
-                            <input id="search" type="text" class="form-control form-control-lg" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
+                            <input id="search" type="text" class="form-control" placeholder="Ingrese el nombre, CURP o Número de Afiliación" value="{{ old('folio') }}"  autocomplete="folio">
                         </div>
                     </div>
                     <div class="form-group col-3">
@@ -69,7 +69,7 @@
                                         <span>{{ $patient->curp}}</span>
                                     </td>
                                     <td class="cell-detail">
-                                        <span>{{ $patient->ssn->ssn }}</span>
+                                        <span>{!! !empty($patient->ssn->ssn) > 0 ? $patient->ssn->ssn : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
                                     </td>
                                     <td class="text-right">
                                         <button type="button" class="btn btn-outline-success btn-navigate" data-id="{{ $patient->id }}" data-name="{{ $patient->getFullName() }}" data-show="diagnosis-form">
@@ -248,7 +248,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="zip_code">{{ __('Código postal') }}</label>
-                            <input id="zip_code" type="text" class="form-control form-control-lg" name="zip_code" data-mask="zip-code"  placeholder="48290">
+                            <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code"  placeholder="48290">
                             <div class="invalid-feedback zip_code_invalid">
                                 No existe el código postal.
                             </div>
@@ -291,7 +291,7 @@
                         <hr class="w-100 mt-0 mb-5">
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label><span class="text-danger pr-1">*</span>{{ __('Estado de la cita') }}</label>
-                            <select name="status" class="select2 select2-lg">
+                            <select name="status" class="select2">
                                 @foreach ($status as $stat)
                                     <option value="{{ $stat->name }}">{{ $stat->description }}</option>
                                 @endforeach
@@ -299,7 +299,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-8">
                             <label for="diagnosis">{{ __('Diagnostico inicial (opcional)') }}</label>
-                            <input id="diagnosis" type="text" class="form-control form-control-lg" name="diagnosis">
+                            <input id="diagnosis" type="text" class="form-control" name="diagnosis">
                         </div>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">

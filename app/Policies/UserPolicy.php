@@ -11,9 +11,8 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny($user)
     {
-       dd($user);
         return true;
     }
     /**
@@ -69,7 +68,16 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-         if ($user->hasRole('admin')) {
+        if ($user->hasRole('admin')) {
+            return true;
+        } else {
+            return false; 
+        }
+    }
+
+    public function home(User $user)
+    {
+        if ($user->hasRole('admin') || $user->hasRole('analisis')) {
             return true;
         } else {
             return false; 

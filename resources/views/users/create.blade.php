@@ -137,7 +137,7 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="password-confirm"><span class="text-danger pr-1">*</span>{{ __('Confirmación de contraseña') }}</label>
-                        <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="********">
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="********">
                         <small class="card-subtitle pt-1">Debe contener un mínimo de 8 carácteres.</small>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center mt-2">
@@ -159,11 +159,11 @@
     <script>
         function roles() {
             switch ($('#role').val()) {
-                case 'admin':
+                case 'admin': case 'analisis':
                     $('#selectDependency').hide();
                     $('#professionalId').hide();
                     break;
-                case 'user': case 'analisis':
+                case 'user':
                     $('#selectDependency').show();
                     $('#professionalId').hide();
                     break;

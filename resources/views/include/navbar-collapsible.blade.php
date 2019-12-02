@@ -6,7 +6,7 @@
                 <span class="icon zmdi zmdi-menu"></span>
             </a>
         </div>
-        <div class="page-title"><span>Sistema para el Hospital Regional</span></div>
+        <div class="page-title"><span>{{ config('app.name') }}</span></div>
         <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
                 <li class="nav-item dropdown">

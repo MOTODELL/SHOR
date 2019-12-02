@@ -40,7 +40,7 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         $patients = Patient::all();
 
@@ -54,7 +54,7 @@ class PatientController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -83,7 +83,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
         // dd(SsnType::where('name', $request->input('ssn_type'))->first());
         $address = new Address();
         $address->street = ucfirst($request->input('street'));
@@ -105,12 +105,13 @@ class PatientController extends Controller
             $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
             if ($locality) {
                 $address->locality()->associate($locality);
-            }
-            $locality = new Locality();
-            $locality->code = getDescriptionName($request->input('locality'));
-            $locality->description = $request->input('locality');
-            if ($locality->save) {
-                $address->locality()->associate($locality);
+            } else {
+                $locality = new Locality();
+                $locality->code = getDescriptionName($request->input('locality'));
+                $locality->description = $request->input('locality');
+                if ($locality->save) {
+                    $address->locality()->associate($locality);
+                }
             }
         }
         if ($request->filled('municipality')) {
@@ -157,7 +158,7 @@ class PatientController extends Controller
      */
     public function show(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         return view('patients.show', compact('patient'));
     }
@@ -170,7 +171,7 @@ class PatientController extends Controller
      */
     public function edit(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
         $vialities = Viality::all();
         $settlement_types = SettlementType::all();
         $localities = Locality::all();
@@ -198,7 +199,7 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        $request->user()->authorizeRoles('admin');
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
         $address = $patient->address;
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
@@ -216,7 +217,18 @@ class PatientController extends Controller
             $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
         }
         if ($request->filled('locality')) {
-            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+            $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
+            if ($locality) {
+                $address->locality()->associate($locality);
+            } else {
+                $locality = new Locality();
+                $locality->code = getDescriptionName($request->input('locality'));
+                $locality->description = $request->input('locality');
+                $locality->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
+                if ($locality->save()) {
+                    $address->locality()->associate($locality);
+                }
+            }
         }
         if ($request->filled('municipality')) {
             $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
@@ -244,8 +256,8 @@ class PatientController extends Controller
             $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
             $patient->sex = substr($request->input('curp'), 10, -7);
             $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
-            $patient->ssn()->associate($ssn);
         }
+        $patient->ssn()->associate($ssn);
         $patient->address()->associate($address);
         if($patient->save()) {
             return redirect()->route('patients.index')->with('message-update', 'Editado');
@@ -280,23 +292,23 @@ class PatientController extends Controller
                 "fullname" => $patient->fullname,
                 "curp" => $patient->curp,
                 "birthdate" => $patient->birthdate,
-                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H" || $patient->sex === "h") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H" || $patient->sex === "h") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
                 "birthplace" => $patient->getBirthplace(),
                 "phone" => $patient->phone,
-                "ssn_type" => $patient->ssn->ssn_type->description,
-                "ssn" => $patient->ssn->ssn,
-                "number" => ($patient->ssn->number === null || empty($patient->ssn->number)) ? "<span class='text-muted'><i>N/A</i></span>" : $patient->ssn->number,
-                "viality_type" => $patient->address->viality->description,
-                "viality_name" => $patient->address->street,
-                "number_ext" => $patient->address->number_ext,
-                "number_int" => ($patient->address->number_int === null || empty($patient->address->number_int)) ? "<span class='text-muted'><i>N/A</i></span>" : $patient->address->number_int,
-                "settlement_type" => $patient->address->settlement_type->description,
-                "settlement_name" => $patient->address->colony,
-                "zip_code" => $patient->address->zip_code->code,
-                "locality" => $patient->address->locality->description,
-                "municipality" => $patient->address->municipality->description,
-                "state" => $patient->address->state->description
+                "ssn_type" => ($patient->ssn->ssn_type) ? $patient->ssn->ssn_type->description : "<span class='text-muted'><i>N/A</i></span>",
+                "ssn" => ($patient->ssn->ssn != "") ? $patient->ssn->ssn : "<span class='text-muted'><i>N/A</i></span>",
+                "number" => ($patient->ssn->number != "") ? $patient->ssn->number : "<span class='text-muted'><i>N/A</i></span>",
+                "viality_type" => ($patient->address->viality) ? $patient->address->viality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "viality_name" => ($patient->address->street != "") ? $patient->address->street : "<span class='text-muted'><i>N/A</i></span>",
+                "number_ext" => ($patient->address->number_ext != "") ? $patient->address->number_ext : "<span class='text-muted'><i>N/A</i></span>",
+                "number_int" => ($patient->address->number_int != "") ? $patient->address->number_int : "<span class='text-muted'><i>N/A</i></span>",
+                "settlement_type" => ($patient->address->settlement_type) ? $patient->address->settlement_type->description : "<span class='text-muted'><i>N/A</i></span>",
+                "settlement_name" => ($patient->address->colony != "") ? $patient->address->colony : "<span class='text-muted'><i>N/A</i></span>",
+                "zip_code" => ($patient->address->zip_code) ? $patient->address->zip_code->code : "<span class='text-muted'><i>N/A</i></span>",
+                "locality" => ($patient->address->locality) ? $patient->address->locality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "municipality" => ($patient->address->municipality) ? $patient->address->municipality->description : "<span class='text-muted'><i>N/A</i></span>",
+                "state" => ($patient->address->state) ? $patient->address->state->description : "<span class='text-muted'><i>N/A</i></span>"
             ];
         }
 

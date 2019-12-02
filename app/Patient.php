@@ -112,7 +112,7 @@ class Patient extends Model
 
     public function ssn()
     {
-        return $this->belongsTo(Ssn::class);
+        return $this->belongsTo(Ssn::class)->withTrashed();
     }
 
     /**
@@ -123,6 +123,6 @@ class Patient extends Model
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class)->withTrashed();
     }
 }

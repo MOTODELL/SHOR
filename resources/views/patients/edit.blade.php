@@ -159,14 +159,14 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="zip_code"><span class="text-danger pr-1">*</span>{{ __('Código postal') }}</label>
-                        <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code" value="{{ $patient->address->zip_code }}"  required placeholder="48290">
+                        <input id="zip_code" type="text" class="form-control" name="zip_code" data-mask="zip-code" value="{{ $patient->address->zip_code->code }}"  required placeholder="48290">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="locality"><span class="text-danger pr-1">*</span>{{ __('Localidad') }}</label>
                         <div>
-                            <select class="select2" name="locality">
+                            <select class="select2-tags" name="locality">
                                 @foreach ($localities as $locality)
-                                    @if ($locality->code == $patient->address->locality->code)
+                                    @if ($locality->code)
                                         <option value="{{ $locality->code }}" selected>{{ $locality->description }}</option>
                                         @else
                                         <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
@@ -270,8 +270,8 @@
                         data: {id: state.code}
                     });
                     $("input#zip_code").focus();
-                    $("input#zip_code").addClass('is-valid');
-                    // $('.zip_code_invalid').hide();
+                    // $("input#zip_code").addClass('is-valid');
+                    $('.zip_code_invalid').hide();
                 }).fail(function () {
                     // $("input#zip_code").removeClass('is-valid');
                     $('.zip_code_invalid').show();

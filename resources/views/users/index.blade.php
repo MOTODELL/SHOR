@@ -221,12 +221,6 @@
 						'error'
 					);
 					$(btn).closest("form").submit();
-				} else if (result.dismiss === Swal.DismissReason.cancel) {
-					Swal.fire(
-					'¡Cancelado!',
-					'Acción revertida',
-					'error'
-					);
 				}
 			});
 			e.preventDefault();

@@ -116,12 +116,12 @@ class UserController extends Controller
     public function show(Request $request, $user)
     {
         // $request->user()->authorizeRoles('admin');
-        $this->authorize('viewAny', $user);
-        dd('holis');
+        
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     
             if ($user) {
+                $this->authorize('viewAny', $user);
                 return view('users.show', compact('user'));
             }
         }
@@ -137,13 +137,13 @@ class UserController extends Controller
     public function edit(Request $request, $user)
     {
         // $request->user()->authorizeRoles('admin');
-        $this->authorize('update', $user);
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
             $dependencies = Dependency::all();
             $roles = Role::all();
     
             if ($user) {
+                $this->authorize('update', $user);
                 return view('users.edit', compact(['user', 'dependencies', 'roles']));
             }
         }
@@ -238,12 +238,12 @@ class UserController extends Controller
             $data = [
                 "fullname" => $user->fullname,
                 "curp" => $user->curp,
-                "birthdate" => $user->birthdate,
+                "birthdate" => ($user->birthdate && $user->birthdate != "") ? $user->birthdate : "<span class='text-muted'><i>N/A</i></span>",
                 "sex_icon" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
                 "sex" => ($user->sex === null || empty($user->sex) || (($user->sex != "H") && ($user->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($user->sex === "H") ? "Hombre" : "Mujer" ),
-                "birthplace" => $user->getBirthplace(),
-                "phone" => $user->phone,
-                "email" => $user->email
+                "birthplace" => ($user->getBirthplace() && $user->getBirthplace() != "") ? $user->getBirthplace() : "<span class='text-muted'><i>N/A</i></span>",
+                "phone" => ($user->phone && $user->phone != "") ? $user->phone : "<span class='text-muted'><i>N/A</i></span>",
+                "email" => ($user->email && $user->email != "") ? $user->email : "<span class='text-muted'><i>N/A</i></span>"
             ];
         }
 

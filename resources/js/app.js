@@ -18,6 +18,7 @@ $(document).ready(function() {
     if ($('script[src="' + host + '/lib/datatables/datatables.net/js/jquery.dataTables.js"]' ).length > 0) {
         $.fn.dataTable.ext.search.push(function(e, t, i, o, n) {
             var user = $("#check-user").is(":checked"),
+                analista = $("#check-analisis").is(":checked"),
                 doctor = $("#check-doctor").is(":checked"),
                 admin = $("#check-admin").is(":checked"),
                 pendiente = $("#check-pendiente").is(":checked"),
@@ -27,8 +28,9 @@ $(document).ready(function() {
     
             return (
                 (
-                    (0 == user && 0 == doctor && 0 == admin && 0 == pendiente && 0 == pagado && 0 == cancelado) ||
+                    (0 == user && 0 == analista && 0 == doctor && 0 == admin && 0 == pendiente && 0 == pagado && 0 == cancelado) ||
                     (1 == user && "usuario" == m[1]) ||
+                    (1 == analista && "analista" == m[1]) ||
                     (1 == doctor && "doctor" == m[1]) ||
                     (1 == admin && "admin" == m[1]) ||
                     (1 == pendiente && "pendiente" == m[1]) ||
@@ -70,7 +72,7 @@ $(document).ready(function() {
                 }
             }
         });
-        $("#check-user, #check-doctor, #check-admin, #check-pendiente, #check-pagado, #check-cancelado").on("click", function() {
+        $("#check-user, #check-analisis, #check-doctor, #check-admin, #check-pendiente, #check-pagado, #check-cancelado").on("click", function() {
             e.draw();
         });
         $('#search').keyup(function(){

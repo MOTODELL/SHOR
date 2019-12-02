@@ -30,16 +30,36 @@
                 @else
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
                 @endif
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->curp }}</td>
+                @if ($user->curp && $user->curp != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->curp }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                @endif
                 @if ($user->hasASex())
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ (($user->sex === "H") ? "Hombre" : "Mujer" ) }}</td>
                 @else
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
                 @endif
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->birthdate }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->getBirthplace() }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->phone }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->email }}</td>
+                @if ($user->birthdate && $user->birthdate != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->birthdate }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                @endif
+                @if ($user->getBirthplace() && $user->getBirthplace() != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->getBirthplace() }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                @endif
+                @if ($user->phone && $user->phone != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->phone }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                @endif
+                @if ($user->email && $user->email != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $user->email }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                @endif
             </tr>
         @endforeach
         <tr>

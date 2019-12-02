@@ -204,7 +204,7 @@
                         <hr class="w-100 mt-0 mb-5">
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label><span class="text-danger pr-1">*</span>{{ __('Estado de la cita') }}</label>
-                            <select name="status" class="select2 select2-lg">
+                            <select name="status" class="select2">
                                 @foreach ($status as $stat)
                                     <option value="{{ $stat->name }}" {{ $date->status->name == $stat->name ? 'selected' : '' }}>{{ $stat->description }}</option>
                                 @endforeach
@@ -212,7 +212,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-8">
                             <label for="diagnosis">{{ __('Diagnostico inicial (opcional)') }}</label>
-                            <input id="diagnosis" type="text" class="form-control form-control-lg" name="diagnosis">
+                            <input id="diagnosis" type="text" class="form-control" name="diagnosis">
                         </div>
                     </div>
                 </div>
@@ -283,10 +283,10 @@
                     });
                     $("input#zip_code").focus();
                     // $("input#zip_code").addClass('is-valid');
-                    // $('.zip_code_invalid').hide();
+                    $('.zip_code_invalid').hide();
                 }).fail(function () {
                     // $("input#zip_code").removeClass('is-valid');
-                    // $('.zip_code_invalid').show();
+                    $('.zip_code_invalid').show();
                 });
             }
         }

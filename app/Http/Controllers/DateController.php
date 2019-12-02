@@ -42,7 +42,7 @@ class DateController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         $dates = Date::all();
         $status = Status::all();
@@ -58,7 +58,7 @@ class DateController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -81,7 +81,7 @@ class DateController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
         if (!$patient) {
             $address = new Address();
@@ -91,8 +91,13 @@ class DateController extends Controller
                 $address->number_int = $request->input('number_int');
             }
             $address->colony = ucfirst($request->input('colony'));
+            dd($request->input('zip_code'));
             if ($request->filled('zip_code') && ZipCode::where('code', $request->input('zip_code'))->first()) {
                 $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+            } else {
+                if ($address->zip_code) {
+                    $address->zip_code == null;
+                }
             }
             if ($request->filled('viality') && $request->input('viality') != 'none') {
                 $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
@@ -165,7 +170,7 @@ class DateController extends Controller
      */
     public function show(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         $date = Date::where('uuid', $date)->first();
 
@@ -181,7 +186,7 @@ class DateController extends Controller
      */
     public function edit(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
         
         $date = Date::withTrashed()->where('uuid', $date)->first();
         $vialities = Viality::all();
@@ -207,7 +212,7 @@ class DateController extends Controller
      */
     public function update(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analisis']);
 
         if (isValidUuid($date)) {
             $date = Date::where('uuid', $date)->first();
@@ -221,6 +226,10 @@ class DateController extends Controller
                 $address->colony = ucfirst($request->input('colony'));
                 if ($request->filled('zip_code') && ZipCode::where('code', $request->input('zip_code'))->first()) {
                     $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+                } else {
+                    if ($address->zip_code) {
+                        $address->zip_code()->dissociate();
+                    }
                 }
                 if ($request->filled('viality') && $request->input('viality') != 'none') {
                     $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
@@ -293,7 +302,7 @@ class DateController extends Controller
      */
     public function destroy(Request $request, Date $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user']);
+        $request->user()->authorizeRoles(['admin']);
 
         $date->delete();
 

@@ -1,16 +1,16 @@
 <table>
     <thead>
     <tr>
-        <th style="width:6px;background-color: #70a1ff;border: 1px solid #000000;">Folio</th>
-        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;">Fecha de atención</th>
-        <th style="width:19px;background-color: #70a1ff;border: 1px solid #000000;">Número exp clínico</th>
-        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;">Folio seguro popular</th>
-        <th style="width:40px;background-color: #70a1ff;border: 1px solid #000000;">Nombre del beneficiario</th>
-        <th style="width:26px;background-color: #70a1ff;border: 1px solid #000000;">CURP</th>
-        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;">Fecha de nacimiento</th>
-        <th style="width:9px;background-color: #70a1ff;border: 1px solid #000000;">Sexo</th>
-        <th style="width:13px;background-color: #70a1ff;border: 1px solid #000000;">Edad en años</th>
-        <th style="width:35px;background-color: #70a1ff;border: 1px solid #000000;">Diagnostico inicial</th>
+        <th style="width:6px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Folio</th>
+        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Fecha de atención</th>
+        <th style="width:19px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Número exp clínico</th>
+        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Núm. Afiliación</th>
+        <th style="width:40px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Nombre del beneficiario</th>
+        <th style="width:26px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">CURP</th>
+        <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Fecha de nacimiento</th>
+        <th style="width:9px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Sexo</th>
+        <th style="width:13px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Edad en años</th>
+        <th style="width:35px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Diagnostico inicial</th>
     </tr>
     </thead>
     <tbody>
@@ -25,14 +25,18 @@
                     $attention_date = $attention_date[2].'/'.$attention_date[1].'/'.$attention_date[0].' '.$hour;
                 @endphp
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $attention_date }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;"><i>N/A</i></td>
+                <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">-</td>
                 @if ($date->patient->hasASsn())
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->ssn->ssn . '-' . $date->patient->ssn->number }}</td>
                 @else
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;"></td>
                 @endif
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->fullname }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->curp }}</td>
+                @if ($date->patient->curp && $date->patient->curp != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->curp }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
                 @php
                     $birthdate = $date->patient->birthdate;
                     $birthdate = explode('-', $birthdate);
@@ -42,7 +46,7 @@
                 @if ($date->patient->hasASex())
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ (($date->patient->sex === "H") ? "Hombre" : "Mujer" ) }}</td>
                 @else
-                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;"><i>N/A</i></td>
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">-</td>
                 @endif
                 @php
                     $birthDate = $date->patient->birthdate;
@@ -54,7 +58,11 @@
                         : (date("Y") - $birthDate[0]));
                 @endphp
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $age }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $date->diagnosis }}</td>
+                @if ($date->diagnosis && $date->diagnosis != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $date->diagnosis }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
             </tr>
         @endforeach
         <tr>

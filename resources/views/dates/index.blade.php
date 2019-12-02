@@ -54,8 +54,8 @@
 						<tr>
 							<th style="width:10%;">Folio</th>
 							<th style="width:20%;">Nombre completo</th>
+							<th style="width:20%;">Núm. Afiliación</th>
 							<th style="width:20%;">Día de atención</th>
-							<th style="width:20%;">Diagnostico inicial</th>
 							<th style="width:10%;">Estado</th>
 							<th style="width:15%;"></th>
 						</tr>
@@ -70,13 +70,13 @@
 								<span>{{ $date->getPatient() }}</span>
 							</td>
 							<td class="cell-detail">
+								<span>{!! !empty($date->patient->ssn->ssn) > 0 ? $date->patient->ssn->ssn : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
+							</td>
+							<td class="cell-detail">
 								<span>{{ $date->attention_date }}</span>
 							</td>
 							<td class="cell-detail">
-								<span>{!! !empty($date->diagnosis) > 0 ? $date->diagnosis : '<span class="text-muted"><i>N/A</i></span>' !!}</span>
-							</td>
-							<td class="cell-detail">
-								<span>{{ $date->getStatus() }}</span>
+								<span class="badge badge-pill badge-{{ $date->statusName == 'pagado' ? 'success' : ($date->statusName == 'cancelado' ? 'danger' : '') }}">{{ $date->getStatus() }}</span>
 							</td>
 							<td class="text-right">
 								<a href="{{ route('pdf', $date->uuid) }}" target="_blank" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Imprimir">
@@ -88,13 +88,15 @@
 								<a href="{{ route('dates.edit', $date->uuid) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Editar">
 									<i class="zmdi zmdi-edit zmdi-hc-lg"></i>
 								</a>
-								<form action="{{ route('dates.destroy', $date) }}" method="post" class="d-inline">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
-										<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
-									</button>
-								</form>
+								@canany(['view','create', 'update',  'delete'], auth()->user())
+									<form action="{{ route('dates.destroy', $date) }}" method="post" class="d-inline">
+										@csrf
+										@method('DELETE')
+										<button type="submit" class="btn btn-danger remove-link" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+											<i class="zmdi zmdi-delete zmdi-hc-lg"></i>
+										</button>
+									</form>
+								@endcanany
 							</td>
 						</tr>
 						@endforeach

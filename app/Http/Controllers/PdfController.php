@@ -23,12 +23,12 @@ class PdfController extends Controller
          */
         $folio = str_pad($date->id, 8, '0', STR_PAD_LEFT);
         $patient = $date->patient;
-        $nombre = strtoupper($patient->name);
-        $primer_apellido = strtoupper($patient->paternal_lastname);
-        $segundo_apellido = strtoupper($patient->maternal_lastname);
+        $nombre = mb_strtoupper($patient->name);
+        $primer_apellido = mb_strtoupper($patient->paternal_lastname);
+        $segundo_apellido = mb_strtoupper($patient->maternal_lastname);
         $curp = $patient->curp;
         $fecha_nacimiento = Carbon::parse($patient->birthdate)->format('dmY');
-        $entidad_nacimiento = strtoupper(preg_split('#\s+#', $patient->birthplace->description, 2)[0]);
+        $entidad_nacimiento = mb_strtoupper(preg_split('#\s+#', $patient->birthplace->description, 2)[0]);
         $edad = Carbon::parse($patient->birthdate)->age;
         $sexo_h = '';
         $sexo_m = '';
@@ -99,36 +99,39 @@ class PdfController extends Controller
         $addess = $patient->address;
         $tipo_vialidad = "";
         if ($addess->viality) {
-            $tipo_vialidad = strtoupper($addess->viality->description);
+            $tipo_vialidad = mb_strtoupper($addess->viality->description);
         }
-        $nombre_vialidad = strtoupper($addess->street);
+        $nombre_vialidad = mb_strtoupper($addess->street);
         $num_ext = $addess->number_ext;
         $num_int = $addess->number_int;
 
         $tipo_asentamiento = "";
         if ($addess->settlement_type) {
-            $tipo_asentamiento = strtoupper($addess->settlement_type->description);
+            $tipo_asentamiento = mb_strtoupper($addess->settlement_type->description);
         }
-        $nombre_asentamiento = strtoupper($addess->colony);
+        $nombre_asentamiento = mb_strtoupper($addess->colony);
 
-        $codigo_postal = $addess->zip_code;
+        $codigo_postal = "";
+        if ($addess->zip_code) {
+            $codigo_postal = $addess->zip_code->code;
+        }
         $localidad = "";
         $localidad_codigo = "";
         if ($addess->locality) {
-            $localidad = strtoupper($addess->locality->description);
+            $localidad = mb_strtoupper($addess->locality->description);
             $localidad_codigo = str_pad($addess->locality->code, 4, '0', STR_PAD_LEFT);
         }
         $municipio = "";
         $municipio_codigo = "";
         if ($addess->municipality) {
-            $municipio = strtoupper($addess->municipality->description);
+            $municipio = mb_strtoupper($addess->municipality->description);
             $municipio_codigo = $addess->municipality->code;
         }
 
         $entidad_federativa = "";
         $entidad_federativa_codigo = "";
         if ($addess->state) {
-            $entidad_federativa = strtoupper($addess->state->description);
+            $entidad_federativa = mb_strtoupper($addess->state->description);
             $entidad_federativa_codigo = $addess->state->code;
         }
         $telefono = $patient->phone;
@@ -437,7 +440,11 @@ class PdfController extends Controller
         $pdf->Cell($char_width, $char_height, substr($localidad_codigo, 3, 1), 0, 0, 'C');
         $pdf->Cell(20.6, $char_height, '', 0, 0, 'C');
         // MUNICIPIO
-        $pdf->Cell(33, 3, $municipio, 0, 0, 'C');
+        if (strlen($municipio) > 22) {
+            $pdf->Cell(33, -2, $municipio, 0, 0, 'C');
+        }else {
+            $pdf->Cell(33, 3, $municipio, 0, 0, 'C');
+        }
         $pdf->Cell(1.9, $char_height, '', 0, 0, 'C');
         // MUNICIPIO CODIGO
         $pdf->Cell($char_width, 3, substr($municipio_codigo, 0, 1), 0, 0, 'C');

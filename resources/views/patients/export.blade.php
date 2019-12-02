@@ -5,7 +5,7 @@
         <th style="width:17px;background-color: #70a1ff;border: 1px solid #000000;">Apellido materno</th>
         <th style="width:27px;background-color: #70a1ff;border: 1px solid #000000;">Nombre</th>
         <th style="width:17px;background-color: #70a1ff;border: 1px solid #000000;">Afiliación</th>
-        <th style="width:25px;background-color: #70a1ff;border: 1px solid #000000;">Número del seguro social</th>
+        <th style="width:25px;background-color: #70a1ff;border: 1px solid #000000;">Núm. Afiliación</th>
         <th style="width:26px;background-color: #70a1ff;border: 1px solid #000000;">CURP</th>
         <th style="width:8px;background-color: #70a1ff;border: 1px solid #000000;">Sexo</th>
         <th style="width:19px;background-color: #70a1ff;border: 1px solid #000000;">Fecha de nacimiento</th>
@@ -31,26 +31,58 @@
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->ssn->ssn_type->description }}</td>
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->ssn->ssn . '-' . $patient->ssn->number }}</td>
                 @else
-                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
-                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
                 @endif
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->curp }}</td>
                 @if ($patient->hasASex())
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ (($patient->sex === "H") ? "Hombre" : "Mujer" ) }}</td>
                 @else
-                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;"><i>N/A</i></td>
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
                 @endif
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->birthdate }}</td>
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->getBirthplace() }}</td>
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->phone }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->viality->description . ' ' . $patient->address->street }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->number_ext }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->number_int }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->settlement_type->description . ' ' . $patient->address->colony }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->zip_code->code }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->locality->description }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->municipality->description }}</td>
-                <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->state->description }}</td>
+                @if ($patient->address->viality)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->viality->description . ' ' . $patient->address->street }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->number_ext && $patient->address->number_ext != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->number_ext }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->number_int && $patient->address->number_int != "")
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->number_int }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->settlement_type)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->settlement_type->description . ' ' . $patient->address->colony }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->zip_code)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->zip_code->code }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->locality)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->locality->description }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->municipality)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->municipality->description }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
+                @if ($patient->address->state)
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">{{ $patient->address->state->description }}</td>
+                @else
+                    <td style="border-left:1px solid #000000;border-right:1px solid #000000;">-</td>
+                @endif
             </tr>
         @endforeach
         <tr>
