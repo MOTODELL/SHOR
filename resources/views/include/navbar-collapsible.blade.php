@@ -19,7 +19,10 @@
                             <div class="user-name">{{ auth()->user()->name }}</div>
                             <div class="user-position online">{{ auth()->user()->email }}</div>
                         </div>
-                    <a class="dropdown-item" href="{{ route('users.show', auth()->user()->id) }}"><span class="icon zmdi zmdi-account"></span>Perfil</a>
+                        <a class="dropdown-item" href="{{ route('users.show', auth()->user()->id) }}">
+                            <span class="icon zmdi zmdi-account"></span>
+                            <span>Perfil</span>
+                        </a>
                         {{-- <a class="dropdown-item" href="#"><span class="icon zmdi zmdi-settings"></span>Settings</a> --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();

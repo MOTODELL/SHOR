@@ -170,7 +170,7 @@
                     $('#selectDependency').hide();
                     $('#professionalId').hide();
                     break;
-                case 'user':
+                case 'user': case 'analisis':
                     $('#selectDependency').show();
                     $('#professionalId').hide();
                     break;

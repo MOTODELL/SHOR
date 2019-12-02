@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('maternal_lastname');
             $table->string('email', 100); //MySQL
             $table->char('phone', 14)->nullable();
-            $table->char('curp', 18)->nullable();
+            $table->char('curp', 18);
             $table->date('birthdate')->nullable();
             $table->char('sex', 1)->nullable();
             $table->unsignedInteger('birthplace_id')->nullable();
