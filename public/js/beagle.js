@@ -4815,6 +4815,7 @@ var deviceIsAndroid = navigator.userAgent.indexOf("Android") > 0,
         "use strict";
         return (
             (App.masks = function() {
+                $.mask.definitions['*']='[a-zA-Z0-9-]';
                 $("[data-mask='date']").mask("99/99/9999"),
                 $("[data-mask='phone']").mask("(999) 999-9999"),
                 $("[data-mask='professional_id']").mask("99999999"),
@@ -4824,6 +4825,8 @@ var deviceIsAndroid = navigator.userAgent.indexOf("Android") > 0,
                 $("[data-mask='curp']").mask("aaaa999999aaaaa***"),
                 $("[data-mask='percent']").mask("99%"),
                 $("[data-mask='currency']").mask("$999,999,999.99");
+                $("[data-mask='number_ext']").mask("********",{placeholder:"",autoclear:false});
+                $("[data-mask='number_int']").mask('********',{placeholder:"",autoclear:false});
             }),
             App
         );

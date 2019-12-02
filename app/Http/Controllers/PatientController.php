@@ -40,7 +40,7 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $patients = Patient::all();
 
@@ -54,7 +54,7 @@ class PatientController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -83,7 +83,7 @@ class PatientController extends Controller
      */
     public function store(StorePatientRequest $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         // dd(SsnType::where('name', $request->input('ssn_type'))->first());
         $address = new Address();
         $address->street = ucfirst($request->input('street'));
@@ -109,7 +109,8 @@ class PatientController extends Controller
                 $locality = new Locality();
                 $locality->code = getDescriptionName($request->input('locality'));
                 $locality->description = $request->input('locality');
-                if ($locality->save) {
+                $locality->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
+                if ($locality->save()) {
                     $address->locality()->associate($locality);
                 }
             }
@@ -158,7 +159,7 @@ class PatientController extends Controller
      */
     public function show(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         return view('patients.show', compact('patient'));
     }
@@ -171,7 +172,7 @@ class PatientController extends Controller
      */
     public function edit(Request $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         $vialities = Viality::all();
         $settlement_types = SettlementType::all();
         $localities = Locality::all();
@@ -199,22 +200,32 @@ class PatientController extends Controller
      */
     public function update(UpdatePatientRequest $request, Patient $patient)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         $address = $patient->address;
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
         if ($request->filled('number_int')) {
             $address->number_int = $request->input('number_int');
+        } else {
+            $address->number_int = "";
         }
         $address->colony = ucfirst($request->input('colony'));
         if ($request->filled('zip_code')) {
             $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+        } else{
+            if ($address->zip_code) {
+                $address->zip_code()->dissociate();
+            }
         }
         if ($request->filled('viality')) {
             $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
+        } else if ($address->viality) {
+            $address->viality()->dissociate();
         }
         if ($request->filled('settlement_type')) {
             $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
+        } else if ($address->settlement_type) {
+            $address->settlement_type()->dissociate();
         }
         if ($request->filled('locality')) {
             $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();

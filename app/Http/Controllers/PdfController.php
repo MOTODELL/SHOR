@@ -119,7 +119,6 @@ class PdfController extends Controller
         $localidad_codigo = "";
         if ($addess->locality) {
             $localidad = mb_strtoupper($addess->locality->description);
-            $localidad_codigo = str_pad($addess->locality->code, 4, '0', STR_PAD_LEFT);
         }
         $municipio = "";
         $municipio_codigo = "";

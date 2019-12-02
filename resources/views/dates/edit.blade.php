@@ -138,11 +138,11 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_ext">{{ __('Número exterior') }}</label>
-                            <input id="number_ext" type="text" class="form-control" name="number_ext" value="{{ empty(old('number_ext')) ? $date->patient->address->number_ext : old('number_ext') }}" placeholder="644">
+                            <input id="number_ext" data-mask="number_ext" type="text" class="form-control" name="number_ext" value="{{ empty(old('number_ext')) ? $date->patient->address->number_ext : old('number_ext') }}" placeholder="644">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_int">{{ __('Número interior') }}</label>
-                            <input id="number_int" type="text" class="form-control" name="number_int" value="{{ empty(old('number_int')) ? $date->patient->address->number_int : old('number_int') }}" placeholder="44">
+                            <input id="number_int" data-mask="number_int" type="text" class="form-control" name="number_int" value="{{ empty(old('number_int')) ? $date->patient->address->number_int : old('number_int') }}" placeholder="44">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="settlementType">{{ __('Tipo de asentamiento humano') }}</label>
@@ -169,10 +169,10 @@
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="locality">{{ __('Localidad') }}</label>
                             <div>
-                                <select class="select2" name="locality">
+                                <select class="select2-tags" name="locality">
                                     <option value="none">Seleccione la localidad</option>
                                     @foreach ($localities as $locality)
-                                        <option value="{{ $locality->code }}">{{ $locality->code }} - {{ $locality->description }}</option>
+                                        <option value="{{ $locality->code }}">{{ $locality->description }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -281,7 +281,6 @@
                     $state.select2('trigger', 'select', {
                         data: {id: state.code}
                     });
-                    $("input#zip_code").focus();
                     // $("input#zip_code").addClass('is-valid');
                     $('.zip_code_invalid').hide();
                 }).fail(function () {

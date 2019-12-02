@@ -225,11 +225,11 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_ext">{{ __('Número exterior') }}</label>
-                            <input id="number_ext" type="text" class="form-control" name="number_ext"  placeholder="644">
+                            <input id="number_ext" data-mask="number_ext" type="text" class="form-control" name="number_ext"  placeholder="644">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="number_int">{{ __('Número interior') }}</label>
-                            <input id="number_int" type="text" class="form-control" name="number_int" placeholder="44">
+                            <input id="number_int" data-mask="number_int" type="text" class="form-control" name="number_int" placeholder="44">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 col-lg-4">
                             <label for="settlementType">{{ __('Tipo de asentamiento humano') }}</label>
@@ -382,7 +382,6 @@
                     $municipality.select2('trigger', 'select', {
                         data: {id: municipality.id}
                     });
-                    $("input#zip_code").focus();
                     $('.zip_code_invalid').hide();
                 }).fail(function () {
                     $('.zip_code_invalid').show();

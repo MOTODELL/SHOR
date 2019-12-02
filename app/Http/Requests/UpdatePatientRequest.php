@@ -24,6 +24,7 @@ class UpdatePatientRequest extends FormRequest
     public function rules()
     {
         $id = $this->route('patient')->id;
+        // dd($id);
         return [
             'name' => [
                 'required'

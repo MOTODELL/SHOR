@@ -133,11 +133,11 @@
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="number_ext"><span class="text-danger pr-1">*</span>{{ __('Número exterior') }}</label>
-                        <input id="number_ext" type="text" class="form-control" name="number_ext" value="{{ $patient->address->number_ext }}" required placeholder="644">
+                        <input id="number_ext" data-mask="number_ext" type="text" class="form-control" name="number_ext" value="{{ $patient->address->number_ext }}" required placeholder="644">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="number_int">{{ __('Número interior') }}</label>
-                        <input id="number_int" type="text" class="form-control" name="number_int" value="{{ $patient->address->number_int }}" placeholder="44">
+                        <input id="number_int" data-mask="number_int" type="text" class="form-control" name="number_int" value="{{ $patient->address->number_int }}" placeholder="44">
                     </div>
                     <div class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="settlementType"><span class="text-danger pr-1">*</span>{{ __('Tipo de asentamiento humano') }}</label>
@@ -269,7 +269,6 @@
                     $state.select2('trigger', 'select', {
                         data: {id: state.code}
                     });
-                    $("input#zip_code").focus();
                     // $("input#zip_code").addClass('is-valid');
                     $('.zip_code_invalid').hide();
                 }).fail(function () {

@@ -166,11 +166,11 @@
     <script>
         function roles() {
             switch ($('#role').val()) {
-                case 'admin':
+                case 'admin': case 'analist':
                     $('#selectDependency').hide();
                     $('#professionalId').hide();
                     break;
-                case 'user': case 'analist':
+                case 'user':
                     $('#selectDependency').show();
                     $('#professionalId').hide();
                     break;

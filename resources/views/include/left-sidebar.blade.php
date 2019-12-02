@@ -10,13 +10,35 @@
                         @if (auth()->user()->hasRole('analist') || auth()->user()->hasRole('admin'))
                             <li class="{{ (request()->is('home')) ? 'active' : '' }}">
                             <a href="{{ route('home.index') }}">
-                                <i class="icon zmdi zmdi-home"></i>
-                                <span>Inicio</span>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon zmdi zmdi-home"></i>
+                                    </div>
+                                    <span>Inicio</span>
+                                </div>
                             </a>
                         </li>
-                        @else
-                            
                         @endif
+                        <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
+                            <a href="{{ route('dates.index') }}">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon fas fa-ambulance"></i>
+                                    </div>
+                                    <span>Urgencias</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
+                            <a href="{{ route('patients.index') }}">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon zmdi zmdi-male-female"></i>
+                                    </div>
+                                    <span>Pacientes</span>
+                                </div>
+                            </a>
+                        </li>
                         
                         {{-- @endcanany --}}
                         {{-- <li class="parent">
@@ -51,36 +73,36 @@
                         @canany(['view', 'create', 'update',  'delete'], auth()->user())
                         <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
                             <a href="{{ route('dependencies.index') }}">
-                                <i class="icon fas fa-hospital-alt"></i>
-                                <span>Áreas</span>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon fas fa-hospital-alt"></i>
+                                    </div>
+                                    <span>Áreas</span>
+                                </div>
                             </a>
                         </li>
                         @endcanany
                         @canany(['view','create', 'update',  'delete'], auth()->user())
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
-                                <i class="icon fas fa-book-medical"></i>
-                                <span>Causes</span>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon fas fa-book-medical"></i>
+                                    </div>
+                                    <span>Causes</span>
+                                </div>
                             </a>
                         </li>
                         @endcanany
-                        <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
-                            <a href="{{ route('patients.index') }}">
-                                <i class="icon zmdi zmdi-male-female"></i>
-                                <span>Pacientes</span>
-                            </a>
-                        </li>
-                        <li class="{{ (request()->is('dates*')) ? 'active' : '' }}">
-                            <a href="{{ route('dates.index') }}">
-                                <i class="icon fas fa-ambulance"></i>
-                                <span>Urgencias</span>
-                            </a>
-                        </li>
                         @canany(['create', 'update',  'delete'], auth()->user())
                             <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
-                                <i class="icon zmdi zmdi-account-circle"></i>
-                                <span>Usuarios</span>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <i class="icon zmdi zmdi-account-circle"></i>
+                                    </div>
+                                    <span>Usuarios</span>
+                                </div>
                             </a>
                         </li>
                         {{-- @elsecanany(['create'], App\Post::class)

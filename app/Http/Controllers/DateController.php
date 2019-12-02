@@ -21,6 +21,7 @@ use App\ZipCode;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
+use function App\Http\getDescriptionName;
 use function App\Http\isValidUuid;
 
 class DateController extends Controller
@@ -42,7 +43,7 @@ class DateController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $dates = Date::all();
         $status = Status::all();
@@ -58,7 +59,7 @@ class DateController extends Controller
      */
     public function create(Request $request)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $patients = Patient::all();
         $vialities = Viality::all();
@@ -78,10 +79,10 @@ class DateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDateRequest $request)
     {
         // dd($request->all());
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         $patient = Patient::where('id', $request->input('id-exist'))->first();
         if (!$patient) {
             $address = new Address();
@@ -111,8 +112,19 @@ class DateController extends Controller
             if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
                 $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
             }
-            if ($request->filled('locality') && $request->input('locality') != 'none') {
-                $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+            if ($request->filled('locality')) {
+                $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
+                if ($locality) {
+                    $address->locality()->associate($locality);
+                } else {
+                    $locality = new Locality();
+                    $locality->code = getDescriptionName($request->input('locality'));
+                    $locality->description = $request->input('locality');
+                    $locality->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
+                    if ($locality->save()) {
+                        $address->locality()->associate($locality);
+                    }
+                }
             }
             if ($request->filled('municipality') && $request->input('municipality') != 'none') {
                 $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
@@ -180,7 +192,7 @@ class DateController extends Controller
      */
     public function show(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $date = Date::where('uuid', $date)->first();
 
@@ -196,7 +208,7 @@ class DateController extends Controller
      */
     public function edit(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
         
         $date = Date::withTrashed()->where('uuid', $date)->first();
         $vialities = Viality::all();
@@ -222,7 +234,7 @@ class DateController extends Controller
      */
     public function update(Request $request, String $date)
     {
-        $request->user()->authorizeRoles(['admin', 'user', 'analist']);
+        $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         if (isValidUuid($date)) {
             $date = Date::where('uuid', $date)->first();
@@ -251,8 +263,19 @@ class DateController extends Controller
                 if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
                     $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
                 }
-                if ($request->filled('locality') && $request->input('locality') != 'none') {
-                    $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+                if ($request->filled('locality')) {
+                    $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
+                    if ($locality) {
+                        $address->locality()->associate($locality);
+                    } else {
+                        $locality = new Locality();
+                        $locality->code = getDescriptionName($request->input('locality'));
+                        $locality->description = $request->input('locality');
+                        $locality->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
+                        if ($locality->save()) {
+                            $address->locality()->associate($locality);
+                        }
+                    }
                 }
                 if ($request->filled('municipality') && $request->input('municipality') != 'none') {
                     $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());

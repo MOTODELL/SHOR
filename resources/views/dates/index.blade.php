@@ -30,6 +30,9 @@
 							</div>
 						</div>
 					</div>
+					@if (!(auth()->user()->hasRole('analist') || auth()->user()->hasRole('admin')))
+						<div class="col-2"></div>
+					@endif
 					<div class="col-5">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -40,14 +43,16 @@
 							<input type="text" class="form-control" id="search" placeholder="Buscar">
 						</div>
 					</div>
-					<div class="col-2 d-flex justify-content-end">
-						<div class="mt-1">
-							<a href="{{ route('dates.export') }}" class="btn btn-success btn-lg" title="Descargar">
-								<i class="fas fa-file-excel mr-1"></i>
-								<span class="h4">Descargar</span>
-							</a>
+					@if (auth()->user()->hasRole('analist') || auth()->user()->hasRole('admin'))
+						<div class="col-2 d-flex justify-content-end">
+							<div class="mt-1">
+								<a href="{{ route('dates.export') }}" class="btn btn-success btn-lg" title="Descargar">
+									<i class="fas fa-file-excel mr-1"></i>
+									<span class="h4">Descargar</span>
+								</a>
+							</div>
 						</div>
-					</div>
+					@endif
 				</div>
 				<table class="table table-striped table-sm table-hover table-fw-widget dataTable">
 					<thead>
