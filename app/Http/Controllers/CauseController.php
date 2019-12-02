@@ -107,7 +107,7 @@ class CauseController extends Controller
         $cause->code = $request->input('code');
         $cause->description = ucfirst($request->input('description'));
         if ($cause->save()) {
-            return redirect()->route('causes.index')->with('message-store', 'Editado');
+            return redirect()->route('causes.index')->with('message-update', 'Editado');
         }
         return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
     }

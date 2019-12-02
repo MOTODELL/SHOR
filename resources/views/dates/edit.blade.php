@@ -180,7 +180,7 @@
                             <div>
                                 <select class="select2" name="municipality">
                                     @foreach ($municipalities as $municipality)
-                                        <option value="{{ $municipality->id }}">{{ $municipality->code }} - {{ $municipality->description }}</option>
+                                        <option value="{{ $municipality->id }}" {{ $municipality->id == $date->patient->address->municipality->id ? "selected" : "" }}>{{ $municipality->code }} - {{ $municipality->description }}</option>
                                     @endforeach
                                 </select>
                             </div>

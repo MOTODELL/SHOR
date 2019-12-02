@@ -253,12 +253,14 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-sm-6 col-md-4">
-						<div class="alert alert-primary alert-simple border-0 shadow-none">
-							<div class="icon"><i class="icon fas fa-flag"></i></div>
-							<div class="message">
-								<span class="user-timeline-date">Estado</span>
-								<div class="user-timeline-title patient-state"></div>
+					<div class="form-row">
+						<div class="form-group col-sm-6 col-md-4">
+							<div class="alert alert-primary alert-simple border-0 shadow-none">
+								<div class="icon"><i class="icon fas fa-flag"></i></div>
+								<div class="message">
+									<span class="user-timeline-date">Estado</span>
+									<div class="user-timeline-title patient-state"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -365,8 +367,8 @@
 						$('.patient-ssn_type').html(patient.ssn_type);
 						$('.patient-ssn').html(patient.ssn);
 						$('.patient-number').html(patient.number);
-						$('.patient-viality').html(patient.viality_type);
-						$('.patient-street').html(patient.viality_name);
+						$('.patient-viality_type').html(patient.viality_type);
+						$('.patient-viality_name').html(patient.viality_name);
 						$('.patient-number_ext').html(patient.number_ext);
 						$('.patient-number_int').html(patient.number_int);
 						$('.patient-settlement_type').html(patient.settlement_type);

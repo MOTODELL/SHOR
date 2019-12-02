@@ -133,7 +133,7 @@
 			});
 			Toast.fire({
 				type: 'info',
-				title: '¡Servicio editado correctamente!'
+				title: '¡Área de servicio editada correctamente!'
 			});
 		</script>
 	@endif

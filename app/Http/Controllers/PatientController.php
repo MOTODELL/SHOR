@@ -7,6 +7,8 @@ use App\State;
 use App\SsnType;
 use App\Address;
 use App\Exports\PatientsExport;
+use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
 use App\Patient;
 use App\Viality;
 use App\Locality;
@@ -80,7 +82,7 @@ class PatientController extends Controller
     public function store(StorePatientRequest $request)
     {
         $request->user()->authorizeRoles('admin');
-        // dd($request);
+        // dd(SsnType::where('name', $request->input('ssn_type'))->first());
         $address = new Address();
         $address->street = ucfirst($request->input('street'));
         $address->number_ext = $request->input('number_ext');
@@ -128,8 +130,8 @@ class PatientController extends Controller
             $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
             $patient->sex = substr($request->input('curp'), 10, -7);
             $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
-            $patient->ssn()->associate($ssn);
         }
+        $patient->ssn()->associate($ssn);
         $patient->address()->associate($address);
         if($patient->save()) {
             return redirect()->route('patients.index')->with('message-create', 'Creado');
@@ -263,14 +265,14 @@ class PatientController extends Controller
     {
         $patient = Patient::where('id', $request->input('id'))->first();
         $data = [];
-        // dd($patient);
+        // dd($patient->address);
         if ($patient) {
             $data = [
                 "fullname" => $patient->fullname,
                 "curp" => $patient->curp,
                 "birthdate" => $patient->birthdate,
-                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
-                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H") ? "Hombre" : "Mujer" ),
+                "sex_icon" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H" || $patient->sex === "h") ? '<i class="icon fas fa-mars"></i>' : '<i class="icon fas fa-venus"></i>' ),
+                "sex" => ($patient->sex === null || empty($patient->sex) || (($patient->sex != "H") && ($patient->sex == "M"))) ? "<span class='text-muted'><i>N/A</i></span>" : (($patient->sex === "H" || $patient->sex === "h") ? "Hombre" : "Mujer" ),
                 "birthplace" => $patient->getBirthplace(),
                 "phone" => $patient->phone,
                 "ssn_type" => $patient->ssn->ssn_type->description,
@@ -282,7 +284,7 @@ class PatientController extends Controller
                 "number_int" => $patient->address->number_int,
                 "settlement_type" => $patient->address->settlement_type->description,
                 "settlement_name" => $patient->address->colony,
-                // "zip_code" => $patient->address->zip_code->id,
+                "zip_code" => $patient->address->zip_code->code,
                 "locality" => $patient->address->locality->description,
                 "municipality" => $patient->address->municipality->description,
                 "state" => $patient->address->state->description

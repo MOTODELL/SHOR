@@ -40,6 +40,7 @@ class HomeController extends Controller
         $dateChart = new DateChart;
         $dateChart->labels($dates->keys()->toArray());
         $dateChart->dataset('Citas', 'line', $dates->values()->toArray());
+        $dateChart->label('Cantidad');
         return view('home', compact('dateChart'));
     }
 

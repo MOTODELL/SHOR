@@ -135,7 +135,7 @@ class User extends Authenticatable
      */
     public function dependency()
     {
-        return $this->belongsTo(Dependency::class);
+        return $this->belongsTo(Dependency::class)->withTrashed();
     }
 
     /**
