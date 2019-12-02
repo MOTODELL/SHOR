@@ -112,7 +112,7 @@ class DateController extends Controller
             if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
                 $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
             }
-            if ($request->filled('locality')) {
+            if ($request->filled('locality') && $request->input('locality') != 'none') {
                 $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
                 if ($locality) {
                     $address->locality()->associate($locality);
@@ -273,7 +273,7 @@ class DateController extends Controller
                 if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
                     $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
                 }
-                if ($request->filled('locality')) {
+                if ($request->filled('locality')  && $request->input('locality') != 'none') {
                     $locality = Locality::where('code', getDescriptionName($request->input('locality')))->first();
                     if ($locality) {
                         $address->locality()->associate($locality);

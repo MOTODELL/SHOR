@@ -53,33 +53,6 @@ class StoreDateRequest extends FormRequest
                 'required',
                 'size:14'
             ],
-            'ssn_type' => [
-                'required'
-            ],
-            'viality' => [
-                'required'
-            ],
-            'street' => [
-                'required'
-            ],
-            'number_ext' => [
-                'required'
-            ],
-            'settlement_type' => [
-                'required'
-            ],
-            'colony' => [
-                'required'
-            ],
-            'zip_code' => [
-                'required'
-            ],
-            'municipality' => [
-                'required'
-            ],
-            'state' => [
-                'required'
-            ],
         ];
     }
 }
