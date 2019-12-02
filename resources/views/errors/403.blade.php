@@ -1,9 +1,5 @@
 @extends('errors::layout')
 
-@section('title')
-    404
-@endsection
+@section('title', 403)
 
-@section('message')
-    Acceso denegado
-@endsection
+@section('message', 'Acceso denegado')

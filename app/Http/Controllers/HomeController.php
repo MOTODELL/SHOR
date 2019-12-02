@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Date;
+use App\Cause;
 use App\Patient;
 use Carbon\Carbon;
 use App\Municipality;
@@ -21,6 +22,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(Cause::class, 'cause');
     }
 
     /**

@@ -1,29 +1,22 @@
 <?php
+
 namespace App\Policies;
+
 use App\User;
+use App\Dependency;
 use Illuminate\Auth\Access\HandlesAuthorization;
-class UserPolicy
+
+class DependencyPolicy
 {
     use HandlesAuthorization;
+
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user can view any dependencies.
      *
      * @param  \App\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
-    {
-       
-        return true;
-    }
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function view(User $user, User $model)
     {
         if ($user->hasRole('admin')) {
             return true;
@@ -31,8 +24,25 @@ class UserPolicy
             return false; 
         }
     }
+
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can view the dependency.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Dependency  $dependency
+     * @return mixed
+     */
+    public function view(User $user, Dependency $dependency)
+    {
+        if ($user->hasRole('admin')) {
+            return true;
+        } else {
+            return false; 
+        }
+    }
+
+    /**
+     * Determine whether the user can create dependencies.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -45,14 +55,15 @@ class UserPolicy
             return false; 
         }
     }
+
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the dependency.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Dependency  $dependency
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user, Dependency $dependency)
     {
         if ($user->hasRole('admin')) {
             return true;
@@ -60,40 +71,43 @@ class UserPolicy
             return false; 
         }
     }
+
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the user can delete the dependency.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Dependency  $dependency
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Dependency $dependency)
     {
-         if ($user->hasRole('admin')) {
+        if ($user->hasRole('admin')) {
             return true;
         } else {
             return false; 
         }
     }
+
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can restore the dependency.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Dependency  $dependency
      * @return mixed
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Dependency $dependency)
     {
         //
     }
+
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the user can permanently delete the dependency.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Dependency  $dependency
      * @return mixed
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Dependency $dependency)
     {
         //
     }

@@ -6,12 +6,14 @@
                 <div class="left-sidebar-content">
                     <ul class="sidebar-elements">
                         <li class="divider pt-2">Menú</li>
+                        @canany(['view', 'create', 'update',  'delete'], auth()->user())
                         <li class="{{ (request()->is('home')) ? 'active' : '' }}">
                             <a href="{{ route('home.index') }}">
                                 <i class="icon zmdi zmdi-home"></i>
                                 <span>Inicio</span>
                             </a>
                         </li>
+                        @endcanany
                         {{-- <li class="parent">
                             <a href="#">
                                 <i class="icon zmdi zmdi-face"></i>
@@ -41,20 +43,22 @@
                             </li>
                         @endcan
                         <li class="divider">Divididor</li> --}}
-                        
+                        @canany(['view', 'create', 'update',  'delete'], auth()->user())
                         <li class="{{ (request()->is('dependencies*')) ? 'active' : '' }}">
                             <a href="{{ route('dependencies.index') }}">
                                 <i class="icon fas fa-hospital-alt"></i>
                                 <span>Áreas</span>
                             </a>
                         </li>
-                        
+                        @endcanany
+                        @canany(['view','create', 'update',  'delete'], auth()->user())
                         <li class="{{ (request()->is('causes*')) ? 'active' : '' }}">
                             <a href="{{ route('causes.index') }}">
                                 <i class="icon fas fa-book-medical"></i>
                                 <span>Causes</span>
                             </a>
                         </li>
+                        @endcanany
                         <li class="{{ (request()->is('patients*')) ? 'active' : '' }}">
                             <a href="{{ route('patients.index') }}">
                                 <i class="icon zmdi zmdi-male-female"></i>
@@ -67,7 +71,7 @@
                                 <span>Urgencias</span>
                             </a>
                         </li>
-                        @canany(['update', 'view', 'delete'], auth()->user())
+                        @canany(['create', 'update',  'delete'], auth()->user())
                             <li class="{{ (request()->is('users*')) ? 'active' : '' }}">
                             <a href="{{ route('users.index') }}">
                                 <i class="icon zmdi zmdi-account-circle"></i>

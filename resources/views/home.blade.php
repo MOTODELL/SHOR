@@ -35,8 +35,8 @@
                     <div class="chart sparkline pl-5">
                         <i class="zmdi zmdi-calendar-check zmdi-hc-5x"></i>
                     </div>
-                    <div class="data-info pr-5 pt-3">
-                        <div class="desc">Citas por semana</div>
+                    <div class="data-info pt-3">
+                        <div class="desc">Citas en la semana</div>
                         <div class="value">
                             <span class="indicator text-warning mdi mdi-chevron-right"></span>
                             <span class="number" data-toggle="counter" data-end="113">{{ $totalDates }}</span>
