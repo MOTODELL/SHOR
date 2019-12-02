@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-       
+       dd($user);
         return true;
     }
 
@@ -28,7 +28,7 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
         if ($user->hasRole('admin')) {
             return true;
@@ -59,7 +59,7 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
         if ($user->hasRole('admin')) {
             return true;
@@ -75,7 +75,7 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
          if ($user->hasRole('admin')) {
             return true;

@@ -18,6 +18,17 @@
 			<div class="container-fluid pb-3">
 				<div class="row">
 					<div class="col-5">
+						<div class="ml-1">
+							<span class="font-weight-bold">Filtrar por:<br></span>
+							<div class="pt-1">
+								@foreach ($status as $stat)
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input class="custom-control-input" type="checkbox" id="check-{{ $stat->name }}">
+										<label class="custom-control-label" for="check-{{ $stat->name }}">{{ $stat->description }}</label>
+									</div>
+								@endforeach
+							</div>
+						</div>
 					</div>
 					<div class="col-5">
 						<div class="input-group mb-3">
@@ -51,7 +62,7 @@
 					</thead>
 					<tbody>
 					@foreach ($dates as $date)
-						<tr class="success">
+						<tr class="success {{ $date->statusName }}">
 							<td class="cell-detail">
 								<span>{{ str_pad($date->id, 8, '0', STR_PAD_LEFT) }}</span>
 							</td>

@@ -117,6 +117,7 @@ class UserController extends Controller
     {
         // $request->user()->authorizeRoles('admin');
         $this->authorize('viewAny', $user);
+        dd('holis');
         if (isValidUuid($user)) {
             $user = User::where('id', $user)->first();
     

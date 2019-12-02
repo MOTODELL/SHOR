@@ -17,17 +17,23 @@ $(document).ready(function() {
     }
     if ($('script[src="' + host + '/lib/datatables/datatables.net/js/jquery.dataTables.js"]' ).length > 0) {
         $.fn.dataTable.ext.search.push(function(e, t, i, o, n) {
-            var u = $("#check-user").is(":checked"),
-                d = $("#check-doctor").is(":checked"),
-                a = $("#check-admin").is(":checked"),
+            var user = $("#check-user").is(":checked"),
+                doctor = $("#check-doctor").is(":checked"),
+                admin = $("#check-admin").is(":checked"),
+                pendiente = $("#check-pendiente").is(":checked"),
+                pagado = $("#check-pagado").is(":checked"),
+                cancelado = $("#check-cancelado").is(":checked"),
                 m = $(e.aoData[i].nTr).attr("class").split(" ");
     
             return (
                 (
-                    (0 == u && 0 == d && 0 == a) ||
-                    (1 == u && "Usuario" == m[1]) ||
-                    (1 == d && "Doctor" == m[1]) ||
-                    (1 == a && "Administrador" == m[1])
+                    (0 == user && 0 == doctor && 0 == admin && 0 == pendiente && 0 == pagado && 0 == cancelado) ||
+                    (1 == user && "usuario" == m[1]) ||
+                    (1 == doctor && "doctor" == m[1]) ||
+                    (1 == admin && "admin" == m[1]) ||
+                    (1 == pendiente && "pendiente" == m[1]) ||
+                    (1 == pagado && "pagado" == m[1]) ||
+                    (1 == cancelado && "cancelado" == m[1]) 
                 )
             );
         });
@@ -64,7 +70,7 @@ $(document).ready(function() {
                 }
             }
         });
-        $("#check-user, #check-doctor, #check-admin").on("click", function() {
+        $("#check-user, #check-doctor, #check-admin, #check-pendiente, #check-pagado, #check-cancelado").on("click", function() {
             e.draw();
         });
         $('#search').keyup(function(){
@@ -121,11 +127,13 @@ $(document).ready(function() {
     if (window.location.pathname == "/icons") {
         App.IconsFilter();
     }
-    $(".select2-tags").select2({
-        width: "100%",
-        placeholder: "Crea o selecciona una localidad",
-        tags: true
-    });
+    if ($('.select2-tags').length > 0) {
+        $(".select2-tags").select2({
+            width: "100%",
+            placeholder: "Crea o selecciona una localidad",
+            tags: true
+        });
+    }
 });
 
 // window.Vue = require("vue");

@@ -21,6 +21,8 @@ use App\ZipCode;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
+use function App\Http\isValidUuid;
+
 class DateController extends Controller
 {
     /**
@@ -43,9 +45,10 @@ class DateController extends Controller
         $request->user()->authorizeRoles(['admin', 'user']);
 
         $dates = Date::all();
+        $status = Status::all();
         // dd($dates->first()->uuid);
 
-        return view('dates.index', compact('dates'));
+        return view('dates.index', compact('dates', 'status'));
     }
 
     /**
@@ -187,10 +190,11 @@ class DateController extends Controller
         $municipalities = Municipality::all();
         $states = State::all();
         $ssn_types = SsnType::all();
+        $status = Status::all();
 
         // dd($date->first()->patient->ssn->number);
 
-        return view('dates.edit', compact(['date', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types']));
+        return view('dates.edit', compact(['date', 'vialities', 'settlement_types', 'localities', 'municipalities', 'states', 'ssn_types', 'status']));
     }
 
     /**
@@ -205,66 +209,80 @@ class DateController extends Controller
     {
         $request->user()->authorizeRoles(['admin', 'user']);
 
-        $date = Date::where('uuid', $date)->first();
+        if (isValidUuid($date)) {
+            $date = Date::where('uuid', $date)->first();
+            if ($date) {
+                $address = $date->patient->address;
+                $address->street = ucfirst($request->input('street'));
+                $address->number_ext = $request->input('number_ext');
+                if ($request->filled('number_int')) {
+                    $address->number_int = $request->input('number_int');
+                }
+                $address->colony = ucfirst($request->input('colony'));
+                if ($request->filled('zip_code') && ZipCode::where('code', $request->input('zip_code'))->first()) {
+                    $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
+                }
+                if ($request->filled('viality') && $request->input('viality') != 'none') {
+                    $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
+                }
+                if ($request->filled('settlement_type') && $request->input('settlement_type') != 'none') {
+                    $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
+                }
+                if ($request->filled('locality') && $request->input('locality') != 'none') {
+                    $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
+                }
+                if ($request->filled('municipality') && $request->input('municipality') != 'none') {
+                    $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
+                }
+                if ($request->filled('state') && $request->input('state') != 'none') {
+                    $address->state()->associate(State::where('code', $request->input('state'))->first());
+                }
+                $address->save();
 
-        $address = $date->patient->address;
-        $address->street = ucfirst($request->input('street'));
-        $address->number_ext = $request->input('number_ext');
-        if ($request->filled('number_int')) {
-            $address->number_int = $request->input('number_int');
-        }
-        $address->colony = ucfirst($request->input('colony'));
-        if ($request->filled('zip_code')) {
-            $address->zip_code()->associate(ZipCode::where('code', $request->input('zip_code'))->first());
-        }
-        if ($request->filled('viality')) {
-            $address->viality()->associate(Viality::where('name', $request->input('viality'))->first());
-        }
-        if ($request->filled('settlement_type')) {
-            $address->settlement_type()->associate(SettlementType::where('name', $request->input('settlement_type'))->first());
-        }
-        if ($request->filled('locality')) {
-            $address->locality()->associate(Locality::where('code', $request->input('locality'))->first());
-        }
-        if ($request->filled('municipality')) {
-            $address->municipality()->associate(Municipality::where('id', $request->input('municipality'))->first());
-        }
-        if ($request->filled('state')) {
-            $address->state()->associate(State::where('code', $request->input('state'))->first());
-        }
-        $address->save();
+                $ssn = $date->patient->ssn;
+                $ssn->number = $request->input('number');
+                $ssn->ssn = strtoupper($request->input('ssn'));
+                if (SsnType::where('name', $request->input('ssn_type'))->first()) {
+                    $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
+                } else {
+                    $ssn->ssn_type()->associate(SsnType::where('name', 'ninguna')->first());
+                }
+                $ssn->save();
 
-        $ssn = $date->patient->ssn;
-        $ssn->number = $request->input('number');
-        $ssn->ssn = strtoupper($request->input('ssn'));
-        $ssn->ssn_type()->associate(SsnType::where('name', $request->input('ssn_type'))->first());
-        $ssn->save();
+                $patient = $date->patient;
+                $patient->name = ucfirst($request->input('name'));
+                $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
+                $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
+                $patient->phone = $request->input('phone');
+                if ($request->filled('curp')) {
+                    $curp = strtoupper($request->input('curp'));
+                    $patient->curp = $curp;
+                    $yy = substr($request->input('curp'), 4, -12);
+                    $mm = substr($request->input('curp'), 6, -10);
+                    $dd = substr($request->input('curp'), 8, -8);
+                    $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
+                    $patient->sex = substr($request->input('curp'), 10, -7);
+                    $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
+                    $patient->ssn()->associate($ssn);
+                }
+                $patient->address()->associate($address);
+                $patient->save();
 
-        $patient = $date->patient;
-        $patient->name = ucfirst($request->input('name'));
-        $patient->paternal_lastname = ucfirst($request->input('paternal_lastname'));
-        $patient->maternal_lastname = ucfirst($request->input('maternal_lastname'));
-        $patient->phone = $request->input('phone');
-        if ($request->filled('curp')) {
-            $curp = strtoupper($request->input('curp'));
-            $patient->curp = $curp;
-            $yy = substr($request->input('curp'), 4, -12);
-            $mm = substr($request->input('curp'), 6, -10);
-            $dd = substr($request->input('curp'), 8, -8);
-            $patient->birthdate = Carbon::createFromFormat("d.m.y", "$dd.$mm.$yy");
-            $patient->sex = substr($request->input('curp'), 10, -7);
-            $patient->birthplace()->associate(State::where('code', strtoupper(substr($request->input('curp'), 11, -5)))->first());
-            $patient->ssn()->associate($ssn);
+                $date->diagnosis = $request->input('diagnosis');
+                if($request->filled('status') && $request->has('status')) {
+                    $date->status()->associate(Status::where('name', $request->input('status'))->first());
+                } else {
+                    $date->status()->associate(Status::where('name', 'pendiente')->first());
+                }
+                $date->user()->associate(auth()->user());
+                $date->patient()->associate($patient);
+                if($date->save()) {
+                    return redirect()->route('dates.show', $date->uuid)->with('message-store', '¡Cita actualizada!');
+                }
+                return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
+            }
         }
-        $patient->address()->associate($address);
-        $patient->save();
-
-        $date->diagnosis = $request->input('diagnosis');
-        $date->status()->associate(Status::where('name', 'pendiente')->first());
-        if($date->save()) {
-            return redirect()->route('dates.show', $date->uuid)->with('message-update', '¡Cita actualizada!');
-        }
-        return redirect()->back()->withInput()->withErrors(['error', 'Ocurrió un error, inténtelo nuevamente.']);
+        return abort('404');
     }
 
     /**

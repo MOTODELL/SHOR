@@ -112,4 +112,12 @@ class Date extends Model
         }
         return "";
     }
+    public function getStatusNameAttribute()
+    {
+        $state = $this->status()->first();
+        if ($state) {
+            return $state->name;
+        }
+        return "";
+    }
 }

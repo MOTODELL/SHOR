@@ -225,6 +225,14 @@ class User extends Authenticatable
         }
         return "";
     }
+    public function getRoleNameAttribute()
+    {
+        $role = $this->roles()->first();
+        if ($role) {
+            return $role->name;
+        }
+        return "";
+    }
 
     public function getRole()
     {

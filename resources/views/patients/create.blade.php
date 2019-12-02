@@ -89,7 +89,7 @@
                     </div>
                     <div id="ssnHide" class="form-group col-sm-12 col-md-6 col-lg-4">
                         <label for="ssn">{{ __('Número del seguro social') }}</label>
-                        <input id="ssn" type="text" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" placeholder="07985671496">
+                        <input id="ssn" type="text" data-mask="ssn" class="form-control text-uppercase @error('ssn') is-invalid @enderror" name="ssn" placeholder="07985671496">
                         @error('ssn')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

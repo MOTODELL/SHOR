@@ -61,7 +61,7 @@
 					@foreach ($users as $user)
 						@if (auth()->user()->id == $user->id)
 						@else
-							<tr class="success {{ $user->getRoleDescription() }}">
+							<tr class="success {{ $user->roleName }}">
 								<td class="user-avatar cell-detail user-info">
 									<img class="mt-0 mt-md-2 mt-lg-0" src="{{ asset($user->avatar) }}" alt="{{ asset($user->name) }}">
 									<span class="mt-1">{{ $user->name.' '.$user->paternal_lastname.' '.$user->maternal_lastname }}</span>
