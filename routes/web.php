@@ -42,5 +42,9 @@ Route::prefix('fetch')->group(function ()
     Route::post('zip_codes', 'DateController@fetch_zip_codes')->name('fetch.zip_codes');
     Route::post('date', 'DateController@fetch')->name('fetch.date');
 });
+Route::prefix('laratable')->group(function ()
+{
+    Route::get('date', 'DateController@laratables')->name('laratable.date');
+});
 
 Route::get('/pdf/{date}', 'PdfController@print')->name('pdf');

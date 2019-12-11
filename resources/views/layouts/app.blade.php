@@ -44,6 +44,7 @@
         {{-- Right Sidebar --}}
         @includeIf('include.right-sidebar')
     </div>
+    @yield('modals')
     <script src="{{ asset('lib/jquery/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/perfect-scrollbar/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
@@ -65,7 +66,7 @@
 					$('.be-toggle-left-sidebar').click();
 				}
 			}
-		});
+        });
     </script>
     @stack('scripts')
 </body>

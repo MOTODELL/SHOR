@@ -56,6 +56,14 @@ class Patient extends Model
         return $this->name . " " . $this->paternal_lastname . " " . $this->maternal_lastname;
     }
 
+    public function getSsnNumAttribute()
+    {
+        if ($this->ssn()->first()) {
+            return $this->ssn()->first()->ssn;
+        }
+        return "";
+    }
+
     public function hasASsn()
     {
         if ($this->ssn()->first()) {
@@ -125,4 +133,10 @@ class Patient extends Model
     {
         return $this->belongsTo(Address::class)->withTrashed();
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LARATABLES
+    |--------------------------------------------------------------------------
+    */
 }

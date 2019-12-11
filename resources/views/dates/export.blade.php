@@ -4,6 +4,7 @@
         <th style="width:6px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Folio</th>
         <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Fecha de atención</th>
         <th style="width:19px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Número exp clínico</th>
+        <th style="width:19px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Estado de la cita</th>
         <th style="width:20px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Núm. Afiliación</th>
         <th style="width:40px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">Nombre del beneficiario</th>
         <th style="width:26px;background-color: #70a1ff;border: 1px solid #000000;text-align: center;">CURP</th>
@@ -31,6 +32,7 @@
                 @else
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;"></td>
                 @endif
+                <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->getStatus() }}</td>
                 <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->fullname }}</td>
                 @if ($date->patient->curp && $date->patient->curp != "")
                     <td style="border-left:1px solid #000000;border-right:1px solid #000000;text-align: center;">{{ $date->patient->curp }}</td>
@@ -66,6 +68,7 @@
             </tr>
         @endforeach
         <tr>
+            <td style="border-top:1px solid #000000;"></td>
             <td style="border-top:1px solid #000000;"></td>
             <td style="border-top:1px solid #000000;"></td>
             <td style="border-top:1px solid #000000;"></td>

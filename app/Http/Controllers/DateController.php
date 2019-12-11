@@ -18,6 +18,7 @@ use App\SettlementType;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDateRequest;
 use App\ZipCode;
+use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -46,10 +47,12 @@ class DateController extends Controller
         $request->user()->authorizeRoles(['admin', 'user', 'analist', 'doctor']);
 
         $dates = Date::all();
-        $status = Status::all();
+        $status = Status::all()->sortByDesc('name');
+        $today = Carbon::now();
+        $firstOfMonth = clone $today;
         // dd($dates->first()->uuid);
 
-        return view('dates.index', compact('dates', 'status'));
+        return view('dates.index', compact('dates', 'status', 'today', 'firstOfMonth'));
     }
 
     /**
@@ -365,10 +368,10 @@ class DateController extends Controller
         return redirect()->route('dates.index')->with('message-destroy', 'Eliminado');
     }
 
-    public function export()
+    public function export(Request $request)
     {
         $now = Carbon::now()->format('d-m-Y_g.i_A');
-        return Excel::download(new DatesExport, "Citas_$now.xlsx");
+        return Excel::download(new DatesExport($request->all()), "Citas_$now.xlsx");
     }
 
     public function fetch_zip_codes(Request $request)
@@ -393,7 +396,8 @@ class DateController extends Controller
 
         return response()->json();
     }
-     public function fetch(Request $request)
+    
+    public function fetch(Request $request)
     {
         $date = Date::where('id', $request->input('id'))->first();
         $data = [];
@@ -429,5 +433,10 @@ class DateController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function laratables()
+    {
+        return Laratables::recordsOf(Date::class);
     }
 }
