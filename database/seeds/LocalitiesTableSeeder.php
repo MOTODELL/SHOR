@@ -13,7 +13,7 @@ class LocalitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        Locality::truncate();
+        // Locality::truncate();
         $locality = new Locality();
         $locality->code = '001';
         $locality->description = 'Ixtapa';

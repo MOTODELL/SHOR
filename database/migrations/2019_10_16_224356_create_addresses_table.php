@@ -15,16 +15,16 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('viality_id')->nullable();
+            $table->unsignedBigInteger('viality_id')->nullable();
             $table->string('street')->nullable();
             $table->string('number_ext')->nullable();
             $table->string('number_int')->nullable();
-            $table->unsignedInteger('settlement_type_id')->nullable();
+            $table->unsignedBigInteger('settlement_type_id')->nullable();
             $table->string('colony')->nullable();
-            $table->unsignedInteger('zip_code_id')->nullable();
-            $table->unsignedInteger('locality_id')->nullable();
-            $table->unsignedInteger('municipality_id')->nullable();
-            $table->unsignedInteger('state_id')->nullable();
+            $table->unsignedBigInteger('zip_code_id')->nullable();
+            $table->unsignedBigInteger('locality_id')->nullable();
+            $table->unsignedBigInteger('municipality_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

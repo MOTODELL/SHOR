@@ -20,11 +20,11 @@ class CreateDatesTable extends Migration
             $table->timestamp('date_start')->nullable();
             $table->timestamp('date_end')->nullable();
             $table->text('diagnosis')->nullable();
-            $table->unsignedInteger('cause_id')->nullable();
-            $table->unsignedInteger('service_id')->nullable();
+            $table->unsignedBigInteger('cause_id')->nullable();
+            $table->unsignedBigInteger('service_id')->nullable();
             $table->float('extra_cost')->nullable();
             $table->float('amount')->nullable();
-            $table->unsignedInteger('status_id');
+            $table->unsignedBigInteger('status_id');
             $table->uuid('user_id');
             $table->uuid('patient_id');
             $table->timestamps();

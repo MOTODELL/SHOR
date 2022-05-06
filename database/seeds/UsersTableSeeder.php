@@ -14,36 +14,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
+        // User::truncate();
         
         $user = new User();
-        $user->name = 'Charly';
-        $user->paternal_lastname = 'Ponce';
-        $user->maternal_lastname = 'Ibarra';
-        $user->username = 'charly12';
+        $user->name = 'Test';
+        $user->paternal_lastname = 'Test';
+        $user->maternal_lastname = 'Test';
+        $user->username = 'test';
         $user->phone = '(999) 999-9999';
-        $user->curp = 'CHLY120997HMNREMR2';
-        $user->email = 'ch.1209@hotmail.com';
-        $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
-        $user->password = Hash::make('charly12');
-        // $user->dependency_id = 1;
-        // $user->key = Hash::make('Charly' . 'Ponce' . 'charly12' . 'ch.1209@hotmail.com');
-        $user->save();
-
-        $user->roles()->attach(Role::where('name', 'admin')->first());
-
-        $user = new User();
-        $user->name = 'Angeles';
-        $user->paternal_lastname = 'Martinez';
-        $user->maternal_lastname = 'Vargas';
-        $user->username = 'ang';
-        $user->phone = '(999) 999-9999';
-        $user->curp = 'MAVA000804MMNRRNA9';
-        $user->email = 'angelesmava0@gmail.com';
-        $user->avatar = 'https://api.adorable.io/avatars/285/'.$user->name;
-        $user->password = Hash::make('123');
-        // $user->dependency_id = 1;
-        // $user->key = Hash::make('Angeles' . 'Martinez' . 'ang' . 'angelesmava0@gmail.com');
+        $user->curp = 'TEST0000TESTESTES2';
+        $user->email = 'test@test.com';
+        $user->avatar = 'https://avatars.dicebear.com/api/initials/'.$user->name.'.svg';
+        $user->password = Hash::make('12345678');
         $user->save();
 
         $user->roles()->attach(Role::where('name', 'admin')->first());

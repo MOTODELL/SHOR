@@ -14,8 +14,8 @@ class CreateCauseDateTable extends Migration
     public function up()
     {
         Schema::create('cause_date', function (Blueprint $table) {
-            $table->unsignedInteger('cause_id');
-            $table->unsignedInteger('date_id');
+            $table->unsignedBigInteger('cause_id');
+            $table->unsignedBigInteger('date_id');
         });
     }
 

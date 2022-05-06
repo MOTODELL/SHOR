@@ -14,7 +14,7 @@ class VialitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        Viality::truncate();
+        // Viality::truncate();
         
         $viality = new Viality();
         $viality->name = getDescriptionName('Ampliación');

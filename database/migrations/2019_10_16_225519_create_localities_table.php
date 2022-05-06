@@ -17,7 +17,7 @@ class CreateLocalitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->string('description');
-            $table->unsignedInteger('municipality_id');
+            $table->unsignedBigInteger('municipality_id');
             $table->timestamps();
             $table->softDeletes();
         });

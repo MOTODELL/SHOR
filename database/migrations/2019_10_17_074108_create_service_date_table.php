@@ -14,8 +14,8 @@ class CreateServiceDateTable extends Migration
     public function up()
     {
         Schema::create('service_date', function (Blueprint $table) {
-            $table->unsignedInteger('service_id');
-            $table->unsignedInteger('date_id');
+            $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('date_id');
         });
     }
 

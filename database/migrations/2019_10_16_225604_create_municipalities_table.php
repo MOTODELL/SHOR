@@ -17,7 +17,7 @@ class CreateMunicipalitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->string('description');
-            $table->unsignedInteger('state_id');
+            $table->unsignedBigInteger('state_id');
             $table->timestamps();
             $table->softDeletes();
         });

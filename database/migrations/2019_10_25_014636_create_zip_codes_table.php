@@ -16,7 +16,7 @@ class CreateZipCodesTable extends Migration
         Schema::create('zip_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('code');
-            $table->unsignedInteger('municipality_id')->nullable();
+            $table->unsignedBigInteger('municipality_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

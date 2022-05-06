@@ -12,7 +12,7 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::truncate();
+        // Role::truncate();
         $role = new Role();
         $role->name = 'user';
         $role->description = 'Usuario';

@@ -4,7 +4,7 @@
         <div class="page-title"><span>Primary Header</span></div>
         <div class="be-right-navbar">
             <ul class="nav navbar-nav float-right be-user-nav">
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ asset('img/avatar.png') }}" alt="Avatar"><span class="user-name">Túpac Amaru</span></a>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ asset('img/avatar.png') }}" width="50px" height="50px" alt="Avatar"><span class="user-name">Túpac Amaru</span></a>
                     <div class="dropdown-menu" role="menu">
                         <div class="user-info">
                             <div class="user-name">Túpac Amaru</div>
