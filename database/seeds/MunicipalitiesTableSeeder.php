@@ -14,7 +14,7 @@ class MunicipalitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        Municipality::truncate();
+        // Municipality::truncate();
 
         $municipios = Storage::disk('local')->get('public/municipios.csv');
         $municipios = explode("\r\n", $municipios);

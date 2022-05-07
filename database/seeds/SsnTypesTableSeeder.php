@@ -14,7 +14,7 @@ class SsnTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        SsnType::truncate();
+        // SsnType::truncate();
 
         $ssn_type = new SsnType();
         $ssn_type->name = getDescriptionName('NINGUNA');

@@ -13,7 +13,7 @@ class ZipCodesTableSeeder extends Seeder
      */
     public function run()
     {
-        ZipCode::truncate();
+        // ZipCode::truncate();
 
         $codigos_postales = Storage::disk('local')->get('public/codigos_postales.csv');
         $codigos_postales = explode("\r\n", $codigos_postales);

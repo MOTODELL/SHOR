@@ -12,7 +12,7 @@ class StatesTableSeeder extends Seeder
      */
     public function run()
     {
-        State::truncate();
+        // State::truncate();
         
         $state = new State();
         $state->code = 'AS';

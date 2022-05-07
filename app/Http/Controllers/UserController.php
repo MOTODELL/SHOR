@@ -79,7 +79,7 @@ class UserController extends Controller
         }
         $user->username = $request->input('username');
         $user->name = ucfirst($request->input('name'));
-        $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+        $user->avatar = 'https://avatars.dicebear.com/api/initials/'.$request->input('name').'.svg';
         $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
         $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
         if ($request->filled('professional_id')) {
@@ -174,7 +174,7 @@ class UserController extends Controller
                     }
                 }
                 $user->name = ucfirst($request->input('name'));
-                $user->avatar = 'https://api.adorable.io/avatars/285/'.$request->input('name');
+                $user->avatar = 'https://avatars.dicebear.com/api/initials/'.$request->input('name').'.svg';
                 $user->paternal_lastname = ucfirst($request->input('paternal_lastname'));
                 $user->maternal_lastname = ucfirst($request->input('maternal_lastname'));
                 if ($request->filled('professional_id')) {

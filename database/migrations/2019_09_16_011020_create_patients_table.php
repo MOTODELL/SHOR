@@ -21,10 +21,10 @@ class CreatePatientsTable extends Migration
             $table->char('curp', 18);
             $table->char('phone', 14);
             $table->date('birthdate');
-            $table->unsignedInteger('birthplace_id')->nullable();
+            $table->unsignedBigInteger('birthplace_id')->nullable();
             $table->char('sex', 1);
             $table->uuid('ssn_id');
-            $table->unsignedInteger('address_id');
+            $table->unsignedBigInteger('address_id');
             $table->timestamps();
             $table->softDeletes();
         });

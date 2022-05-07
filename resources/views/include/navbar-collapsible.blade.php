@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav float-right be-user-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <img src="{{ auth()->user()->avatar }}" alt="Avatar">
+                        <img src="{{ auth()->user()->avatar }}" width="50px" height="50px" alt="Avatar">
                         <span class="user-name">{{ auth()->user()->name }}</span>
                     </a>
                     <div class="dropdown-menu" role="menu">

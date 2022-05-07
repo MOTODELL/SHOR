@@ -14,7 +14,7 @@ class SettlementTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        SettlementType::truncate();
+        // SettlementType::truncate();
 
         $settlement_type = new SettlementType();
         $settlement_type->name = getDescriptionName('Aeropuerto');
